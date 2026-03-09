@@ -1,704 +1,901 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>tucontenido.ai - Agencia de Ads UGC con IA</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tucontenido.ads</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --bg-soft: #0c0c0c;
+      --card: #101010;
+      --line: rgba(255, 255, 255, 0.08);
+      --line-strong: rgba(255, 255, 255, 0.14);
+      --text: #ffffff;
+      --muted: #b7b7b7;
+      --muted-2: #8d8d8d;
+      --accent: #ffffff;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+      --radius: 24px;
+      --radius-sm: 16px;
+      --max: 1180px;
+    }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" crossorigin href="https://fonts.gstatic.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    * {
+      box-sizing: border-box;
+    }
 
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "accent": "#ffffff",
-            "muted": "rgba(255,255,255,0.72)",
-            "muted2": "rgba(255,255,255,0.55)",
-            "line": "rgba(255,255,255,0.12)",
-            "surface": "rgba(255,255,255,0.04)",
-            "surface2": "rgba(255,255,255,0.06)",
-            "bg": "#050507",
-            "bg2": "#0B0B0F",
-          },
-          fontFamily: { display: ["Inter", "sans-serif"] },
-          borderRadius: {
-            "DEFAULT": "0.75rem",
-            "xl": "1rem",
-            "2xl": "1.25rem",
-            "3xl": "1.5rem",
-            "full": "9999px"
-          }
-        }
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.05), transparent 30%),
+        linear-gradient(180deg, #080808 0%, #040404 100%);
+      color: var(--text);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(5, 5, 5, 0.72);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .header-inner {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid var(--line-strong);
+      background: linear-gradient(180deg, #181818 0%, #0a0a0a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+      font-size: 18px;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .brand-sub {
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--muted-2);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .nav a {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+    }
+
+    .header-cta {
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: #ffffff;
+      color: #050505;
+      font-size: 14px;
+      font-weight: 800;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .header-cta:hover,
+    .primary-btn:hover,
+    .secondary-btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.06), transparent 26%),
+        radial-gradient(circle at 80% 10%, rgba(255,255,255,0.04), transparent 22%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      padding: 84px 0 68px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      color: #d8d8d8;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(42px, 8vw, 82px);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+      font-weight: 900;
+      max-width: 760px;
+    }
+
+    .hero p {
+      max-width: 640px;
+      margin: 22px 0 0;
+      font-size: clamp(17px, 2.4vw, 20px);
+      line-height: 1.7;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      min-height: 56px;
+      padding: 16px 24px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 800;
+      transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+    }
+
+    .primary-btn {
+      background: #ffffff;
+      color: #050505;
+      border: 1px solid #ffffff;
+    }
+
+    .secondary-btn {
+      background: transparent;
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+    }
+
+    .hero-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .hero-point {
+      padding: 12px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: #d6d6d6;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.03) 100%);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .mockup-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+    }
+
+    .mockup-label {
+      color: var(--muted-2);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .metric {
+      padding: 18px;
+      border-radius: 22px;
+      background: #0a0a0a;
+      border: 1px solid var(--line);
+      margin-bottom: 14px;
+    }
+
+    .metric-value {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      margin: 0 0 6px;
+    }
+
+    .metric-label {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      font-weight: 600;
+    }
+
+    .lead-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .lead-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: #0b0b0b;
+    }
+
+    .lead-item strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .lead-item span {
+      color: var(--muted-2);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: rgba(255,255,255,0.05);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    section {
+      padding: 84px 0;
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 34px;
+    }
+
+    .section-kicker {
+      display: inline-block;
+      margin-bottom: 14px;
+      color: var(--muted-2);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+      font-weight: 900;
+    }
+
+    .section-head p {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+      font-weight: 500;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-index {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      border: 1px solid var(--line-strong);
+      background: #0c0c0c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel h3 {
+      margin: 0 0 16px;
+      font-size: 34px;
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+    }
+
+    .panel p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .steps {
+      display: grid;
+      gap: 14px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 16px;
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: #0b0b0b;
+    }
+
+    .step-num {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      border: 1px solid var(--line-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 18px;
+    }
+
+    .step h4 {
+      margin: 2px 0 8px;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .results {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .result-box {
+      padding: 22px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      text-align: left;
+    }
+
+    .result-box strong {
+      display: block;
+      font-size: 36px;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      margin-bottom: 10px;
+    }
+
+    .result-box span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      font-weight: 600;
+    }
+
+    .cta-box {
+      text-align: center;
+      padding: 42px 28px;
+      border-radius: 32px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.06), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      box-shadow: var(--shadow);
+    }
+
+    .cta-box h2 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+    }
+
+    .cta-box p {
+      max-width: 720px;
+      margin: 18px auto 0;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 18px;
+    }
+
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .footer {
+      padding: 28px 0 40px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted-2);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-inner,
+      .split,
+      .grid-3,
+      .results {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-inner {
+        padding-top: 64px;
       }
     }
-  </script>
 
-  <style>
-    /* Minimal premium feel */
-    .hairline { border-color: rgba(255,255,255,.12); }
-    .mask-fade { mask-image: radial-gradient(ellipse at center, black 55%, transparent 75%); }
-    .glass { background: rgba(255,255,255,0.04); backdrop-filter: blur(10px); }
+    @media (max-width: 760px) {
+      .header-inner {
+        min-height: 72px;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .hero h1 {
+        line-height: 1;
+      }
+
+      .section-head p,
+      .cta-box p,
+      .hero p {
+        font-size: 16px;
+      }
+
+      section {
+        padding: 64px 0;
+      }
+
+      .container {
+        width: min(var(--max), calc(100% - 22px));
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
   </style>
 </head>
-
-<body class="bg-bg text-white font-display antialiased selection:bg-white/10 selection:text-white">
-  <!-- Header -->
-  <header class="sticky top-0 z-50 w-full border-b hairline bg-bg/70 backdrop-blur-md">
-    <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-      <a href="#" class="flex items-center gap-3">
-        <span class="text-base sm:text-lg font-semibold tracking-tight">tucontenido.ai</span>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#" class="brand">
+        <div class="brand-mark">t.</div>
+        <div class="brand-text">
+          <div class="brand-title">tucontenido.ads</div>
+          <div class="brand-sub">Agencia de contenido y performance</div>
+        </div>
       </a>
 
-      <nav class="hidden md:flex items-center gap-8 text-sm text-white/70">
-        <a class="hover:text-white transition-colors" href="#problemas">Problemas</a>
-        <a class="hover:text-white transition-colors" href="#solucion">Solución</a>
-        <a class="hover:text-white transition-colors" href="#ejemplos">Ejemplos</a>
-        <a class="hover:text-white transition-colors" href="#como-funciona">Cómo funciona</a>
-        <a class="hover:text-white transition-colors" href="#precios">Precios</a>
-        <a class="hover:text-white transition-colors" href="#faq">FAQ</a>
+      <nav class="nav">
+        <a href="#servicios">Servicios</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#resultados">Resultados</a>
+        <a href="#contacto">Contacto</a>
       </nav>
 
-      <a
-        href="https://wa.me/"
-        class="inline-flex h-10 items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-black hover:opacity-90 transition-opacity"
-      >
-        Hablar por WhatsApp
-      </a>
+      <a class="header-cta" href="#contacto">Quiero crecer</a>
     </div>
   </header>
 
-  <!-- Hero (CON VIDEO DE FONDO) -->
-  <section class="relative overflow-hidden pt-16 pb-20 sm:pt-20 sm:pb-28">
-    <!-- Video background -->
-    <div class="absolute inset-0 z-0 overflow-hidden">
-      <video
-        class="w-full h-full object-cover opacity-40"
-        autoplay
-        muted
-        loop
-        playsinline
-      >
-        <source src="fondo.mp4" type="video/mp4" />
-      </video>
-
-      <!-- Overlay oscuro para legibilidad -->
-      <div class="absolute inset-0 bg-bg/80"></div>
-
-      <!-- Sutil glow (mantiene el look premium) -->
-      <div class="absolute -top-40 left-1/2 -translate-x-1/2 h-[520px] w-[520px] rounded-full bg-white/10 blur-3xl opacity-30 mask-fade"></div>
-      <div class="absolute top-0 right-[-140px] h-[420px] w-[420px] rounded-full bg-white/5 blur-3xl opacity-25"></div>
-    </div>
-
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="max-w-3xl">
-        <p class="inline-flex items-center gap-2 rounded-full border hairline bg-white/5 px-4 py-2 text-xs font-semibold text-white/80">
-          Agencia de anuncios UGC para ecommerce
-        </p>
-
-        <h1 class="mt-6 text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.05]">
-          Anuncios UGC creados con IA para que tu tienda online venda más, sin grabar ni aparecer en cámara.
-        </h1>
-
-        <p class="mt-6 text-lg sm:text-xl text-white/70 leading-relaxed max-w-2xl">
-          Somos un servicio hecho por personas, apoyado en inteligencia artificial: escribimos guiones, producimos videos verticales y te entregamos creativos listos para correr en Meta y TikTok.
-        </p>
-
-        <div class="mt-10">
-          <a
-            href="https://wa.me/"
-            class="inline-flex h-12 items-center justify-center rounded-full bg-white px-7 text-base font-semibold text-black hover:opacity-90 transition-opacity"
-          >
-            Hablar por WhatsApp
-          </a>
-        </div>
-
-        <p class="mt-4 text-xs text-white/50">
-          Sin formularios. Sin registros. Solo WhatsApp.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Social proof (minimal) -->
-  <section class="border-y hairline bg-bg2 py-10">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <p class="text-xs font-semibold tracking-widest text-white/45">
-        PARA TIENDAS ONLINE Y MARCAS ECOMMERCE
-      </p>
-      <div class="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6 text-white/55">
-        <div class="rounded-2xl border hairline bg-white/5 px-4 py-4 text-sm">Shopify</div>
-        <div class="rounded-2xl border hairline bg-white/5 px-4 py-4 text-sm">WooCommerce</div>
-        <div class="rounded-2xl border hairline bg-white/5 px-4 py-4 text-sm">DTC</div>
-        <div class="rounded-2xl border hairline bg-white/5 px-4 py-4 text-sm">Mercado Libre</div>
-        <div class="rounded-2xl border hairline bg-white/5 px-4 py-4 text-sm">Amazon</div>
-        <div class="rounded-2xl border hairline bg-white/5 px-4 py-4 text-sm">TikTok / Meta</div>
-      </div>
-    </div>
-  </section>
-
-<!-- Problemas -->
-<section id="problemas" class="py-20 sm:py-24">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="max-w-3xl">
-      <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight">El problema</h2>
-      <p class="mt-4 text-lg text-white/70">
-        En ecommerce, el cuello de botella casi siempre es el mismo:
-        <span class="text-white">contenido constante</span>.
-      </p>
-    </div>
-
-    <!-- Lista minimal con divisores -->
-    <div class="mt-14 border-t hairline">
-      <div class="grid grid-cols-1 md:grid-cols-2">
-        <!-- 01 -->
-        <div class="py-10 md:py-12 md:pr-10 md:border-r hairline">
-          <p class="text-xs uppercase tracking-widest text-white/40">01</p>
-          <p class="mt-3 text-lg font-semibold">Producción de video cara</p>
-          <p class="mt-3 text-white/65 leading-relaxed">
-            Grabar, editar, coordinar y repetir se vuelve costoso e interminable.
-          </p>
-        </div>
-
-        <!-- 02 -->
-        <div class="py-10 md:py-12 md:pl-10">
-          <p class="text-xs uppercase tracking-widest text-white/40">02</p>
-          <p class="mt-3 text-lg font-semibold">Incomodidad al aparecer en cámara</p>
-          <p class="mt-3 text-white/65 leading-relaxed">
-            No querés grabarte, no tenés tiempo o simplemente te da vergüenza.
-          </p>
-        </div>
-
-        <!-- Divider horizontal solo en desktop -->
-        <div class="hidden md:block md:col-span-2 border-t hairline"></div>
-
-        <!-- 03 -->
-        <div class="py-10 md:py-12 md:pr-10 md:border-r hairline">
-          <p class="text-xs uppercase tracking-widest text-white/40">03</p>
-          <p class="mt-3 text-lg font-semibold">Falta de contenido constante</p>
-          <p class="mt-3 text-white/65 leading-relaxed">
-            Sin volumen, no podés testear ganchos, ángulos y ofertas con velocidad.
-          </p>
-        </div>
-
-        <!-- 04 -->
-        <div class="py-10 md:py-12 md:pl-10">
-          <p class="text-xs uppercase tracking-widest text-white/40">04</p>
-          <p class="mt-3 text-lg font-semibold">Anuncios iguales a la competencia</p>
-          <p class="mt-3 text-white/65 leading-relaxed">
-            Mismos formatos, mismos claims, misma estética: tu marca se diluye.
-          </p>
-        </div>
-      </div>
-    </div>
-
-
-      <div class="mt-10">
-        <a href="https://wa.me/" class="text-white/80 hover:text-white underline underline-offset-4">
-          Contame tu producto por WhatsApp →
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Solución -->
-  <section id="solucion" class="py-20 sm:py-24 border-y hairline bg-bg2">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
-        <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight">La solución</h2>
-        <p class="mt-4 text-lg text-white/70">
-          En TuContenido.ai creamos anuncios <span class="text-white">UGC</span> con actores generados con IA,
-          guiones orientados a conversión y formatos verticales optimizados para Meta y TikTok.
-          <span class="text-white">Vos no grabás.</span> <span class="text-white">Vos no aparecés.</span>
-        </p>
-      </div>
-
-      <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
-        <div class="rounded-3xl border hairline bg-white/5 p-8">
-          <p class="text-lg font-semibold">No grabás</p>
-          <p class="mt-2 text-white/65">Nos pasás la info del producto. Nosotros hacemos el resto.</p>
-        </div>
-        <div class="rounded-3xl border hairline bg-white/5 p-8">
-          <p class="text-lg font-semibold">No aparecés</p>
-          <p class="mt-2 text-white/65">Usamos actores IA realistas para representar tu marca.</p>
-        </div>
-        <div class="rounded-3xl border hairline bg-white/5 p-8">
-          <p class="text-lg font-semibold">Menor costo</p>
-          <p class="mt-2 text-white/65">Pagás por videos listos para anuncios, sin producciones caras.</p>
-        </div>
-        <div class="rounded-3xl border hairline bg-white/5 p-8">
-          <p class="text-lg font-semibold">Más volumen, más rápido</p>
-          <p class="mt-2 text-white/65">Creativos para testear en días, no en semanas.</p>
-        </div>
-      </div>
-
-      <div class="mt-10">
-        <a
-          href="https://wa.me/"
-          class="inline-flex h-11 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-black hover:opacity-90 transition-opacity"
-        >
-          Pedir mis videos
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Ejemplos -->
-  <section id="ejemplos" class="py-20 sm:py-24">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-3 max-w-3xl">
-        <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight">Ejemplos de videos</h2>
-        <p class="text-lg text-white/70">
-          Ejemplos reales de anuncios creados con IA para ecommerce. Formato Reels/TikTok listo para pauta.
-        </p>
-      </div>
-
-      <div class="mt-12 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
-        <!-- Reemplazá /videos/ugc-01.mp4 etc por tus videos reales -->
-<div class="group rounded-3xl border hairline bg-white/5 overflow-hidden">
-  <video
-    class="aspect-[9/16] w-full object-cover"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="metadata"
-  >
-    <source src="ugc.mp4" type="video/mp4" />
-  </video>
-
-  <div class="p-4">
-    <p class="text-sm font-semibold">UGC Hook 01</p>
-    <p class="mt-1 text-xs text-white/55">Ecommerce • Vertical</p>
-  </div>
-</div>
-
-
-        <div class="group rounded-3xl border hairline bg-white/5 overflow-hidden hover:bg-white/10 transition-colors">
-          <video class="aspect-[9/16] w-full object-cover" autoplay muted loop playsinline>
-            <source src="/videos/ugc-02.mp4" type="video/mp4" />
-          </video>
-          <div class="p-4">
-            <p class="text-sm font-semibold">UGC Hook 02</p>
-            <p class="mt-1 text-xs text-white/55">Test A/B • Vertical</p>
-          </div>
-        </div>
-
-        <div class="group rounded-3xl border hairline bg-white/5 overflow-hidden hover:bg-white/10 transition-colors">
-          <video class="aspect-[9/16] w-full object-cover" autoplay muted loop playsinline>
-            <source src="/videos/ugc-03.mp4" type="video/mp4" />
-          </video>
-          <div class="p-4">
-            <p class="text-sm font-semibold">UGC Hook 03</p>
-            <p class="mt-1 text-xs text-white/55">Meta / TikTok</p>
-          </div>
-        </div>
-
-        <div class="group rounded-3xl border hairline bg-white/5 overflow-hidden hover:bg-white/10 transition-colors">
-          <video class="aspect-[9/16] w-full object-cover" autoplay muted loop playsinline>
-            <source src="/videos/ugc-04.mp4" type="video/mp4" />
-          </video>
-          <div class="p-4">
-            <p class="text-sm font-semibold">UGC Hook 04</p>
-            <p class="mt-1 text-xs text-white/55">Direct response</p>
-          </div>
-        </div>
-
-        <div class="group rounded-3xl border hairline bg-white/5 overflow-hidden hover:bg-white/10 transition-colors">
-          <video class="aspect-[9/16] w-full object-cover" autoplay muted loop playsinline>
-            <source src="/videos/ugc-05.mp4" type="video/mp4" />
-          </video>
-          <div class="p-4">
-            <p class="text-sm font-semibold">UGC Hook 05</p>
-            <p class="mt-1 text-xs text-white/55">Ecommerce • Vertical</p>
-          </div>
-        </div>
-
-        <div class="group rounded-3xl border hairline bg-white/5 overflow-hidden hover:bg-white/10 transition-colors">
-          <video class="aspect-[9/16] w-full object-cover" autoplay muted loop playsinline>
-            <source src="/videos/ugc-06.mp4" type="video/mp4" />
-          </video>
-          <div class="p-4">
-            <p class="text-sm font-semibold">UGC Hook 06</p>
-            <p class="mt-1 text-xs text-white/55">Test rápido</p>
-          </div>
-        </div>
-
-        <div class="group rounded-3xl border hairline bg-white/5 overflow-hidden hover:bg-white/10 transition-colors">
-          <video class="aspect-[9/16] w-full object-cover" autoplay muted loop playsinline>
-            <source src="/videos/ugc-07.mp4" type="video/mp4" />
-          </video>
-          <div class="p-4">
-            <p class="text-sm font-semibold">UGC Hook 07</p>
-            <p class="mt-1 text-xs text-white/55">Reels / TikTok</p>
-          </div>
-        </div>
-
-        <div class="group rounded-3xl border hairline bg-white/5 overflow-hidden hover:bg-white/10 transition-colors">
-          <video class="aspect-[9/16] w-full object-cover" autoplay muted loop playsinline>
-            <source src="/videos/ugc-08.mp4" type="video/mp4" />
-          </video>
-          <div class="p-4">
-            <p class="text-sm font-semibold">UGC Hook 08</p>
-            <p class="mt-1 text-xs text-white/55">Ecommerce • Vertical</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-10">
-        <a href="https://wa.me/" class="inline-flex h-11 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-black hover:opacity-90 transition-opacity">
-          Quiero videos como estos
-        </a>
-      </div>
-    </div>
-  </section>
-
- <!-- Cómo funciona -->
-<section id="como-funciona" class="py-20 sm:py-24 border-y hairline bg-bg2">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-    <div class="max-w-3xl">
-      <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight">
-        Cómo funciona
-      </h2>
-      <p class="mt-4 text-lg text-white/70">
-        Un proceso simple donde nosotros hacemos el trabajo pesado.
-      </p>
-    </div>
-
-    <!-- Layout minimal con divisores -->
-    <div class="mt-14 border-t hairline">
-      <div class="grid grid-cols-1 md:grid-cols-3">
-
-        <!-- Paso 1 -->
-        <div class="py-10 md:py-12 md:pr-10 md:border-r hairline">
-          <p class="text-xs uppercase tracking-widest text-white/40">
-            Paso 1
-          </p>
-
-          <p class="mt-3 text-lg font-semibold">
-            Nos enviás la info del producto
-          </p>
-
-          <p class="mt-3 text-white/65 leading-relaxed">
-            Por WhatsApp nos pasás el link de tu tienda, beneficios clave,
-            precio y qué querés destacar.
-          </p>
-
-          <p class="mt-4 text-xs text-white/45">
-            Sin briefings largos ni procesos innecesarios.
-          </p>
-        </div>
-
-        <!-- Paso 2 -->
-        <div class="py-10 md:py-12 md:px-10 md:border-r hairline">
-          <p class="text-xs uppercase tracking-widest text-white/40">
-            Paso 2
-          </p>
-
-          <p class="mt-3 text-lg font-semibold">
-            Creamos los guiones y los videos
-          </p>
-
-          <p class="mt-3 text-white/65 leading-relaxed">
-            Definimos ganchos, estructura de venta y producimos anuncios UGC
-            con actores generados con IA.
-          </p>
-
-          <p class="mt-4 text-xs text-white/45">
-            Pensados específicamente para Meta y TikTok Ads.
-          </p>
-        </div>
-
-        <!-- Paso 3 -->
-        <div class="py-10 md:py-12 md:pl-10">
-          <p class="text-xs uppercase tracking-widest text-white/40">
-            Paso 3
-          </p>
-
-          <p class="mt-3 text-lg font-semibold">
-            Recibís anuncios listos para vender
-          </p>
-
-          <p class="mt-3 text-white/65 leading-relaxed">
-            Te entregamos los videos finales en formato vertical,
-            listos para subir y testear.
-          </p>
-
-          <p class="mt-4 text-xs text-white/45">
-            Uso comercial incluido. Sin marcas de agua.
-          </p>
-        </div>
-      <div class="mt-10">
-        <a href="https://wa.me/" class="inline-flex h-11 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-black hover:opacity-90 transition-opacity">
-          Iniciar por WhatsApp
-        </a>
-      </div>
-    </div>
-  </section>
-  
-<section id="precios" class="py-20 sm:py-24">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="max-w-3xl">
-      <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight">Precios</h2>
-      <p class="mt-4 text-lg text-white/70">
-        Paquetes de servicio (no software). <span class="text-white">USD 10 por video</span>. Uso comercial incluido.
-      </p>
-    </div>
-
-    <!-- Oferta (cierre rápido) -->
-    <div class="mt-10 rounded-3xl border hairline bg-white/5 p-6 md:p-8">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
         <div>
-          <p class="text-sm font-semibold text-white/90">Oferta de primera compra</p>
-          <p class="mt-1 text-white/70">
-            Arrancá con <span class="text-white font-semibold">20+ videos</span> o el plan mensual y te bonificamos
-            <span class="text-white font-semibold">+2 videos</span>.
-          </p>
-          <p class="mt-2 text-xs text-white/45">Se coordina por WhatsApp. Sin formularios.</p>
-        </div>
-        <a
-          href="https://wa.me/"
-          class="inline-flex h-11 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-black hover:opacity-90 transition-opacity"
-        >
-          Pedir mi primera tanda
-        </a>
-      </div>
-    </div>
+          <div class="eyebrow">Contenido que vende · Publicidad que escala</div>
 
-    <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-      <!-- Starter -->
-<div class="rounded-3xl border hairline bg-white/5 p-8 flex flex-col">
-  <p class="text-lg font-semibold">Pack Starter</p>
-  <p class="mt-1 text-white/60 text-sm">Ideal para empezar a testear</p>
+          <h1>
+            Creamos contenido, anuncios y sistemas para que tu marca crezca en internet.
+          </h1>
 
-  <p class="mt-6 text-4xl font-semibold">$50</p>
-  <p class="mt-1 text-white/55 text-sm">5 videos UGC</p>
-
-  <div class="mt-6 space-y-2 text-sm text-white/70">
-    <p>• Guión orientado a ventas</p>
-    <p>• Actor IA realista</p>
-    <p>• Formato vertical (Reels/TikTok)</p>
-    <p>• Uso comercial incluido</p>
-  </div>
-
-  <p class="mt-4 text-xs text-white/45">
-    Ideal para validar un producto o ángulo.
-  </p>
-
-  <a href="https://wa.me/"
-     class="mt-8 inline-flex h-10 items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-black hover:opacity-90 transition-opacity">
-    Pedir mis videos
-  </a>
-</div>
-
-      <!-- Growth -->
-<div class="rounded-3xl border hairline bg-white/5 p-8 flex flex-col">
-  <p class="text-lg font-semibold">Pack Growth</p>
-  <p class="mt-1 text-white/60 text-sm">Para escalar campañas activas</p>
-
-  <p class="mt-6 text-4xl font-semibold">$100</p>
-  <p class="mt-1 text-white/55 text-sm">10 videos UGC</p>
-  <p class="mt-2 text-xs font-semibold text-white/80">
-  +1 video bonus por volumen
- </p>
-  <div class="mt-6 space-y-2 text-sm text-white/70">
-    <p>• Variaciones de ganchos</p>
-    <p>• Guiones orientados a conversión</p>
-    <p>• Actores IA realistas</p>
-    <p>• Formato vertical listo para ads</p>
-  </div>
-
-  <p class="mt-4 text-xs text-white/45">
-    Ideal para encontrar creativos ganadores.
-  </p>
-
-  <a href="https://wa.me/"
-     class="mt-8 inline-flex h-10 items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-black hover:opacity-90 transition-opacity">
-    Hablar por WhatsApp
-  </a>
-</div>
-
-      <!-- Scale -->
-<div class="rounded-3xl border hairline bg-white/5 p-8 flex flex-col">
-  <p class="text-lg font-semibold">Pack Scale</p>
-  <p class="mt-1 text-white/60 text-sm">Más volumen para testeo</p>
-
-  <p class="mt-6 text-4xl font-semibold">$200</p>
-  <p class="mt-1 text-white/55 text-sm">20 videos UGC</p>
-  <p class="mt-2 text-xs font-semibold text-white/80">
-  +3 videos bonus incluidos
-  </p>
-  <div class="mt-6 space-y-2 text-sm text-white/70">
-    <p>• Múltiples ganchos y ángulos</p>
-    <p>• Actores IA variados</p>
-    <p>• Ideal para A/B testing</p>
-    <p>• Uso comercial incluido</p>
-  </div>
-
-  <p class="mt-4 text-xs text-white/45">
-    Pensado para marcas que ya venden.
-  </p>
-
-  <a href="https://wa.me/"
-     class="mt-8 inline-flex h-10 items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-black hover:opacity-90 transition-opacity">
-    Pedir mis videos
-  </a>
-</div>
-
-      <!-- Mensual (retención) -->
-      <div class="relative rounded-3xl border hairline bg-white/10 p-8 flex flex-col">
-        <div class="absolute -top-3 left-6 rounded-full bg-white px-3 py-1 text-xs font-semibold text-black">
-          Recomendado
-        </div>
-
-        <p class="text-lg font-semibold">Plan mensual</p>
-        <p class="mt-2 text-white/60 text-sm">Producción continua para testear y escalar</p>
-
-        <p class="mt-6 text-4xl font-semibold">$300</p>
-
-        <p class="mt-1 text-white/55 text-sm">
-          <span class="text-white font-semibold">30 videos / mes</span>
-          <span class="text-white/45">•</span>
-          <span class="text-white font-semibold">+5 videos bonus</span>
-        </p>
-
-        <div class="mt-6 space-y-2 text-sm text-white/70">
-          <p>• 35 creativos/mes para testeo</p>
-          <p>• Uso comercial incluido</p>
-          <p>• Entregas semanales (coordinadas)</p>
-        </div>
-
-        <a href="https://wa.me/" class="mt-8 inline-flex h-10 items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-black hover:opacity-90 transition-opacity">
-          Quiero el mensual
-        </a>
-
-        <p class="mt-3 text-xs text-white/45">
-          Tip: el mensual es ideal si corrés anuncios todas las semanas.
-        </p>
-      </div>
-    </div>
-
-    <!-- Qué incluye -->
-    <div class="mt-14 rounded-3xl border hairline bg-white/5 p-10">
-      <h3 class="text-2xl font-semibold tracking-tight">Qué incluye cada video</h3>
-      <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
-        <div class="rounded-2xl border hairline bg-white/5 p-6">
-          <p class="font-semibold">Guión orientado a ventas</p>
-          <p class="mt-2 text-white/65">Ganchos, estructura y llamadas a la acción pensadas para conversión.</p>
-        </div>
-        <div class="rounded-2xl border hairline bg-white/5 p-6">
-          <p class="font-semibold">Actor IA realista</p>
-          <p class="mt-2 text-white/65">Presentación tipo UGC sin que vos tengas que grabarte.</p>
-        </div>
-        <div class="rounded-2xl border hairline bg-white/5 p-6">
-          <p class="font-semibold">Formato vertical</p>
-          <p class="mt-2 text-white/65">Listo para Reels/TikTok (9:16) y pensado para anuncios.</p>
-        </div>
-        <div class="rounded-2xl border hairline bg-white/5 p-6">
-          <p class="font-semibold">Subtítulos + uso comercial</p>
-          <p class="mt-2 text-white/65">Incluye subtítulos y permiso para usar en campañas pagas.</p>
-        </div>
-      </div>
-
-      <div class="mt-10">
-        <a href="https://wa.me/" class="inline-flex h-11 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-black hover:opacity-90 transition-opacity">
-          Cotizar por WhatsApp
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-  <!-- FAQ -->
-  <section id="faq" class="py-20 sm:py-24 border-y hairline bg-bg2">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
-        <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight">FAQ</h2>
-        <p class="mt-4 text-lg text-white/70">Respuestas rápidas para reducir fricción.</p>
-      </div>
-
-      <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
-        <div class="rounded-3xl border hairline bg-white/5 p-8">
-          <p class="font-semibold">¿Tengo que grabar o aparecer en cámara?</p>
-          <p class="mt-2 text-white/65">No. Vos solo enviás la info del producto. Nosotros producimos los videos.</p>
-        </div>
-
-        <div class="rounded-3xl border hairline bg-white/5 p-8">
-          <p class="font-semibold">¿Puedo usarlos en anuncios pagos?</p>
-          <p class="mt-2 text-white/65">Sí. El uso comercial está incluido para que puedas pautar en Meta y TikTok.</p>
-        </div>
-
-        <div class="rounded-3xl border hairline bg-white/5 p-8">
-          <p class="font-semibold">¿Para qué tipo de tiendas funciona?</p>
-          <p class="mt-2 text-white/65">Para la mayoría de ecommerce: DTC, dropshipping, marcas propias y tiendas online.</p>
-        </div>
-
-        <div class="rounded-3xl border hairline bg-white/5 p-8">
-          <p class="font-semibold">¿Cuánto tarda la entrega?</p>
-          <p class="mt-2 text-white/65">Depende del volumen, pero normalmente entregamos rápido. Escribinos y lo coordinamos.</p>
-        </div>
-      </div>
-
-      <div class="mt-10">
-        <a href="https://wa.me/" class="text-white/80 hover:text-white underline underline-offset-4">
-          Tengo otra pregunta → Hablar por WhatsApp
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Cierre -->
-  <section class="py-20 sm:py-24">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="rounded-3xl border hairline bg-white/5 p-10 sm:p-14">
-        <div class="max-w-3xl">
-          <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight">
-            Anuncios listos para vender. Sin grabar. Sin aparecer. Sin producciones caras.
-          </h2>
-          <p class="mt-4 text-lg text-white/70">
-            Contanos qué vendés y te decimos qué creativos UGC haríamos para tu tienda.
+          <p>
+            En tucontenido.ads ayudamos a negocios, marcas personales y empresas a captar atención,
+            generar demanda y convertir visitas en clientes con una mezcla de estrategia, creatividad
+            y performance marketing.
           </p>
 
-          <div class="mt-10">
-            <a
-              href="https://wa.me/"
-              class="inline-flex h-12 items-center justify-center rounded-full bg-white px-7 text-base font-semibold text-black hover:opacity-90 transition-opacity"
-            >
-              Hablar por WhatsApp
-            </a>
+          <div class="hero-actions">
+            <a href="#contacto" class="primary-btn">Solicitar propuesta</a>
+            <a href="#servicios" class="secondary-btn">Ver servicios</a>
           </div>
 
-          <p class="mt-4 text-xs text-white/50">Contacto directo por WhatsApp. Sin formularios ni registros.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="py-10 border-t hairline bg-bg2">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-        <div class="flex items-center gap-3">
-          <div>
-            <p class="text-sm font-semibold">tucontenido.ai</p>
-            <p class="text-xs text-white/55">Agencia de anuncios UGC creados con IA</p>
+          <div class="hero-points">
+            <div class="hero-point">Meta Ads</div>
+            <div class="hero-point">Google Ads</div>
+            <div class="hero-point">Creativos UGC</div>
+            <div class="hero-point">Landing pages</div>
+            <div class="hero-point">Funnels</div>
           </div>
         </div>
 
-        <div class="flex items-center gap-6 text-sm text-white/60">
-          <a href="#problemas" class="hover:text-white">Problemas</a>
-          <a href="#solucion" class="hover:text-white">Solución</a>
-          <a href="#precios" class="hover:text-white">Precios</a>
-          <a href="https://wa.me/" class="hover:text-white">WhatsApp</a>
+        <div class="hero-card">
+          <div class="mockup-top">
+            <div class="dots">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+            <div class="mockup-label">Dashboard</div>
+          </div>
+
+          <div class="metric">
+            <p class="metric-value">+241%</p>
+            <p class="metric-label">Aumento promedio en volumen de oportunidades al combinar contenido y campañas.</p>
+          </div>
+
+          <div class="metric">
+            <p class="metric-value">3X</p>
+            <p class="metric-label">Más velocidad para convertir cuando la creatividad, la pauta y la landing trabajan juntas.</p>
+          </div>
+
+          <div class="lead-list">
+            <div class="lead-item">
+              <div>
+                <strong>Campaña activa · Lead nuevo</strong>
+                <span>Meta Ads · Hace 3 minutos</span>
+              </div>
+              <div class="tag">Nuevo</div>
+            </div>
+
+            <div class="lead-item">
+              <div>
+                <strong>Formulario completado</strong>
+                <span>Landing page · Hace 8 minutos</span>
+              </div>
+              <div class="tag">Calificado</div>
+            </div>
+
+            <div class="lead-item">
+              <div>
+                <strong>Consulta de alta intención</strong>
+                <span>Google Ads · Hace 11 minutos</span>
+              </div>
+              <div class="tag">Hot lead</div>
+            </div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <p class="mt-8 text-xs text-white/45">© 2026 tucontenido.ai. Servicio hecho por personas, apoyado en IA.</p>
+    <section id="servicios">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Servicios</div>
+          <h2>Una landing normal, sobria y premium, como marca moderna de internet.</h2>
+          <p>
+            El enfoque de tucontenido.ads combina branding visual, anuncios y conversión.
+            No se trata solo de “hacer posteos” o “meter pauta”, sino de construir un sistema digital que venda.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-index">01</div>
+            <h3>Contenido estratégico</h3>
+            <p>
+              Creamos piezas pensadas para captar atención, generar confianza y mover a la audiencia a la acción.
+              Reels, anuncios, creativos estáticos y guiones enfocados en resultado.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-index">02</div>
+            <h3>Ads y performance</h3>
+            <p>
+              Diseñamos campañas en Meta y Google Ads con foco en leads, ventas o posicionamiento,
+              optimizando métricas reales y no solo números de vanidad.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-index">03</div>
+            <h3>Landing y conversión</h3>
+            <p>
+              Desarrollamos páginas claras, rápidas y orientadas a convertir para que cada visita tenga
+              una mejor probabilidad de transformarse en oportunidad.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="proceso">
+      <div class="container">
+        <div class="split">
+          <div class="panel">
+            <div class="section-kicker">Proceso</div>
+            <h3>De la atención a la conversión.</h3>
+            <p>
+              Trabajamos con una lógica simple: atraer a la audiencia correcta, mostrar una propuesta
+              visual potente y convertir ese interés en una acción concreta. Cada etapa tiene un rol:
+              creatividad, tráfico, landing y seguimiento.
+            </p>
+          </div>
+
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div>
+                <h4>Definimos estrategia</h4>
+                <p>
+                  Analizamos tu oferta, tu público y tu objetivo para construir un plan claro de contenido y adquisición.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-num">2</div>
+              <div>
+                <h4>Producimos creativos</h4>
+                <p>
+                  Desarrollamos mensajes, visuales, hooks y anuncios alineados con la identidad de tu marca.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-num">3</div>
+              <div>
+                <h4>Lanzamos campañas</h4>
+                <p>
+                  Activamos pauta y páginas de conversión para empezar a captar tráfico cualificado y medir respuesta.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-num">4</div>
+              <div>
+                <h4>Optimizamos para crecer</h4>
+                <p>
+                  Ajustamos audiencias, mensajes, landing y oferta para mejorar rendimiento semana a semana.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resultados">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Resultados</div>
+          <h2>Diseñada para verse fuerte, limpia y profesional.</h2>
+          <p>
+            Esta estética sigue la línea de tu logo: fondo negro, tipografía blanca, mucho aire, contraste alto
+            y una presencia digital minimalista que transmite solidez.
+          </p>
+        </div>
+
+        <div class="results">
+          <div class="result-box">
+            <strong>+120</strong>
+            <span>Creativos y anuncios producidos para campañas de captación y performance.</span>
+          </div>
+
+          <div class="result-box">
+            <strong>+35%</strong>
+            <span>Mejoras típicas en tasa de conversión cuando la landing acompaña bien la campaña.</span>
+          </div>
+
+          <div class="result-box">
+            <strong>24/7</strong>
+            <span>Sistema digital corriendo con anuncios, formularios y automatización activa.</span>
+          </div>
+
+          <div class="result-box">
+            <strong>1 solo sistema</strong>
+            <span>Contenido, tráfico y conversión trabajando juntos en la misma dirección.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="container">
+        <div class="cta-box">
+          <div class="section-kicker">Contacto</div>
+          <h2>Si querés una marca que se vea bien y además convierta, hablemos.</h2>
+          <p>
+            Podemos adaptar esta landing, crear tu sistema de campañas y desarrollar la presencia digital
+            completa de tu negocio con una estética moderna, clara y orientada a resultados.
+          </p>
+
+          <div class="cta-actions">
+            <a href="mailto:hola@tucontenido.ads" class="primary-btn">hola@tucontenido.ads</a>
+            <a href="https://wa.me/5490000000000" class="secondary-btn" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© 2026 tucontenido.ads · Todos los derechos reservados.</div>
+      <div class="footer-links">
+        <a href="#servicios">Servicios</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#contacto">Contacto</a>
+      </div>
     </div>
   </footer>
 </body>
