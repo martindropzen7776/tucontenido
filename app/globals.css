@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════
+   TU CONTENIDO — sistema
+   Cobalto saturado + hueso + amarillo ácido.
+   La audacia se gasta en un solo lugar: el par cobalto/ácido.
+   ═══════════════════════════════════════════════════ */
+
+@theme {
+  --color-bone: #f0ede4;
+  --color-bone-2: #e4e0d4;
+  --color-ink: #10131c;
+  --color-ink-soft: #4a4f5e;
+  --color-cobalt: #1f35d4;
+  --color-cobalt-deep: #16269a;
+  --color-acid: #d8f24b;
+
+  --font-disp: var(--font-bricolage), "Trebuchet MS", sans-serif;
+  --font-body: var(--font-instrument), system-ui, sans-serif;
+  --font-mono: var(--font-space-mono), ui-monospace, monospace;
+
+  /* Escala de motion — árbitro único, de transitions.dev */
+  --duration-quick: 150ms;
+  --duration-fast: 250ms;
+  --duration-medium: 350ms;
+  --duration-slow: 400ms;
+  --duration-very-slow: 500ms;
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.36, 0.64, 1);
+}
+
+:root {
+  --rule: rgba(16, 19, 28, 0.14);
+  --rule-on-c: rgba(240, 237, 228, 0.22);
+  --pad: clamp(20px, 5vw, 72px);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-bone);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-acid);
+  color: var(--color-ink);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-cobalt);
+  outline-offset: 3px;
+}
+.on-c a:focus-visible,
+.on-c button:focus-visible {
+  outline-color: var(--color-acid);
+}
+
+/* ─── Tipografía ─── */
+.disp {
+  font-family: var(--font-disp);
+  font-weight: 800;
+  font-stretch: 88%;
+  line-height: 0.92;
+  letter-spacing: -0.028em;
+  text-wrap: balance;
+}
+.h1 {
+  font-size: clamp(46px, 10.5vw, 132px);
+  line-height: 0.88;
+}
+.h2 {
+  font-size: clamp(34px, 6.4vw, 76px);
+}
+.h3 {
+  font-size: clamp(21px, 2.6vw, 30px);
+  line-height: 1.06;
+  letter-spacing: -0.018em;
+}
+.mono {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.lede {
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 1.62;
+  max-width: 46ch;
+  color: var(--color-ink-soft);
+}
+.on-c .lede {
+  color: rgba(240, 237, 228, 0.78);
+}
+
+/* ─── Superficies ─── */
+.on-c {
+  background: var(--color-cobalt);
+  color: var(--color-bone);
+}
+.pad-x {
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+}
+.sec {
+  padding-top: clamp(72px, 11vw, 148px);
+  padding-bottom: clamp(72px, 11vw, 148px);
+  position: relative;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-cobalt);
+  margin-bottom: 24px;
+}
+.on-c .eyebrow {
+  color: var(--color-acid);
+}
+.eyebrow::before {
+  content: "";
+  width: 26px;
+  height: 2px;
+  background: currentColor;
+}
+
+/* ─── Botones ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 17px 30px;
+  border: 2px solid var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-bone);
+  transition:
+    transform var(--duration-fast) var(--ease-smooth-out),
+    background var(--duration-fast),
+    color var(--duration-fast);
+}
+.btn .arw {
+  transition: transform var(--duration-fast) var(--ease-smooth-out);
+}
+.btn-acid {
+  background: var(--color-acid);
+  color: var(--color-ink);
+}
+.btn-line {
+  background: transparent;
+  color: var(--color-ink);
+}
+.on-c .btn-line {
+  color: var(--color-bone);
+  border-color: var(--color-bone);
+}
+
+@media (hover: hover) {
+  .btn:hover {
+    transform: translate(-2px, -2px);
+    background: var(--color-cobalt);
+    border-color: var(--color-cobalt);
+  }
+  .btn:hover .arw {
+    transform: translateX(5px);
+  }
+  .btn-acid:hover {
+    background: var(--color-ink);
+    color: var(--color-acid);
+    border-color: var(--color-ink);
+  }
+  .btn-line:hover {
+    background: var(--color-ink);
+    color: var(--color-bone);
+  }
+  .on-c .btn-line:hover {
+    background: var(--color-bone);
+    color: var(--color-cobalt);
+  }
+}
+
+/* ─── Objetivos táctiles: 44px es el mínimo usable ─── */
+@media (max-width: 620px) {
+  .tap {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
