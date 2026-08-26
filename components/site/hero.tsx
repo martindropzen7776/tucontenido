@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
+import { Saturno } from "./saturno";
 import { TextReveal } from "@/components/motion/text-reveal";
 import { NumberTicker } from "@/components/motion/number-ticker";
 import { Magnetic } from "@/components/motion/magnetic";
@@ -31,18 +32,21 @@ export function Hero() {
 
   return (
     <header
-      className="pad-x flex flex-col gap-[clamp(28px,6vw,44px)] pb-[clamp(56px,8vw,80px)]
+      className="relative isolate overflow-hidden pad-x flex flex-col gap-[clamp(28px,6vw,44px)] pb-[clamp(56px,8vw,80px)]
                  pt-[calc(68px+clamp(40px,7vw,80px))]
                  lg:grid lg:min-h-svh lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]
                  lg:items-center lg:gap-[clamp(32px,5vw,72px)] lg:pb-0
                  border-b border-[var(--rule)]"
     >
+      {/* El fondo va detrás de todo el hero, en su propia capa. */}
+      <Saturno className="-z-10 opacity-90" />
+
       <div className="order-1 flex flex-col">
         <div className="eyebrow mono">Sin llamadas · sin reuniones · sin vueltas</div>
 
         <h1 className="disp h1">
           <TextReveal text="Tu web" split="word" as="span" />
-          <TextReveal text="lista" split="word" as="span" delay={0.08} className="text-cobalt" />
+          <TextReveal text="lista" split="word" as="span" delay={0.08} className="ghost" />
           <span className="block">
             <TextReveal text="en" split="word" as="span" delay={0.16} className="!inline-block" />{" "}
             {/* El subrayado ácido se dibuja recién al final de la secuencia:
@@ -51,7 +55,7 @@ export function Hero() {
               <TextReveal text="7 días" split="word" as="span" delay={0.2} className="!inline-block" />
               <motion.span
                 aria-hidden="true"
-                className="absolute inset-x-[-2px] bottom-[0.07em] -z-10 block h-[0.17em] origin-left bg-acid"
+                className="absolute inset-x-[-2px] bottom-[0.07em] -z-10 block h-[0.17em] origin-left bg-ink"
                 initial={menos ? false : { scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 0.52, delay: 0.85, ease: [0.65, 0, 0.35, 1] }}
@@ -96,17 +100,17 @@ function Row({ k, v }: { k: string; v: string }) {
   return (
     <div className="flex justify-between gap-4 border-b border-dashed border-[var(--rule-on-c)] py-[11px] text-sm last:border-b-0">
       <b className="font-semibold">{k}</b>
-      <span className="text-right text-bone/70">{v}</span>
+      <span className="text-right text-bone/60">{v}</span>
     </div>
   );
 }
 
 function Ticket() {
   return (
-    <div className="border-2 border-ink bg-cobalt p-[clamp(26px,3vw,38px)] text-bone shadow-[6px_6px_0_var(--color-ink)] sm:shadow-[12px_12px_0_var(--color-ink)]">
+    <div className="relative border-2 border-ink bg-ink p-[clamp(26px,3vw,38px)] text-bone shadow-[6px_6px_0_rgba(244,244,241,0.22)] sm:shadow-[12px_12px_0_rgba(244,244,241,0.18)]">
       <div className="mb-5 flex items-baseline justify-between border-b border-dashed border-[var(--rule-on-c)] pb-4">
-        <span className="mono text-acid">Presupuesto</span>
-        <span className="mono text-acid">Nº 001</span>
+        <span className="mono text-bone/55">Presupuesto</span>
+        <span className="mono text-bone/55">Nº 001</span>
       </div>
       <Row k="Diseño a medida" v="Incluido" />
       <Row k="Hasta 6 secciones" v="Incluido" />
@@ -114,9 +118,9 @@ function Ticket() {
       <Row k="WhatsApp y Google" v="Incluido" />
       <Row k="Dos rondas de ajustes" v="Incluido" />
       <Row k="Cuota de mantenimiento" v="$0" />
-      <div className="mt-5 flex items-baseline justify-between border-t-2 border-acid pt-[18px]">
+      <div className="mt-5 flex items-baseline justify-between border-t-2 border-bone pt-[18px]">
         <span className="mono">Total</span>
-        <span className="disp text-[clamp(34px,4vw,48px)] leading-none tracking-[-0.03em] text-acid">
+        <span className="disp text-[clamp(34px,4vw,48px)] leading-none tracking-[-0.03em] text-bone">
           USD 500
         </span>
       </div>

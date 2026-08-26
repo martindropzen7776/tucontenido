@@ -1,25 +1,33 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════
-   TU CONTENIDO — sistema
-   Cobalto saturado + hueso + amarillo ácido.
-   La audacia se gasta en un solo lugar: el par cobalto/ácido.
+   TU CONTENIDO — sistema monocromo
+
+   Sin color. La jerarquía la hacen el valor y el peso:
+   blanco puro para lo que manda, gris para lo que
+   acompaña, negro para el fondo. Un bloque blanco sólido
+   es el equivalente a un acento de color.
+
+   Los nombres de los tokens vienen de la versión anterior
+   y se mantienen para no reescribir cada clase:
+     bone   → el fondo (ahora negro)
+     ink    → el texto (ahora blanco)
+     cobalt → el acento brillante, sobre fondo oscuro
+     acid   → el acento oscuro, sobre fondo claro
    ═══════════════════════════════════════════════════ */
 
 @theme {
-  --color-bone: #f0ede4;
-  --color-bone-2: #e4e0d4;
-  --color-ink: #10131c;
-  --color-ink-soft: #4a4f5e;
-  --color-cobalt: #1f35d4;
-  --color-cobalt-deep: #16269a;
-  --color-acid: #d8f24b;
+  --color-bone: #0a0a0c;
+  --color-bone-2: #131318;
+  --color-ink: #f4f4f1;
+  --color-ink-soft: #9a9aa4;
+  --color-cobalt: #ffffff;
+  --color-acid: #0a0a0c;
 
   --font-disp: var(--font-bricolage), "Trebuchet MS", sans-serif;
   --font-body: var(--font-instrument), system-ui, sans-serif;
   --font-mono: var(--font-space-mono), ui-monospace, monospace;
 
-  /* Escala de motion — árbitro único, de transitions.dev */
   --duration-quick: 150ms;
   --duration-fast: 250ms;
   --duration-medium: 350ms;
@@ -30,14 +38,16 @@
 }
 
 :root {
-  --rule: rgba(16, 19, 28, 0.14);
-  --rule-on-c: rgba(240, 237, 228, 0.22);
+  /* Reglas sobre negro y sobre blanco: una para cada ground. */
+  --rule: rgba(244, 244, 241, 0.16);
+  --rule-on-c: rgba(10, 10, 12, 0.18);
   --pad: clamp(20px, 5vw, 72px);
 }
 
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  background: #0a0a0c;
 }
 
 body {
@@ -51,18 +61,18 @@ body {
 }
 
 ::selection {
-  background: var(--color-acid);
-  color: var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-bone);
 }
 
 a:focus-visible,
 button:focus-visible {
-  outline: 3px solid var(--color-cobalt);
+  outline: 3px solid var(--color-ink);
   outline-offset: 3px;
 }
 .on-c a:focus-visible,
 .on-c button:focus-visible {
-  outline-color: var(--color-acid);
+  outline-color: var(--color-bone);
 }
 
 /* ─── Tipografía ─── */
@@ -99,15 +109,29 @@ button:focus-visible {
   max-width: 46ch;
   color: var(--color-ink-soft);
 }
-.on-c .lede {
-  color: rgba(240, 237, 228, 0.78);
+
+/* Contorno: el recurso monocromo para dar peso sin color. */
+.ghost {
+  -webkit-text-stroke: 1.5px rgba(244, 244, 241, 0.3);
+  color: transparent;
+}
+.on-c .ghost {
+  -webkit-text-stroke-color: rgba(10, 10, 12, 0.3);
 }
 
 /* ─── Superficies ─── */
+/* .on-c es la sección clara: invierte todo el bloque. */
 .on-c {
-  background: var(--color-cobalt);
+  background: var(--color-ink);
   color: var(--color-bone);
 }
+.on-c .lede {
+  color: #5f5f68;
+}
+.on-c .eyebrow {
+  color: var(--color-acid);
+}
+
 .pad-x {
   padding-left: var(--pad);
   padding-right: var(--pad);
@@ -125,9 +149,6 @@ button:focus-visible {
   color: var(--color-cobalt);
   margin-bottom: 24px;
 }
-.on-c .eyebrow {
-  color: var(--color-acid);
-}
 .eyebrow::before {
   content: "";
   width: 26px;
@@ -136,6 +157,8 @@ button:focus-visible {
 }
 
 /* ─── Botones ─── */
+/* Sobre negro: bloque blanco sólido. Sobre blanco: bloque negro.
+   En monocromo el relleno es el acento. */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -150,45 +173,59 @@ button:focus-visible {
   transition:
     transform var(--duration-fast) var(--ease-smooth-out),
     background var(--duration-fast),
-    color var(--duration-fast);
+    color var(--duration-fast),
+    border-color var(--duration-fast);
 }
 .btn .arw {
   transition: transform var(--duration-fast) var(--ease-smooth-out);
 }
 .btn-acid {
-  background: var(--color-acid);
-  color: var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-bone);
+  border-color: var(--color-ink);
 }
 .btn-line {
   background: transparent;
   color: var(--color-ink);
+  border-color: rgba(244, 244, 241, 0.35);
+}
+
+.on-c .btn,
+.on-c .btn-acid {
+  background: var(--color-bone);
+  color: var(--color-ink);
+  border-color: var(--color-bone);
 }
 .on-c .btn-line {
+  background: transparent;
   color: var(--color-bone);
-  border-color: var(--color-bone);
+  border-color: rgba(10, 10, 12, 0.35);
 }
 
 @media (hover: hover) {
   .btn:hover {
     transform: translate(-2px, -2px);
-    background: var(--color-cobalt);
-    border-color: var(--color-cobalt);
+    background: transparent;
+    color: var(--color-ink);
+    border-color: var(--color-ink);
   }
   .btn:hover .arw {
     transform: translateX(5px);
   }
-  .btn-acid:hover {
-    background: var(--color-ink);
-    color: var(--color-acid);
-    border-color: var(--color-ink);
-  }
   .btn-line:hover {
     background: var(--color-ink);
     color: var(--color-bone);
+    border-color: var(--color-ink);
+  }
+  .on-c .btn:hover,
+  .on-c .btn-acid:hover {
+    background: transparent;
+    color: var(--color-bone);
+    border-color: var(--color-bone);
   }
   .on-c .btn-line:hover {
     background: var(--color-bone);
-    color: var(--color-cobalt);
+    color: var(--color-ink);
   }
 }
 

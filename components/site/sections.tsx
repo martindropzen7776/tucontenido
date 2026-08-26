@@ -29,12 +29,12 @@ export function Incluye() {
       <div className="grid border-l-2 border-t-2 border-ink min-[620px]:grid-cols-2 lg:grid-cols-3">
         {INCLUYE.map(([t, d], i) => (
           <ScrollReveal key={t} delay={i * 0.04}>
-            <article className="group h-full border-b-2 border-r-2 border-ink bg-bone p-[clamp(26px,3vw,40px)] transition-colors duration-[350ms] hover:bg-acid">
-              <div className="mono !text-[11px] text-cobalt group-hover:text-ink">
+            <article className="group h-full border-b-2 border-r-2 border-ink bg-bone p-[clamp(26px,3vw,40px)] transition-colors duration-[350ms] hover:bg-ink">
+              <div className="mono !text-[11px] text-ink-soft group-hover:text-bone">
                 {String(i + 1).padStart(2, "0")}
               </div>
-              <h3 className="disp h3 mb-3 mt-[22px]">{t}</h3>
-              <p className="text-[15px] leading-relaxed text-ink-soft group-hover:text-ink">{d}</p>
+              <h3 className="disp h3 mb-3 mt-[22px] group-hover:text-bone">{t}</h3>
+              <p className="text-[15px] leading-relaxed text-ink-soft group-hover:text-bone">{d}</p>
             </article>
           </ScrollReveal>
         ))}
@@ -105,7 +105,7 @@ export function Trabajos() {
                 t.listo ? "bg-bone" : "border-dashed bg-bone/60 opacity-60"
               }`}
             >
-              <span className="mono !text-[11px] text-cobalt">{t.rubro}</span>
+              <span className="mono !text-[11px] text-ink-soft">{t.rubro}</span>
               <span className="disp text-[clamp(22px,2.5vw,30px)] leading-none tracking-[-0.025em]">
                 {t.nombre}
               </span>
@@ -173,12 +173,12 @@ export function Precio() {
         <div className="mt-[clamp(40px,5vw,64px)] grid border-2 border-ink lg:grid-cols-[minmax(0,1.08fr)_minmax(0,1fr)]">
           <div className="bg-bone p-[clamp(24px,3.6vw,52px)]">
             <div className="flex items-start gap-2.5">
-              <span className="mono !text-[15px] !tracking-[0.1em] pt-3 text-cobalt">USD</span>
+              <span className="mono !text-[15px] !tracking-[0.1em] pt-3 text-ink-soft">USD</span>
               <span className="disp text-[clamp(56px,11vw,124px)] leading-[0.82] tracking-[-0.04em]">
                 500
               </span>
             </div>
-            <div className="mono !text-[11px] mb-7 mt-3.5 text-cobalt">
+            <div className="mono !text-[11px] mb-7 mt-3.5 text-ink-soft">
               Pago único · sin cuota de mantenimiento
             </div>
 
@@ -188,13 +188,13 @@ export function Precio() {
                   key={x}
                   className="flex gap-3 border-b border-[var(--rule)] py-3 text-[15px] leading-snug last:border-b-0"
                 >
-                  <span className="mono !text-[13px] !tracking-normal shrink-0 text-cobalt">+</span>
+                  <span className="mono !text-[13px] !tracking-normal shrink-0 text-ink">+</span>
                   {x}
                 </li>
               ))}
             </ul>
 
-            <div className="mt-7 border-l-[3px] border-cobalt bg-bone-2 p-[20px_22px] text-sm leading-relaxed text-ink-soft">
+            <div className="mt-7 border-l-[3px] border-ink bg-bone-2 p-[20px_22px] text-sm leading-relaxed text-ink-soft">
               Aparte del pago único, el alojamiento cuesta{" "}
               <b className="font-semibold text-ink">USD 10 por mes</b> y lo pagás vos
               directo a la plataforma, con tu tarjeta. No pasa por nosotros: es lo que
@@ -260,14 +260,14 @@ function Pregunta({ q, a }: { q: string; a: React.ReactNode }) {
         type="button"
         onClick={() => setAbierta((v) => !v)}
         aria-expanded={abierta}
-        className="disp flex w-full items-center justify-between gap-6 py-[26px] text-left text-[clamp(18px,2.1vw,23px)] leading-snug tracking-[-0.018em] transition-colors hover:text-cobalt max-[620px]:min-h-[56px]"
+        className="disp flex w-full items-center justify-between gap-6 py-[26px] text-left text-[clamp(18px,2.1vw,23px)] leading-snug tracking-[-0.018em] transition-opacity hover:opacity-70 max-[620px]:min-h-[56px]"
         style={{ fontStretch: "90%", fontWeight: 700 }}
       >
         <span>{q}</span>
         <motion.span
           animate={{ rotate: abierta ? 180 : 0 }}
           transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          className="shrink-0 text-cobalt"
+          className="shrink-0 text-ink-soft"
         >
           <svg viewBox="0 0 16 16" width="17" height="17" fill="none">
             <path d="M4 6.5L8 10.5L12 6.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
