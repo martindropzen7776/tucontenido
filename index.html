@@ -448,6 +448,214 @@ footer{ background:var(--ink); color:var(--bone); padding:clamp(52px,6vw,76px) v
   .hero-h1 .hl::after{ transform:scaleX(1) !important; }
   .rail-fill{ height:100% !important; }
 }
+
+/* ═══════════════════════════════════════════════════
+   MOTION TOKENS — transitions.dev
+   Árbitro único de duración, easing, distancia y blur.
+   Todo lo que se mueve en esta página lee de acá.
+   ═══════════════════════════════════════════════════ */
+:root{
+  --duration-stagger: 40ms;
+  --duration-micro: 80ms;
+  --duration-quick: 150ms;
+  --duration-fast: 250ms;
+  --duration-medium: 350ms;
+  --duration-slow: 400ms;
+  --duration-very-slow: 500ms;
+
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: ease-in-out;
+  --ease-out: ease-out;
+  --ease-linear: linear;
+  --ease-bounce: cubic-bezier(0.34, 1.36, 0.64, 1);
+
+  --distance-micro: 4px;
+  --distance-base: 8px;
+  --distance-medium: 12px;
+  --blur-small: 2px;
+  --blur-medium: 3px;
+
+  /* Thinking states — la letanía de los otros */
+  --think-hold: 1900ms;
+  --think-swap: 150ms;
+  --think-gap: 50ms;
+  --think-distance: 8px;
+  --think-blur: 2px;
+  --think-shimmer: 2000ms;
+  --think-base: rgba(240,237,228,.42);
+  --think-highlight: #F0EDE4;
+  --think-ease: ease-in-out;
+
+  /* Success check — nuestro lado sí resuelve */
+  --check-opacity-dur: 500ms;
+  --check-rotate-dur: 500ms;
+  --check-rotate-from: 80deg;
+  --check-bob-dur: 500ms;
+  --check-y-amount: 40px;
+  --check-blur-dur: 500ms;
+  --check-blur-from: 10px;
+  --check-path-dur: 500ms;
+  --check-path-delay: 80ms;
+  --check-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --check-ease-opacity: cubic-bezier(0.22, 1, 0.36, 1);
+  --check-ease-rotate: cubic-bezier(0.22, 1, 0.36, 1);
+  --check-ease-bob: cubic-bezier(0.34, 1.35, 0.64, 1);
+  --check-ease-path: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Card tilt — portafolio */
+  --tilt-perspective: 1000px;
+  --tilt-return: 1000ms;
+  --tilt-return-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --tilt-follow: 400ms;
+  --tilt-follow-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --tilt-glare-opacity: 0.32;
+  --tilt-glare-fade: 300ms;
+  --tilt-glare-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Accordion — preguntas */
+  --acc-expand: 250ms;
+  --acc-collapse: 250ms;
+  --acc-chevron: 250ms;
+  --acc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ─── t-think: el estado que nunca termina ─── */
+.t-think{ position:relative; display:block; text-align:left; }
+.t-think-sizer{ display:block; visibility:hidden; white-space:nowrap; }
+.t-think-text{
+  position:absolute; top:0; left:0; right:0; display:block;
+  color:var(--think-base); white-space:nowrap;
+  transform:translateY(0); filter:blur(0); opacity:1;
+  transition:
+    transform var(--think-swap) var(--think-ease),
+    filter var(--think-swap) var(--think-ease),
+    opacity var(--think-swap) var(--think-ease);
+  will-change:transform, filter, opacity;
+}
+.t-think-text::before{
+  content:attr(data-text); position:absolute; inset:0; pointer-events:none;
+  background-image:linear-gradient(90deg,
+    transparent 0%, transparent 40%,
+    var(--think-highlight) 50%,
+    transparent 60%, transparent 100%);
+  background-size:400% 100%; background-repeat:no-repeat;
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent; -webkit-text-fill-color:transparent;
+  animation:t-think-shimmer var(--think-shimmer) linear infinite;
+}
+@keyframes t-think-shimmer{ 0%{ background-position:100% 0; } 100%{ background-position:0% 0; } }
+.t-think-text.is-exit{
+  transform:translateY(calc(var(--think-distance) * -1));
+  filter:blur(var(--think-blur)); opacity:0;
+}
+.t-think-text.is-enter-start{
+  transition:none; transform:translateY(var(--think-distance));
+  filter:blur(var(--think-blur)); opacity:0;
+}
+
+/* ─── t-success-check ─── */
+.t-success-check{ display:inline-block; transform-origin:center; opacity:0; will-change:transform, opacity, filter; }
+.t-success-check svg{ display:block; overflow:visible; }
+.t-success-check[data-state="in"]{
+  animation:
+    t-check-fade   var(--check-opacity-dur) var(--check-ease-opacity) forwards,
+    t-check-rotate var(--check-rotate-dur)  var(--check-ease-rotate)  forwards,
+    t-check-blur   var(--check-blur-dur)    var(--check-ease-out)     forwards,
+    t-check-bob    var(--check-bob-dur)     var(--check-ease-bob)     forwards;
+}
+.t-success-check[data-state="in"] svg path{
+  animation:t-check-draw var(--check-path-dur) var(--check-ease-path) var(--check-path-delay, 0ms) forwards;
+}
+@keyframes t-check-fade{ from{ opacity:0; } to{ opacity:1; } }
+@keyframes t-check-rotate{ from{ transform:rotate(var(--check-rotate-from)); } to{ transform:rotate(0deg); } }
+@keyframes t-check-blur{ from{ filter:blur(var(--check-blur-from)); } to{ filter:blur(0); } }
+@keyframes t-check-bob{ from{ translate:0 var(--check-y-amount); } to{ translate:0 0; } }
+@keyframes t-check-draw{ to{ stroke-dashoffset:0; } }
+
+/* ─── t-tilt: el portafolio se inclina hacia el dedo ─── */
+.t-tilt{ touch-action:none; }
+.t-tilt-card{
+  position:relative; overflow:hidden;
+  transform:perspective(var(--tilt-perspective)) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg));
+  transform-style:preserve-3d;
+  transition:transform var(--tilt-return) var(--tilt-return-ease);
+  will-change:transform;
+}
+.t-tilt-card.is-tilting{ transition:transform var(--tilt-follow) var(--tilt-follow-ease); }
+.t-tilt-glare{
+  position:absolute; inset:0; pointer-events:none; opacity:0; mix-blend-mode:screen;
+  background:
+    radial-gradient(circle 95px at var(--tilt-gx,50%) var(--tilt-gy,50%),
+      rgba(255,255,255,0.48), rgba(255,255,255,0.06) 52%, rgba(255,255,255,0) 84%),
+    radial-gradient(circle 200px at var(--tilt-gx,50%) var(--tilt-gy,50%),
+      rgba(255,255,255,0.22), rgba(255,255,255,0.04) 58%, rgba(255,255,255,0) 78%),
+    radial-gradient(circle 360px at var(--tilt-gx,50%) var(--tilt-gy,50%),
+      rgba(255,255,255,0.10), rgba(255,255,255,0) 88%);
+  transition:opacity var(--tilt-glare-fade) var(--tilt-glare-ease);
+}
+.t-tilt.is-hover .t-tilt-glare{ opacity:var(--tilt-glare-opacity); }
+
+/* ─── t-acc: preguntas ─── */
+.t-acc{ border-bottom:1px solid var(--rule); }
+.t-acc-head{
+  width:100%; text-align:left; background:none; border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:space-between; gap:26px;
+  padding:26px 4px 26px 0; color:var(--ink);
+  font-family:var(--f-disp); font-weight:700; font-stretch:90%;
+  font-size:clamp(18px,2.1vw,23px); line-height:1.24; letter-spacing:-.018em;
+  transition:color var(--duration-quick) var(--ease-smooth-out);
+}
+.t-acc-head:hover{ color:var(--cobalt); }
+.t-acc-panel{ display:grid; grid-template-rows:0fr; transition:grid-template-rows var(--acc-collapse) var(--acc-ease); }
+.t-acc[data-open="true"] .t-acc-panel{ grid-template-rows:1fr; transition:grid-template-rows var(--acc-expand) var(--acc-ease); }
+.t-acc-panel-inner{
+  overflow:hidden; opacity:0; filter:blur(2px);
+  transition:opacity var(--acc-collapse) var(--acc-ease), filter var(--acc-collapse) var(--acc-ease);
+}
+.t-acc[data-open="true"] .t-acc-panel-inner{
+  opacity:1; filter:blur(0);
+  transition:opacity var(--acc-expand) var(--acc-ease), filter var(--acc-expand) var(--acc-ease);
+}
+.t-acc-body{ padding:0 40px 28px 0; font-size:16px; line-height:1.75; color:var(--ink-soft); max-width:66ch; font-family:var(--f-body); font-weight:400; letter-spacing:0; }
+.t-acc-body b{ color:var(--ink); font-weight:600; }
+.t-acc-chevron{ display:inline-flex; flex-shrink:0; transform:scaleY(1); transform-origin:center; transition:transform var(--acc-chevron) var(--acc-ease); color:var(--cobalt); }
+.t-acc-chevron path{ vector-effect:non-scaling-stroke; }
+.t-acc[data-open="true"] .t-acc-chevron{ transform:scaleY(-1); }
+
+/* ═══ LA DIFERENCIA ═══ */
+.diff{ display:grid; grid-template-columns:1fr 1fr; border:2px solid var(--ink); margin-top:clamp(40px,5vw,64px); }
+.diff-side{ padding:clamp(28px,3.4vw,48px); display:flex; flex-direction:column; }
+.diff-them{ background:var(--ink); color:var(--bone); }
+.diff-us{ background:var(--acid); color:var(--ink); border-left:2px solid var(--ink); }
+.diff-label{ font-family:var(--f-mono); font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; margin-bottom:10px; }
+.diff-them .diff-label{ color:rgba(240,237,228,.5); }
+.diff-us .diff-label{ color:var(--cobalt); }
+.diff-title{ font-family:var(--f-disp); font-weight:800; font-stretch:88%; font-size:clamp(26px,3.4vw,40px); line-height:1; letter-spacing:-.03em; margin-bottom:26px; }
+
+.steps{ list-style:none; display:flex; flex-direction:column; margin-bottom:26px; }
+.steps li{ display:flex; gap:14px; align-items:baseline; padding:13px 0; font-size:15px; line-height:1.5; border-bottom:1px dashed rgba(240,237,228,.18); }
+.diff-us .steps li{ border-bottom-color:rgba(16,19,28,.22); }
+.steps li:last-child{ border-bottom:none; }
+.steps .n{ font-family:var(--f-mono); font-size:11px; font-weight:700; flex-shrink:0; opacity:.55; }
+
+.think-box{ margin-top:auto; padding:18px 20px; border:1px dashed rgba(240,237,228,.28); font-size:15px; }
+.think-cap{ font-family:var(--f-mono); font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(240,237,228,.4); margin-bottom:12px; }
+.done-box{ margin-top:auto; display:flex; align-items:center; gap:16px; padding:18px 20px; border:2px solid var(--ink); background:var(--bone); }
+.done-txt strong{ display:block; font-family:var(--f-disp); font-weight:800; font-size:19px; letter-spacing:-.02em; line-height:1.1; }
+.done-txt span{ font-size:13px; color:var(--ink-soft); }
+
+@media (max-width:900px){
+  .diff{ grid-template-columns:1fr; }
+  .diff-us{ border-left:none; border-top:2px solid var(--ink); }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .t-think-text{ transition:none !important; transform:none !important; filter:none !important; }
+  .t-think-text::before{ display:none !important; }
+  .t-success-check{ animation:none !important; opacity:1; }
+  .t-success-check svg path{ animation:none !important; stroke-dashoffset:0 !important; }
+  .t-tilt-card{ transform:none !important; transition:none !important; }
+}
 </style>
 </head>
 
@@ -456,6 +664,7 @@ footer{ background:var(--ink); color:var(--bone); padding:clamp(52px,6vw,76px) v
 <nav>
   <a href="/" class="logo">tucontenido<i>.</i></a>
   <div class="nav-mid">
+    <a href="#diferencia">La diferencia</a>
     <a href="#incluye">Qué incluye</a>
     <a href="#dias">Los 7 días</a>
     <a href="#trabajos">Trabajos</a>
@@ -467,7 +676,7 @@ footer{ background:var(--ink); color:var(--bone); padding:clamp(52px,6vw,76px) v
 <!-- ══════════ HERO ══════════ -->
 <header class="hero" id="inicio">
   <div class="hero-main">
-    <div class="eyebrow mono">Diseño web · Argentina</div>
+    <div class="eyebrow mono">Sin llamadas · sin reuniones · sin vueltas</div>
 
     <h1 class="disp hero-h1">
       <span class="ln"><span>Tu web</span></span>
@@ -476,9 +685,9 @@ footer{ background:var(--ink); color:var(--bone); padding:clamp(52px,6vw,76px) v
     </h1>
 
     <p class="lede hero-lede">
-      A medida, andando bien en el celular y con los textos ya escritos.
-      Cuando está lista te la transferimos: queda a tu nombre, sin cuota
-      de mantenimiento y sin depender de nosotros para nada.
+      Nos escribís por WhatsApp, mandás el logo y listo. Sin llamada de venta,
+      sin reuniones para coordinar reuniones, sin briefs de cuarenta preguntas.
+      <b>En 72 horas ya estás viendo tu web.</b>
     </p>
 
     <div class="hero-btns">
@@ -527,6 +736,64 @@ footer{ background:var(--ink); color:var(--bone); padding:clamp(52px,6vw,76px) v
     <span class="marq-i">Sin cuota mensual</span><span class="marq-i">Queda a tu nombre</span>
   </div>
 </div>
+
+
+<!-- ══════════ LA DIFERENCIA ══════════ -->
+<section id="diferencia">
+  <div class="sec-head">
+    <div class="rv">
+      <div class="eyebrow mono">La diferencia</div>
+      <h2 class="disp">Otros todavía te están<br>pidiendo cosas</h2>
+    </div>
+    <p class="lede rv">
+      No somos más rápidos porque trabajemos apurados. Somos más rápidos
+      porque sacamos del medio todo lo que no hace falta.
+    </p>
+  </div>
+
+  <div class="diff rv">
+    <div class="diff-side diff-them">
+      <div class="diff-label">En otros lados</div>
+      <div class="diff-title">Seis pasos antes de ver un solo diseño</div>
+      <ul class="steps">
+        <li><span class="n">01</span> Completás un brief de cuarenta preguntas</li>
+        <li><span class="n">02</span> Agendás una llamada de descubrimiento</li>
+        <li><span class="n">03</span> Esperás el presupuesto cinco días hábiles</li>
+        <li><span class="n">04</span> Otra reunión para revisar el presupuesto</li>
+        <li><span class="n">05</span> Firmás contrato y adelantás la seña</li>
+        <li><span class="n">06</span> Recién ahí empiezan a diseñar</li>
+      </ul>
+      <div class="think-box">
+        <div class="think-cap">Estado del proyecto</div>
+        <span class="t-think" role="status" aria-live="off">
+          <span class="t-think-sizer" aria-hidden="true">Contrato y 50% de seña</span>
+          <span class="t-think-text" data-text="Brief de 40 preguntas">Brief de 40 preguntas</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="diff-side diff-us">
+      <div class="diff-label">Acá</div>
+      <div class="diff-title">Dos mensajes y a diseñar</div>
+      <ul class="steps">
+        <li><span class="n">01</span> Nos escribís por WhatsApp y te decimos el precio en el momento</li>
+        <li><span class="n">02</span> Mandás el logo y las fotos que tengas</li>
+      </ul>
+      <div class="done-box">
+        <span class="t-success-check" id="doneCheck" data-state="out" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" width="40" height="40">
+            <path d="M13 24.5 L20.5 32 L35 16" stroke="#1F35D4" stroke-width="4.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="done-txt">
+          <strong>En 72 horas ves tu web</strong>
+          <span>Entera, navegable, desde tu celular</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ══════════ QUÉ INCLUYE ══════════ -->
 <section id="incluye">
@@ -623,53 +890,66 @@ footer{ background:var(--ink); color:var(--bone); padding:clamp(52px,6vw,76px) v
   </div>
 
   <div class="work-grid">
-    <a class="work rv" href="#" target="_blank" rel="noopener" data-pending="1">
-      <span class="work-cat">⚠ Falta URL</span>
-      <span class="work-name">Proyecto 01</span>
-      <span class="work-go">Abrir sitio
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M4.5 3H10v5.5" stroke="currentColor" stroke-width="1.8"/></svg>
-      </span>
-    </a>
-
-    <a class="work rv" href="#" target="_blank" rel="noopener" data-pending="1">
-      <span class="work-cat">⚠ Falta URL</span>
-      <span class="work-name">Proyecto 02</span>
-      <span class="work-go">Abrir sitio
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M4.5 3H10v5.5" stroke="currentColor" stroke-width="1.8"/></svg>
-      </span>
-    </a>
-
-    <a class="work rv" href="#" target="_blank" rel="noopener" data-pending="1">
-      <span class="work-cat">⚠ Falta URL</span>
-      <span class="work-name">Proyecto 03</span>
-      <span class="work-go">Abrir sitio
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M4.5 3H10v5.5" stroke="currentColor" stroke-width="1.8"/></svg>
-      </span>
-    </a>
-
-    <a class="work rv" href="#" target="_blank" rel="noopener" data-pending="1">
-      <span class="work-cat">⚠ Falta URL</span>
-      <span class="work-name">Proyecto 04</span>
-      <span class="work-go">Abrir sitio
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M4.5 3H10v5.5" stroke="currentColor" stroke-width="1.8"/></svg>
-      </span>
-    </a>
-
-    <a class="work rv" href="#" target="_blank" rel="noopener" data-pending="1">
-      <span class="work-cat">⚠ Falta URL</span>
-      <span class="work-name">Proyecto 05</span>
-      <span class="work-go">Abrir sitio
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M4.5 3H10v5.5" stroke="currentColor" stroke-width="1.8"/></svg>
-      </span>
-    </a>
-
-    <a class="work rv" href="#" target="_blank" rel="noopener" data-pending="1">
-      <span class="work-cat">⚠ Falta URL</span>
-      <span class="work-name">Proyecto 06</span>
-      <span class="work-go">Abrir sitio
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M4.5 3H10v5.5" stroke="currentColor" stroke-width="1.8"/></svg>
-      </span>
-    </a>
+    <div class="t-tilt rv">
+      <a class="work t-tilt-card" href="#" target="_blank" rel="noopener" data-pending="1">
+        <span class="work-cat">⚠ Falta URL</span>
+        <span class="work-name">Proyecto 01</span>
+        <span class="work-go">Abrir sitio
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M4.5 3H10v5.5" stroke="currentColor" stroke-width="1.8"/></svg>
+        </span>
+        <span class="t-tilt-glare"></span>
+      </a>
+    </div>
+    <div class="t-tilt rv">
+      <a class="work t-tilt-card" href="#" target="_blank" rel="noopener" data-pending="1">
+        <span class="work-cat">⚠ Falta URL</span>
+        <span class="work-name">Proyecto 02</span>
+        <span class="work-go">Abrir sitio
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M4.5 3H10v5.5" stroke="currentColor" stroke-width="1.8"/></svg>
+        </span>
+        <span class="t-tilt-glare"></span>
+      </a>
+    </div>
+    <div class="t-tilt rv">
+      <a class="work t-tilt-card" href="#" target="_blank" rel="noopener" data-pending="1">
+        <span class="work-cat">⚠ Falta URL</span>
+        <span class="work-name">Proyecto 03</span>
+        <span class="work-go">Abrir sitio
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M4.5 3H10v5.5" stroke="currentColor" stroke-width="1.8"/></svg>
+        </span>
+        <span class="t-tilt-glare"></span>
+      </a>
+    </div>
+    <div class="t-tilt rv">
+      <a class="work t-tilt-card" href="#" target="_blank" rel="noopener" data-pending="1">
+        <span class="work-cat">⚠ Falta URL</span>
+        <span class="work-name">Proyecto 04</span>
+        <span class="work-go">Abrir sitio
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M4.5 3H10v5.5" stroke="currentColor" stroke-width="1.8"/></svg>
+        </span>
+        <span class="t-tilt-glare"></span>
+      </a>
+    </div>
+    <div class="t-tilt rv">
+      <a class="work t-tilt-card" href="#" target="_blank" rel="noopener" data-pending="1">
+        <span class="work-cat">⚠ Falta URL</span>
+        <span class="work-name">Proyecto 05</span>
+        <span class="work-go">Abrir sitio
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M4.5 3H10v5.5" stroke="currentColor" stroke-width="1.8"/></svg>
+        </span>
+        <span class="t-tilt-glare"></span>
+      </a>
+    </div>
+    <div class="t-tilt rv">
+      <a class="work t-tilt-card" href="#" target="_blank" rel="noopener" data-pending="1">
+        <span class="work-cat">⚠ Falta URL</span>
+        <span class="work-name">Proyecto 06</span>
+        <span class="work-go">Abrir sitio
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M4.5 3H10v5.5" stroke="currentColor" stroke-width="1.8"/></svg>
+        </span>
+        <span class="t-tilt-glare"></span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -740,36 +1020,60 @@ footer{ background:var(--ink); color:var(--bone); padding:clamp(52px,6vw,76px) v
   </div>
 
   <div class="faqs rv">
-    <details class="q">
-      <summary>¿Por qué hay 10 dólares por mes si dicen que no hay mantenimiento?</summary>
-      <div class="q-body">Son dos cosas distintas. Los <b>USD 10 mensuales</b> son el alojamiento y los pagás vos directo a la plataforma donde vive tu web. Nosotros no te cobramos <b>nada</b> por mes. Es a propósito: si el alojamiento estuviera a nuestro nombre, el día que quisieras irte tendrías que pedirnos permiso. Necesitás una tarjeta habilitada para pagos en dólares.</div>
-    </details>
-
-    <details class="q">
-      <summary>¿La web es realmente mía?</summary>
-      <div class="q-body">Sí, y no es una forma de decir. Al terminar te transferimos el proyecto a <b>tu cuenta</b> y el dominio se compra directamente a tu nombre. Podés editarla, cambiar de diseñador o darla de baja sin hablar con nosotros. Si querés quedamos como editores para poder ayudarte, pero el dueño sos vos.</div>
-    </details>
-
-    <details class="q">
-      <summary>¿Y si después necesito cambiar algo?</summary>
-      <div class="q-body">Los cambios chicos te los hacemos <b>sin costo</b>: textos, fotos, precios, horarios, datos de contacto. Nos escribís por WhatsApp y listo. Secciones nuevas, rediseños o funciones que no estaban son presupuesto aparte, y te lo decimos antes de tocar nada.</div>
-    </details>
-
-    <details class="q">
-      <summary>¿Cómo pago los USD 500?</summary>
-      <!-- ⚠️ CONFIRMAR MEDIOS DE PAGO REALES -->
-      <div class="q-body">Mercado Pago, transferencia bancaria o USDT. Se abona <b>50% para arrancar y 50% contra entrega</b>, así ninguno de los dos queda expuesto.</div>
-    </details>
-
-    <details class="q">
-      <summary>¿De verdad son 7 días?</summary>
-      <div class="q-body">Sí, pero el reloj arranca cuando nos mandás el material del formulario, no cuando pagás. Es la parte que más suele demorarse y no depende de nosotros. Con el material completo, el <b>primer boceto lo ves en 72 horas</b>.</div>
-    </details>
-
-    <details class="q">
-      <summary>¿Tengo que comprar el dominio yo?</summary>
-      <div class="q-body">Te guiamos para comprarlo, pero se compra <b>en tu cuenta y con tu tarjeta</b>, por la misma razón que el alojamiento. Cuesta entre USD 10 y USD 15 al año según la terminación. Si ya tenés uno, lo conectamos sin costo.</div>
-    </details>
+    <div class="t-acc" data-open="false">
+      <button class="t-acc-head" type="button" aria-expanded="false">
+        <span>¿Por qué hay 10 dólares por mes si dicen que no hay mantenimiento?</span>
+        <span class="t-acc-chevron"><svg viewBox="0 0 16 16" width="17" height="17" fill="none"><path d="M4 6.5L8 10.5L12 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </button>
+      <div class="t-acc-panel"><div class="t-acc-panel-inner">
+        <div class="t-acc-body">Son dos cosas distintas. Los <b>USD 10 mensuales</b> son el alojamiento y los pagás vos directo a la plataforma donde vive tu web. Nosotros no te cobramos <b>nada</b> por mes. Es a propósito: si el alojamiento estuviera a nuestro nombre, el día que quisieras irte tendrías que pedirnos permiso. Necesitás una tarjeta habilitada para pagos en dólares.</div>
+      </div></div>
+    </div>
+    <div class="t-acc" data-open="false">
+      <button class="t-acc-head" type="button" aria-expanded="false">
+        <span>¿La web es realmente mía?</span>
+        <span class="t-acc-chevron"><svg viewBox="0 0 16 16" width="17" height="17" fill="none"><path d="M4 6.5L8 10.5L12 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </button>
+      <div class="t-acc-panel"><div class="t-acc-panel-inner">
+        <div class="t-acc-body">Sí, y no es una forma de decir. Al terminar te transferimos el proyecto a <b>tu cuenta</b> y el dominio se compra directamente a tu nombre. Podés editarla, cambiar de diseñador o darla de baja sin hablar con nosotros. Si querés quedamos como editores para poder ayudarte, pero el dueño sos vos.</div>
+      </div></div>
+    </div>
+    <div class="t-acc" data-open="false">
+      <button class="t-acc-head" type="button" aria-expanded="false">
+        <span>¿En serio no hay ninguna llamada?</span>
+        <span class="t-acc-chevron"><svg viewBox="0 0 16 16" width="17" height="17" fill="none"><path d="M4 6.5L8 10.5L12 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </button>
+      <div class="t-acc-panel"><div class="t-acc-panel-inner">
+        <div class="t-acc-body">Ninguna, salvo que vos la quieras. Todo se resuelve por WhatsApp: te decimos el precio en el momento, mandás el material cuando puedas y el primer boceto te llega por el mismo chat. Si preferís hablar por teléfono lo hacemos, pero <b>no es un requisito para empezar</b>.</div>
+      </div></div>
+    </div>
+    <div class="t-acc" data-open="false">
+      <button class="t-acc-head" type="button" aria-expanded="false">
+        <span>¿Y si después necesito cambiar algo?</span>
+        <span class="t-acc-chevron"><svg viewBox="0 0 16 16" width="17" height="17" fill="none"><path d="M4 6.5L8 10.5L12 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </button>
+      <div class="t-acc-panel"><div class="t-acc-panel-inner">
+        <div class="t-acc-body">Los cambios chicos te los hacemos <b>sin costo</b>: textos, fotos, precios, horarios, datos de contacto. Nos escribís por WhatsApp y listo. Secciones nuevas, rediseños o funciones que no estaban son presupuesto aparte, y te lo decimos antes de tocar nada.</div>
+      </div></div>
+    </div>
+    <div class="t-acc" data-open="false">
+      <button class="t-acc-head" type="button" aria-expanded="false">
+        <span>¿Cómo pago los USD 500?</span>
+        <span class="t-acc-chevron"><svg viewBox="0 0 16 16" width="17" height="17" fill="none"><path d="M4 6.5L8 10.5L12 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </button>
+      <div class="t-acc-panel"><div class="t-acc-panel-inner">
+        <div class="t-acc-body">Mercado Pago, transferencia bancaria o USDT. Se abona <b>50% para arrancar y 50% contra entrega</b>, así ninguno de los dos queda expuesto.</div>
+      </div></div>
+    </div>
+    <div class="t-acc" data-open="false">
+      <button class="t-acc-head" type="button" aria-expanded="false">
+        <span>¿De verdad son 7 días?</span>
+        <span class="t-acc-chevron"><svg viewBox="0 0 16 16" width="17" height="17" fill="none"><path d="M4 6.5L8 10.5L12 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </button>
+      <div class="t-acc-panel"><div class="t-acc-panel-inner">
+        <div class="t-acc-body">Sí, pero el reloj arranca cuando nos mandás el material, no cuando pagás. Es la parte que más suele demorarse y no depende de nosotros. Con el material completo, el <b>primer boceto lo ves en 72 horas</b>.</div>
+      </div></div>
+    </div>
   </div>
 </section>
 
@@ -857,6 +1161,128 @@ const navEl = document.querySelector('nav');
 addEventListener('scroll', () => {
   navEl.style.borderBottomColor = scrollY > 30 ? 'rgba(16,19,28,.28)' : 'rgba(16,19,28,.14)';
 }, { passive: true });
+
+
+/* ═══════════════════════════════════════════════════════
+   TRANSICIONES — transitions.dev
+   Funcionan sin GSAP: si el CDN falla, esto igual anda.
+   ═══════════════════════════════════════════════════════ */
+const menosMovimiento = matchMedia('(prefers-reduced-motion: reduce)');
+
+const msVar = (name, fb) => {
+  const v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name));
+  return Number.isFinite(v) ? v : fb;
+};
+
+/* ── Thinking states: la letanía que nunca termina ──
+   Es el chiste de la sección: el estado del proyecto de la
+   competencia va cambiando y nunca llega a "entregado". */
+(function letania() {
+  const box = document.querySelector('.t-think');
+  if (!box || menosMovimiento.matches) return;
+  let live = box.querySelector('.t-think-text');
+  const ESTADOS = [
+    'Brief de 40 preguntas',
+    'Llamada de 45 minutos',
+    'Reunión de seguimiento',
+    'Presupuesto en 5 días',
+    'Contrato y 50% de seña',
+    'Entrega en 6 semanas'
+  ];
+  let i = 0;
+
+  (function ciclo() {
+    setTimeout(() => {
+      const swap = msVar('--think-swap', 150);
+      const gap  = msVar('--think-gap', 50);
+      const saliente = live;
+      i = (i + 1) % ESTADOS.length;
+
+      saliente.classList.add('is-exit');
+
+      const next = document.createElement('span');
+      next.className = 't-think-text is-enter-start';
+      next.textContent = ESTADOS[i];
+      next.setAttribute('data-text', ESTADOS[i]);
+      box.appendChild(next);
+      live = next;
+
+      const soltar = () => { void next.offsetWidth; next.classList.remove('is-enter-start'); };
+      if (gap > 0) setTimeout(soltar, gap); else soltar();
+
+      setTimeout(() => { saliente.remove(); ciclo(); }, swap + gap);
+    }, msVar('--think-hold', 1900));
+  })();
+})();
+
+/* ── Success check: nuestro lado sí resuelve ── */
+(function tildeListo() {
+  const check = document.getElementById('doneCheck');
+  if (!check) return;
+  const path = check.querySelector('path');
+  if (path) {
+    /* La longitud real del trazo, no un 20 hardcodeado: si no,
+       el check se pre-dibuja o se pasa de largo. */
+    const largo = Math.ceil(path.getTotalLength()) + 1;
+    path.style.strokeDasharray = largo;
+    path.style.strokeDashoffset = largo;
+  }
+  if (menosMovimiento.matches) { check.setAttribute('data-state', 'in'); return; }
+  const io = new IntersectionObserver(es => {
+    es.forEach(e => {
+      if (e.isIntersecting) { check.setAttribute('data-state', 'in'); io.disconnect(); }
+    });
+  }, { threshold: .6 });
+  io.observe(check.closest('.done-box') || check);
+})();
+
+/* ── Card tilt: el portafolio se inclina hacia el dedo ──
+   El puntero se sigue sobre el wrapper plano, nunca sobre la
+   tarjeta que rota, o los bordes se escapan del cursor. */
+document.querySelectorAll('.t-tilt').forEach(tilt => {
+  const card = tilt.querySelector('.t-tilt-card');
+  if (!card) return;
+  const MAX = 12;
+
+  const reset = () => {
+    tilt.classList.remove('is-hover');
+    card.classList.remove('is-tilting');
+    card.style.setProperty('--tilt-rx', '0deg');
+    card.style.setProperty('--tilt-ry', '0deg');
+  };
+
+  const track = e => {
+    if (menosMovimiento.matches) return;
+    const r = tilt.getBoundingClientRect();
+    const px = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+    const py = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height));
+    tilt.classList.add('is-hover');
+    card.classList.add('is-tilting');
+    card.style.setProperty('--tilt-ry', ((px - .5) * MAX).toFixed(2) + 'deg');
+    card.style.setProperty('--tilt-rx', ((.5 - py) * MAX).toFixed(2) + 'deg');
+    card.style.setProperty('--tilt-gx', (px * 100).toFixed(1) + '%');
+    card.style.setProperty('--tilt-gy', (py * 100).toFixed(1) + '%');
+  };
+
+  tilt.addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'mouse') { try { tilt.setPointerCapture(e.pointerId); } catch (_) {} }
+  });
+  tilt.addEventListener('pointermove', track);
+  tilt.addEventListener('pointerup', reset);
+  tilt.addEventListener('pointercancel', reset);
+  tilt.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') reset(); });
+});
+
+/* ── Accordion: el CSS maneja alto y chevron, el JS solo el estado ── */
+document.querySelectorAll('.t-acc').forEach(acc => {
+  const head = acc.querySelector('.t-acc-head');
+  if (!head) return;
+  head.addEventListener('click', () => {
+    const abierto = acc.getAttribute('data-open') === 'true';
+    acc.setAttribute('data-open', String(!abierto));
+    head.setAttribute('aria-expanded', String(!abierto));
+  });
+});
 
 /* ═══════════ MOVIMIENTO ═══════════
    Un momento orquestado en la entrada, un momento
