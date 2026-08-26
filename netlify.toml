@@ -1,17 +1,19 @@
-# Sitio estático: un solo index.html en la raíz, sin build.
-# Este archivo PISA lo que esté configurado en la UI de Netlify,
-# así que anula cualquier comando de build viejo que haya quedado.
+# Next.js 16 con App Router.
+# Este archivo pisa lo que esté configurado en la UI de Netlify:
+# si quedó un comando o un publish directory de la versión anterior
+# en HTML plano, acá se anula.
 
 [build]
-  # Comando que no hace nada y nunca falla. Está explícito a propósito:
-  # si lo dejáramos vacío, Netlify seguiría usando el de la UI.
-  command = "echo 'Sitio estatico, sin build'"
-
-  # El HTML está en la raíz del repo, no en dist/ ni build/.
-  publish = "."
+  command = "npm run build"
+  publish = ".next"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "22"
+
+# El plugin oficial es lo que hace que Next funcione en Netlify.
+# Se declara explícito en vez de confiar en la autodetección.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 # ── Cabeceras ──────────────────────────────────────────────
 [[headers]]
@@ -22,8 +24,8 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
 
-# El HTML se revalida siempre: cuando publicás un cambio, se ve al toque.
+# Las fuentes y los assets con hash en el nombre se cachean para siempre.
 [[headers]]
-  for = "/index.html"
+  for = "/_next/static/*"
   [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+    Cache-Control = "public, max-age=31536000, immutable"
