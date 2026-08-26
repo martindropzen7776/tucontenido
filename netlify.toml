@@ -1,0 +1,29 @@
+# Sitio estático: un solo index.html en la raíz, sin build.
+# Este archivo PISA lo que esté configurado en la UI de Netlify,
+# así que anula cualquier comando de build viejo que haya quedado.
+
+[build]
+  # Comando que no hace nada y nunca falla. Está explícito a propósito:
+  # si lo dejáramos vacío, Netlify seguiría usando el de la UI.
+  command = "echo 'Sitio estatico, sin build'"
+
+  # El HTML está en la raíz del repo, no en dist/ ni build/.
+  publish = "."
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# ── Cabeceras ──────────────────────────────────────────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# El HTML se revalida siempre: cuando publicás un cambio, se ve al toque.
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
