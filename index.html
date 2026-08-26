@@ -130,7 +130,8 @@ h3.disp{ font-size:clamp(21px, 2.6vw, 30px); line-height:1.06; letter-spacing:-.
 .on-c{ background:var(--cobalt); color:var(--bone); }
 .on-bone2{ background:var(--bone-2); }
 
-section{ padding:clamp(72px,11vw,148px) var(--pad); position:relative; }
+section, header.hero{ padding-left:var(--pad); padding-right:var(--pad); }
+section{ padding-top:clamp(72px,11vw,148px); padding-bottom:clamp(72px,11vw,148px); position:relative; }
 
 .eyebrow{
   display:inline-flex; align-items:center; gap:10px;
@@ -265,7 +266,7 @@ nav{
   transition:background var(--d-base) var(--ease);
   position:relative;
 }
-.cell:hover{ background:var(--acid); }
+@media (hover:hover){ .cell:hover{ background:var(--acid); } }
 .cell-n{ font-family:var(--f-mono); font-size:11px; font-weight:700; letter-spacing:.16em; color:var(--cobalt); }
 .cell h3{ margin:22px 0 12px; }
 .cell p{ font-size:15px; line-height:1.65; color:var(--ink-soft); }
@@ -316,7 +317,7 @@ nav{
   border-color:transparent var(--cobalt) transparent transparent;
   transition:border-color var(--d-base);
 }
-.work:hover{ transform:translate(-4px,-4px); background:var(--cobalt); color:var(--bone); box-shadow:8px 8px 0 var(--ink); }
+@media (hover:hover){ .work:hover{ background:var(--cobalt); color:var(--bone); } }
 .work:hover::after{ border-right-color:var(--acid); }
 .work-cat{ font-family:var(--f-mono); font-size:10px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--cobalt); }
 .work:hover .work-cat{ color:var(--acid); }
@@ -573,7 +574,13 @@ footer{ background:var(--ink); color:var(--bone); padding:clamp(52px,6vw,76px) v
 @keyframes t-check-draw{ to{ stroke-dashoffset:0; } }
 
 /* ─── t-tilt: el portafolio se inclina hacia el dedo ─── */
-.t-tilt{ touch-action:none; }
+/* El tilt es una afordancia de mouse. En touch, touch-action:none
+   secuestra el gesto y la página deja de scrollear sobre las tarjetas:
+   por eso solo se activa donde hay puntero fino. */
+.t-tilt{ touch-action:pan-y; }
+@media (hover:hover) and (pointer:fine){
+  .t-tilt{ touch-action:none; }
+}
 .t-tilt-card{
   position:relative; overflow:hidden;
   transform:perspective(var(--tilt-perspective)) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg));
@@ -655,6 +662,53 @@ footer{ background:var(--ink); color:var(--bone); padding:clamp(52px,6vw,76px) v
   .t-success-check{ animation:none !important; opacity:1; }
   .t-success-check svg path{ animation:none !important; stroke-dashoffset:0 !important; }
   .t-tilt-card{ transform:none !important; transition:none !important; }
+}
+
+/* ═══════════════════════════════════════════════════
+   MÓVIL — correcciones
+   ═══════════════════════════════════════════════════ */
+@media (max-width:1000px){
+  /* El ticket iba arriba y empujaba el CTA fuera de pantalla.
+     Ahora el orden es: título, texto, botones, y recién el ticket. */
+  .hero{ display:flex; flex-direction:column; gap:clamp(28px,6vw,44px); }
+  .hero-side{ order:2; align-self:stretch; }
+  .hero-main{ order:1; display:flex; flex-direction:column; }
+  .facts{ order:3; margin-top:0; }
+}
+
+@media (max-width:620px){
+  /* Objetivos táctiles: 44px es el mínimo usable con el pulgar. */
+  .f-col a, .nav-mid a{
+    display:inline-flex; align-items:center;
+    min-height:44px; padding:2px 0;
+  }
+  .f-col li{ margin-bottom:2px; }
+  .logo{ display:inline-flex; align-items:center; min-height:44px; }
+  .nav-cta{ min-height:44px; display:inline-flex; align-items:center; }
+  .t-acc-head{ min-height:56px; }
+
+  /* 10px es ilegible en un teléfono. Piso de 11px. */
+  .fact-l, .think-cap, .work-cat, .diff-label,
+  .price-once, .price-sub, .close-note, .f-col h5, .f-bot{ font-size:11px; }
+  .mono, .eyebrow{ font-size:11px; letter-spacing:.13em; }
+
+  /* El titular respira mejor con menos tracking negativo. */
+  h1.disp{ letter-spacing:-.02em; }
+
+  /* Que el ticket no toque los bordes ni se le corte la sombra. */
+  .ticket{ box-shadow:6px 6px 0 var(--ink); }
+
+  /* Los pasos de "la diferencia" con más aire entre número y texto. */
+  .steps li{ padding:12px 0; font-size:14.5px; }
+  .diff-side{ padding:24px 20px; }
+  .think-box, .done-box{ padding:16px; }
+  .done-txt strong{ font-size:17px; }
+}
+
+@media (max-width:400px){
+  /* El marquee a esta altura solo agrega ruido y consume batería. */
+  .marq-i{ font-size:13px; padding:0 18px; }
+  .big-price .num{ font-size:clamp(56px,17vw,72px); }
 }
 </style>
 </head>
@@ -1239,9 +1293,11 @@ const msVar = (name, fb) => {
 /* ── Card tilt: el portafolio se inclina hacia el dedo ──
    El puntero se sigue sobre el wrapper plano, nunca sobre la
    tarjeta que rota, o los bordes se escapan del cursor. */
+const punteroFino = matchMedia('(hover: hover) and (pointer: fine)');
 document.querySelectorAll('.t-tilt').forEach(tilt => {
   const card = tilt.querySelector('.t-tilt-card');
-  if (!card) return;
+  /* Sin mouse no hay tilt: en un teléfono el gesto es scrollear. */
+  if (!card || !punteroFino.matches) return;
   const MAX = 12;
 
   const reset = () => {
