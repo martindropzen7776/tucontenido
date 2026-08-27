@@ -1,78 +1,63 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
-import { Saturno } from "./saturno";
-import { TextReveal } from "@/components/motion/text-reveal";
 import { NumberTicker } from "@/components/motion/number-ticker";
 import { Magnetic } from "@/components/motion/magnetic";
 import { WaLink, Arrow } from "./wa-link";
+import { Saturno } from "./saturno";
 
-function Fact({
-  value,
-  suffix,
-  label,
+/* Los datos van en filas con una regla fina entre medio, como un
+   remito. En columnas serían tres tarjetas, que es exactamente el
+   bloque que delata una página generada. */
+function Dato({
+  valor,
+  sufijo,
+  etiqueta,
+  detalle,
 }: {
-  value: number;
-  suffix?: string;
-  label: string;
+  valor: number;
+  sufijo?: string;
+  etiqueta: string;
+  detalle: string;
 }) {
   return (
-    <div className="pt-5 pr-4 max-[620px]:border-b max-[620px]:border-[var(--rule)] max-[620px]:pb-4">
-      <div className="disp text-[clamp(30px,4.4vw,50px)] leading-none tracking-[-0.03em]">
-        <NumberTicker value={value} startOnView />
-        {suffix && <sup className="text-[0.42em] align-super text-cobalt">{suffix}</sup>}
+    <div className="flex items-baseline gap-5 border-t border-[var(--rule)] py-4 first:border-t-0 sm:gap-7">
+      <div className="disp w-[4.2rem] shrink-0 text-[clamp(28px,4vw,40px)] leading-none tracking-[-0.03em] sm:w-[5.5rem]">
+        <NumberTicker value={valor} startOnView />
+        {sufijo && <span className="text-[0.5em] text-ink-soft">{sufijo}</span>}
       </div>
-      <div className="mono mt-[7px] !text-[11px] tracking-[0.14em] text-ink-soft">{label}</div>
+      <div className="min-w-0">
+        <div className="text-[15px] font-semibold leading-tight">{etiqueta}</div>
+        <div className="text-[13.5px] leading-snug text-ink-soft">{detalle}</div>
+      </div>
     </div>
   );
 }
 
 export function Hero() {
-  const menos = useReducedMotion();
-
   return (
     <header
-      className="relative isolate overflow-hidden pad-x flex flex-col gap-[clamp(28px,6vw,44px)] pb-[clamp(56px,8vw,80px)]
-                 pt-[calc(68px+clamp(40px,7vw,80px))]
-                 lg:grid lg:min-h-svh lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]
-                 lg:items-center lg:gap-[clamp(32px,5vw,72px)] lg:pb-0
-                 border-b border-[var(--rule)]"
+      className="relative isolate overflow-hidden pad-x flex flex-col gap-[clamp(36px,7vw,56px)]
+                 pb-[clamp(64px,9vw,96px)] pt-[calc(68px+clamp(44px,8vw,92px))]
+                 lg:grid lg:min-h-svh lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]
+                 lg:items-center lg:gap-[clamp(40px,6vw,88px)] lg:pb-0"
     >
-      {/* El fondo va detrás de todo el hero, en su propia capa. */}
       <Saturno className="-z-10 opacity-90" />
 
       <div className="order-1 flex flex-col">
-        <div className="eyebrow mono">Sin llamadas · sin reuniones · sin vueltas</div>
+        {/* Sin rótulo arriba. El titular no necesita que le avisen
+            que es el titular, y ninguna palabra va resaltada: la
+            frase entera es la promesa. */}
+        <h1 className="disp h1 max-w-[13ch]">Tu web lista en 7 días</h1>
 
-        <h1 className="disp h1">
-          <TextReveal text="Tu web" split="word" as="span" />
-          <TextReveal text="lista" split="word" as="span" delay={0.08} className="ghost" />
-          <span className="block">
-            <TextReveal text="en" split="word" as="span" delay={0.16} className="!inline-block" />{" "}
-            {/* El subrayado ácido se dibuja recién al final de la secuencia:
-                es el remate, no un adorno que entra con todo lo demás. */}
-            <span className="relative inline-block">
-              <TextReveal text="7 días" split="word" as="span" delay={0.2} className="!inline-block" />
-              <motion.span
-                aria-hidden="true"
-                className="absolute inset-x-[-2px] bottom-[0.07em] -z-10 block h-[0.17em] origin-left bg-ink"
-                initial={menos ? false : { scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.52, delay: 0.85, ease: [0.65, 0, 0.35, 1] }}
-              />
-            </span>
-          </span>
-        </h1>
-
-        <p className="lede mt-[clamp(24px,3vw,34px)]">
+        <p className="lede mt-[clamp(26px,3.4vw,38px)]">
           Nos escribís por WhatsApp, mandás el logo y listo. Sin llamada de venta,
           sin reuniones para coordinar reuniones, sin briefs de cuarenta preguntas.{" "}
           <b className="font-semibold text-ink">En 72 horas ya estás viendo tu web.</b>
         </p>
 
-        <div className="mt-[clamp(30px,4vw,44px)] flex flex-wrap gap-3.5">
+        <div className="mt-[clamp(32px,4.4vw,46px)] flex flex-wrap gap-3.5">
           <Magnetic strength={0.28}>
-            <WaLink msg="Hola! Quiero mi web en 7 días. ¿Cómo arrancamos?" className="btn btn-acid">
+            <WaLink msg="Hola! Quiero mi web en 7 días. ¿Cómo arrancamos?" className="btn">
               Pedir mi web
               <Arrow />
             </WaLink>
@@ -82,10 +67,10 @@ export function Hero() {
           </a>
         </div>
 
-        <div className="mt-[clamp(40px,6vw,64px)] grid grid-cols-1 border-t-2 border-ink min-[620px]:grid-cols-3">
-          <Fact value={7} label="Días de entrega" />
-          <Fact value={72} suffix="h" label="Primer boceto" />
-          <Fact value={100} suffix="%" label="A tu nombre" />
+        <div className="mt-[clamp(38px,5.5vw,60px)] max-w-[30rem]">
+          <Dato valor={7} etiqueta="Días de entrega" detalle="Desde que mandás el material" />
+          <Dato valor={72} sufijo="h" etiqueta="Primer boceto" detalle="La web entera, navegable" />
+          <Dato valor={100} sufijo="%" etiqueta="A tu nombre" detalle="Se transfiere a tu cuenta" />
         </div>
       </div>
 
@@ -96,31 +81,31 @@ export function Hero() {
   );
 }
 
-function Row({ k, v }: { k: string; v: string }) {
+function Fila({ k, v }: { k: string; v: string }) {
   return (
     <div className="flex justify-between gap-4 border-b border-dashed border-[var(--rule-on-c)] py-[11px] text-sm last:border-b-0">
-      <b className="font-semibold">{k}</b>
-      <span className="text-right text-bone/60">{v}</span>
+      <span className="font-medium">{k}</span>
+      <span className="text-right text-bone/55">{v}</span>
     </div>
   );
 }
 
 function Ticket() {
   return (
-    <div className="relative border-2 border-ink bg-ink p-[clamp(26px,3vw,38px)] text-bone shadow-[6px_6px_0_rgba(244,244,241,0.22)] sm:shadow-[12px_12px_0_rgba(244,244,241,0.18)]">
+    <div className="relative border border-ink bg-ink p-[clamp(24px,3vw,38px)] text-bone">
       <div className="mb-5 flex items-baseline justify-between border-b border-dashed border-[var(--rule-on-c)] pb-4">
-        <span className="mono text-bone/55">Presupuesto</span>
-        <span className="mono text-bone/55">Nº 001</span>
+        <span className="mono text-bone/45">Presupuesto</span>
+        <span className="mono text-bone/45">Nº 001</span>
       </div>
-      <Row k="Diseño a medida" v="Incluido" />
-      <Row k="Hasta 6 secciones" v="Incluido" />
-      <Row k="Textos de venta" v="Incluido" />
-      <Row k="WhatsApp y Google" v="Incluido" />
-      <Row k="Dos rondas de ajustes" v="Incluido" />
-      <Row k="Cuota de mantenimiento" v="$0" />
-      <div className="mt-5 flex items-baseline justify-between border-t-2 border-bone pt-[18px]">
+      <Fila k="Diseño a medida" v="Incluido" />
+      <Fila k="Hasta 6 secciones" v="Incluido" />
+      <Fila k="Textos de venta" v="Incluido" />
+      <Fila k="WhatsApp y Google" v="Incluido" />
+      <Fila k="Dos rondas de ajustes" v="Incluido" />
+      <Fila k="Cuota de mantenimiento" v="$0" />
+      <div className="mt-5 flex items-baseline justify-between border-t border-bone pt-[18px]">
         <span className="mono">Total</span>
-        <span className="disp text-[clamp(34px,4vw,48px)] leading-none tracking-[-0.03em] text-bone">
+        <span className="disp text-[clamp(32px,4vw,46px)] leading-none tracking-[-0.03em]">
           USD 500
         </span>
       </div>

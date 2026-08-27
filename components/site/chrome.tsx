@@ -1,7 +1,6 @@
 "use client";
 
 import { ScrollProgress } from "@/components/motion/scroll-progress";
-import { Marquee } from "@/components/motion/marquee";
 import { EMAIL, INSTAGRAM } from "@/lib/site";
 import { WaLink } from "./wa-link";
 
@@ -17,7 +16,7 @@ export function Nav() {
   return (
     <>
       <ScrollProgress variant="bar" position="top" height={3} className="!bg-cobalt z-[300]" />
-      <nav className="pad-x fixed inset-x-0 top-0 z-[200] flex h-[68px] items-center justify-between gap-4 border-b border-[var(--rule)] bg-bone/90 backdrop-blur-md backdrop-saturate-150 max-[620px]:h-[60px]">
+      <nav className="pad-x fixed inset-x-0 top-0 z-[200] flex h-[68px] items-center justify-between gap-4 border-b border-[var(--rule)] bg-bone max-[620px]:h-[60px]">
         <a href="#" className="disp tap text-[19px] tracking-[-0.03em]">
           tucontenido<i className="not-italic text-cobalt">.</i>
         </a>
@@ -40,34 +39,6 @@ export function Nav() {
         </WaLink>
       </nav>
     </>
-  );
-}
-
-const CINTA = [
-  "Diseño a medida",
-  "Anda en el celular",
-  "Textos incluidos",
-  "WhatsApp integrado",
-  "Sin cuota mensual",
-  "Queda a tu nombre",
-];
-
-export function Cinta() {
-  return (
-    <div className="overflow-hidden bg-ink py-[15px] text-bone">
-      <Marquee speed={38} pauseOnHover gap="0px">
-        {CINTA.map((t) => (
-          <span
-            key={t}
-            className="disp inline-flex items-center gap-[26px] whitespace-nowrap px-[18px] text-[13px] uppercase tracking-[0.02em] sm:px-[26px] sm:text-[15px]"
-            style={{ fontStretch: "80%", fontWeight: 700 }}
-          >
-            {t}
-            <span className="h-[7px] w-[7px] bg-acid" aria-hidden="true" />
-          </span>
-        ))}
-      </Marquee>
-    </div>
   );
 }
 

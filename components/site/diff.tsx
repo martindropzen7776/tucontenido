@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
-import { ScrollReveal } from "@/components/motion/scroll-reveal";
+import { Aparece } from "./aparece";
 
 const LETANIA = [
   "Brief de 40 preguntas",
@@ -50,9 +50,9 @@ function Letania() {
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.span
             key={i}
-            initial={{ y: 8, opacity: 0, filter: "blur(2px)" }}
-            animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-            exit={{ y: -8, opacity: 0, filter: "blur(2px)" }}
+            initial={{ y: 8, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -8, opacity: 0 }}
             transition={{ duration: 0.15, ease: "easeInOut" }}
             className="absolute inset-x-0 top-0 block whitespace-nowrap text-[15px] text-ink/40"
           >
@@ -79,8 +79,8 @@ function Tilde() {
         height="40"
         fill="none"
         className="shrink-0 overflow-visible"
-        initial={menos ? false : { opacity: 0, rotate: 80, y: 40, filter: "blur(10px)" }}
-        animate={visto || menos ? { opacity: 1, rotate: 0, y: 0, filter: "blur(0px)" } : {}}
+        initial={menos ? false : { opacity: 0, rotate: 80, y: 40 }}
+        animate={visto || menos ? { opacity: 1, rotate: 0, y: 0 } : {}}
         transition={{ duration: 0.5, ease: [0.34, 1.35, 0.64, 1] }}
         aria-hidden="true"
       >
@@ -109,23 +109,22 @@ export function Diff() {
   return (
     <section id="diferencia" className="sec pad-x">
       <div className="mb-[clamp(44px,6vw,76px)] grid items-end gap-[clamp(24px,5vw,72px)] lg:grid-cols-[minmax(0,1fr)_minmax(0,0.72fr)]">
-        <ScrollReveal>
-          <div className="eyebrow mono">La diferencia</div>
+        <Aparece>
           <h2 className="disp h2">
             Otros todavía te están
             <br />
             pidiendo cosas
           </h2>
-        </ScrollReveal>
-        <ScrollReveal delay={0.05}>
+        </Aparece>
+        <Aparece delay={0.05}>
           <p className="lede">
             No somos más rápidos porque trabajemos apurados. Somos más rápidos
             porque sacamos del medio todo lo que no hace falta.
           </p>
-        </ScrollReveal>
+        </Aparece>
       </div>
 
-      <ScrollReveal delay={0.08}>
+      <Aparece delay={0.08}>
         <div className="grid border-2 border-ink/25 min-[900px]:grid-cols-2">
           <div className="flex flex-col bg-bone-2 p-5 sm:p-[clamp(28px,3.4vw,48px)]">
             <div className="mono !text-[11px] text-ink-soft">En otros lados</div>
@@ -169,7 +168,7 @@ export function Diff() {
             <Tilde />
           </div>
         </div>
-      </ScrollReveal>
+      </Aparece>
     </section>
   );
 }
