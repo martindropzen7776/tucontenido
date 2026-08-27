@@ -14,9 +14,14 @@ export default function Terminos() {
 
       <p>
         Este sitio y el servicio de diseño web que se ofrece en él pertenecen a{" "}
-        <strong>{TITULAR.nombre}</strong>, CUIT {TITULAR.cuit}, con domicilio en{" "}
-        {TITULAR.domicilio}, que opera bajo el nombre comercial {TITULAR.marca}.
-        Para cualquier consulta o reclamo: <a href={`mailto:${TITULAR.email}`}>{TITULAR.email}</a>.
+        <strong>{TITULAR.marca}</strong>, proveedor independiente con actividad en{" "}
+        {TITULAR.jurisdiccion}. Para consultas, reclamos o cualquier gestión:{" "}
+        <a href={`mailto:${TITULAR.email}`}>{TITULAR.email}</a>.
+      </p>
+      <p>
+        Los datos fiscales completos del titular —razón social, CUIT y domicilio—
+        se entregan <strong>a quien los solicite</strong> por esa misma casilla, y
+        constan en la factura de cualquier trabajo contratado.
       </p>
       <p>
         Contratar el servicio implica aceptar estas condiciones. Si no estás de

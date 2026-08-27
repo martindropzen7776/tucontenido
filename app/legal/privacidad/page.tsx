@@ -13,9 +13,11 @@ export default function Privacidad() {
       <h1>Política de privacidad</h1>
 
       <p>
-        Responsable de la base de datos: <strong>{TITULAR.nombre}</strong>, CUIT{" "}
-        {TITULAR.cuit}, {TITULAR.domicilio}. Contacto para todo lo relativo a datos
-        personales: <a href={`mailto:${TITULAR.email}`}>{TITULAR.email}</a>.
+        Responsable de la base de datos: <strong>{TITULAR.marca}</strong>, con
+        actividad en {TITULAR.jurisdiccion}. Contacto para todo lo relativo a datos
+        personales: <a href={`mailto:${TITULAR.email}`}>{TITULAR.email}</a>. Los
+        datos identificatorios completos del responsable se entregan a quien los
+        solicite por esa casilla.
       </p>
       <p>
         Esta política se rige por la <strong>Ley 25.326 de Protección de los Datos

@@ -1,28 +1,28 @@
 /* ═══════════════════════════════════════════════════════════
-   Datos legales del titular del sitio.
+   Datos del titular del sitio.
 
-   ⚠️  COMPLETAR ANTES DE PUBLICAR. Una página de términos con
-   datos de relleno es peor que no tenerla: se ve que salió de
-   una plantilla y, si alguien reclama, no identifica a nadie.
+   Decisión tomada: NO publicamos CUIT ni domicilio. En un sitio
+   abierto esos datos quedan expuestos a cualquiera, y para quien
+   trabaja desde su casa el domicilio fiscal y el particular son
+   el mismo.
 
-   Los tres primeros son obligatorios para que los términos y la
-   política de privacidad tengan valor:
-   - razón social o nombre completo del titular
-   - CUIT o CUIL
-   - domicilio (puede ser el fiscal)
+   La identificación se resuelve con nombre comercial + una casilla
+   que funciona + el compromiso de entregar los datos fiscales
+   completos a quien los pida. Es la práctica habitual de los
+   proveedores de servicios chicos en Argentina.
+
+   El canal de arrepentimiento y baja, que sí es obligatorio por la
+   Disposición 954/2025, sigue funcionando por email sin registro
+   previo — que es lo que la norma exige.
    ═══════════════════════════════════════════════════════════ */
 
 export const TITULAR = {
-  /** Razón social, o tu nombre y apellido si facturás como persona física. */
-  nombre: "[COMPLETAR: razón social o nombre completo]",
-  /** CUIT o CUIL, con guiones. */
-  cuit: "[COMPLETAR: CUIT / CUIL]",
-  /** Domicilio. Alcanza el fiscal; no hace falta que sea una oficina. */
-  domicilio: "[COMPLETAR: domicilio], Ciudad Autónoma de Buenos Aires, Argentina",
-  /** Casilla donde recibís reclamos, bajas y ejercicio de derechos. */
-  email: "hola@tucontenido.ar",
-  /** Nombre comercial, el que ve el cliente. */
+  /** Nombre comercial: el que ve el cliente. */
   marca: "Tu Contenido",
+  /** Casilla donde llegan consultas, reclamos, bajas y ejercicio de derechos. */
+  email: "hola@tucontenido.ar",
+  /** Jurisdicción a efectos de ley aplicable. No es un domicilio. */
+  jurisdiccion: "Ciudad Autónoma de Buenos Aires, República Argentina",
 };
 
 /** Última revisión de los textos legales. Actualizar al cambiarlos. */

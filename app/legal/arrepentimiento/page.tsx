@@ -83,9 +83,9 @@ export default function Arrepentimiento() {
       <h2>Si preferís escribirnos directamente</h2>
       <p>
         También vale un correo a <a href={`mailto:${TITULAR.email}`}>{TITULAR.email}</a>{" "}
-        con la palabra ARREPENTIMIENTO o BAJA en el asunto. Y si querés dejar
-        constancia formal, podés hacerlo por carta documento a{" "}
-        {TITULAR.domicilio}.
+        con la palabra ARREPENTIMIENTO o BAJA en el asunto. Si necesitás dejar
+        constancia formal por carta documento, pedinos los datos completos del
+        titular por esa misma casilla y te los damos sin vueltas.
       </p>
 
       <h2>Dónde reclamar si no te respondemos</h2>
