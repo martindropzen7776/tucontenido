@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { wa } from "@/lib/site";
 import { leerRubro, type Rubro } from "@/lib/rubros";
 
@@ -36,91 +36,98 @@ type Paso = {
 function armarPasos(r: Rubro): Paso[] {
   return [
     {
-      clave: "web",
-      pregunta: `¿Tu ${r.local} ya tiene página web?`,
+      /* Abre con una escena, no con un trámite. "¿Tenés web?" es un
+         campo de formulario; esto es algo que el dueño ya se preguntó. */
+      clave: "google",
+      pregunta: "¿Qué pasa hoy si alguien te busca en Google?",
       opciones: [
         {
-          id: "no",
-          texto: "No, todavía no",
-          eco: `Cuando alguien busca ${r.busqueda} y no aparecés, se lo lleva otro.`,
+          id: "nada",
+          texto: "No aparezco",
+          eco: "Es el problema más caro que tenés y el más barato de arreglar.",
+        },
+        {
+          id: "insta",
+          texto: "Aparece mi Instagram",
+          eco: "Instagram te muestra. Una web te explica: qué hacés, cuánto sale y cómo contactarte.",
         },
         {
           id: "vieja",
-          texto: "Sí, pero está vieja",
-          eco: `Una web desactualizada trabaja en contra: el que entra asume que el ${r.local} está igual.`,
+          texto: "Aparece mi web, pero está vieja",
+          eco: `Y se nota. El que la abre asume que el ${r.local} está igual de desactualizado.`,
         },
         {
-          id: "anda",
-          texto: "Sí, y funciona bien",
-          eco: "Entonces no somos lo que necesitás. Igual te la miramos gratis y te decimos qué le falta.",
+          id: "bien",
+          texto: "Aparece mi web y está bien",
+          eco: "Entonces no somos lo que necesitás. Si querés te la miramos igual, gratis.",
           sirve: false,
         },
       ],
     },
     {
-      clave: "llegan",
-      pregunta: `¿Cómo te llegan los ${r.cliente} hoy?`,
+      /* El momento de la cuenta. No se la hacemos nosotros: elige él
+         el número y el eco solo lo termina de decir en voz alta. */
+      clave: "cuantos",
+      pregunta: `¿Cuántos ${r.cliente} nuevos por mes harían que valga la pena?`,
       opciones: [
         {
-          id: "boca",
-          texto: "Por recomendación",
-          eco: "El boca a boca no escala y depende de que alguien se acuerde de vos. La web trabaja sola.",
+          id: "pocos",
+          texto: "Con dos o tres ya está",
+          eco: "Dos clientes nuevos y la web ya se pagó. De ahí en adelante sigue trabajando sin costo.",
         },
         {
-          id: "redes",
-          texto: "Por Instagram o redes",
-          eco: "Ya te encuentran los que te siguen. La web es lo que convierte al que todavía no.",
+          id: "medio",
+          texto: "Unos cinco",
+          eco: "Cinco por mes son sesenta al año. La web se paga una sola vez.",
         },
         {
-          id: "google",
-          texto: "Me buscan en Google",
-          eco: "Si te buscan en Google y no tenés web, están encontrando a tu competencia.",
+          id: "muchos",
+          texto: "Diez o más",
+          eco: "Para ese volumen la web deja de ser un gasto y pasa a ser infraestructura.",
         },
       ],
     },
     {
-      /* La pregunta de la llamada. No vende: hace que el prospecto
-         reviva la fricción del proceso de siempre. Y las tres
-         respuestas terminan en el mismo lugar — acá el precio se
-         dice ahora. */
+      /* La fricción del proceso de siempre, contada por él. */
       clave: "presupuesto",
       pregunta: "¿Alguna vez pediste presupuesto para una web?",
       opciones: [
         {
           id: "llamada",
           texto: "Sí, y me hicieron agendar una llamada",
-          eco: "Y en esa llamada tampoco te dijeron el precio. Acá lo tenés ahora: USD 500, sin reuniones.",
+          eco: "Y en la llamada tampoco te dijeron el precio. Acá ya lo sabés: USD 500.",
         },
         {
           id: "fantasma",
           texto: "Sí, pero nunca me contestaron",
-          eco: "Pasa todo el tiempo. Acá contestás tres preguntas y ya sabés cuánto sale y cuánto tarda.",
+          eco: "Nos lo dicen seguido. Es la parte del rubro que peor funciona.",
         },
         {
           id: "primera",
           texto: "No, es la primera vez",
-          eco: "Entonces te ahorrás la parte fea. USD 500, siete días, y la web queda a tu nombre.",
+          eco: "Mejor. Te ahorrás la parte fea: acá el precio está publicado y no hay reunión.",
         },
       ],
     },
     {
+      /* Cierre operativo: qué pasa a partir de ahora. */
       clave: "cuando",
       pregunta: "¿Para cuándo la necesitás online?",
       opciones: [
         {
           id: "ya",
           texto: "Cuanto antes",
-          eco: "Si mandás el material hoy, el primer boceto lo ves en 72 horas.",
+          eco: "Mandás logo y fotos hoy, y el jueves estás mirando tu web en el celular.",
         },
         {
           id: "mes",
           texto: "Este mes",
-          eco: "Entra cómodo. El plazo son siete días desde que mandás logo y fotos.",
+          eco: "Entra cómodo. Son siete días desde que mandás el material, no desde que pagás.",
         },
         {
           id: "viendo",
           texto: "Estoy averiguando",
-          eco: "Sin problema. Te pasamos el precio y los tiempos, y decidís cuando quieras.",
+          eco: "Está bien. Te dejamos el precio y los tiempos por escrito y lo pensás.",
         },
       ],
     },
@@ -142,16 +149,32 @@ export function Califica() {
   const [paso, setPaso] = useState(0);
   const [respuestas, setRespuestas] = useState<Record<string, Opcion>>({});
   const [nombre, setNombre] = useState("");
+  /* La opcion recien tocada. Se muestra marcada con su eco debajo
+     durante un momento y despues avanza sola: asi la reaccion queda
+     pegada a la respuesta y no debajo de la pregunta siguiente. */
+  const [elegida, setElegida] = useState<Opcion | null>(null);
+  const reloj = useRef<number | null>(null);
 
   const actual = PASOS[paso];
   const terminado = paso >= TOTAL;
   const elegidas = PASOS.map((p) => respuestas[p.clave]).filter(Boolean);
   const califica = elegidas.every((o) => o.sirve !== false);
-  const ultimoEco = elegidas.length ? elegidas[elegidas.length - 1].eco : null;
+  useEffect(() => () => { if (reloj.current) window.clearTimeout(reloj.current); }, []);
+
+  function avanzar(op: Opcion) {
+    if (reloj.current) window.clearTimeout(reloj.current);
+    reloj.current = null;
+    setRespuestas((r) => ({ ...r, [actual.clave]: op }));
+    setElegida(null);
+    setPaso((p) => p + 1);
+  }
 
   function responder(op: Opcion) {
-    setRespuestas((r) => ({ ...r, [actual.clave]: op }));
-    setPaso((p) => p + 1);
+    if (elegida) return avanzar(elegida);
+    setElegida(op);
+    /* setTimeout, no requestAnimationFrame: si el navegador deja de
+       componer cuadros esto igual se dispara y nadie queda trabado. */
+    reloj.current = window.setTimeout(() => avanzar(op), 1250);
     const w = window as unknown as { fbq?: (...a: unknown[]) => void };
     if (typeof w.fbq === "function") {
       w.fbq("trackCustom", "PasoCalificador", {
@@ -163,14 +186,16 @@ export function Califica() {
   }
 
   function volver() {
+    if (reloj.current) window.clearTimeout(reloj.current);
+    setElegida(null);
     setPaso((p) => Math.max(0, p - 1));
   }
 
   function mensajeFinal() {
     const NL = String.fromCharCode(10);
     const datos = [
-      `· Web: ${respuestas.web?.texto ?? "-"}`,
-      `· Le llegan: ${respuestas.llegan?.texto ?? "-"}`,
+      `· En Google: ${respuestas.google?.texto ?? "-"}`,
+      `· Le alcanzaría con: ${respuestas.cuantos?.texto ?? "-"}`,
       `· Presupuestó antes: ${respuestas.presupuesto?.texto ?? "-"}`,
       `· Plazo: ${respuestas.cuando?.texto ?? "-"}`,
     ];
@@ -221,12 +246,26 @@ export function Califica() {
             </h1>
 
             <div className="flex flex-col gap-2.5">
-              {actual.opciones.map((op) => (
+              {actual.opciones.map((op) => {
+                const esta = elegida?.id === op.id;
+                const otra = !!elegida && !esta;
+                return (
                 <button
                   key={op.id}
                   type="button"
                   onClick={() => responder(op)}
-                  className="group flex min-h-[60px] w-full items-center justify-between gap-4 border border-ink/30 px-5 py-4 text-left text-[16px] font-medium transition-colors hover:border-ink hover:bg-ink hover:text-bone sm:text-[17px]"
+                  aria-pressed={esta}
+                  /* Sin transicion cuando ya hay una elegida: marcar cual
+                     tocaste es informacion de estado y tiene que verse al
+                     instante, no cuando termine una animacion. El hover si
+                     transiciona, porque eso si es adorno. */
+                  className={`group flex min-h-[58px] w-full items-center justify-between gap-4 border px-5 py-3.5 text-left text-[16px] font-medium sm:text-[17px] ${
+                    esta
+                      ? "border-ink bg-ink text-bone"
+                      : otra
+                        ? "border-ink/12 text-ink/30"
+                        : "border-ink/30 transition-colors duration-200 hover:border-ink hover:bg-ink hover:text-bone"
+                  }`}
                 >
                   {op.texto}
                   <svg
@@ -237,7 +276,29 @@ export function Califica() {
                     <path d="M1 6.5h13M9.5 1.5 14.5 6.5l-5 5" stroke="currentColor" strokeWidth="1.8" />
                   </svg>
                 </button>
-              ))}
+                );
+              })}
+            </div>
+
+            {/* El eco, pegado a la respuesta que lo provoco. El alto
+                esta reservado siempre para que nada salte. */}
+            <div className="min-h-[3.8rem]">
+              {elegida && (
+                <div className="border-l-2 border-ink pl-4">
+                  <p className="text-[15px] leading-snug">{elegida.eco}</p>
+                  {/* La pausa avanza sola, pero el navegador puede demorar
+                      el timer (pestaña en segundo plano, ahorro de batería).
+                      Este boton hace que la espera sea explicita y da salida
+                      inmediata si tarda. */}
+                  <button
+                    type="button"
+                    onClick={() => avanzar(elegida)}
+                    className="mono mt-2 !text-[11px] text-ink-soft underline underline-offset-4 transition-opacity hover:opacity-70"
+                  >
+                    Seguir
+                  </button>
+                </div>
+              )}
             </div>
         </div>
       ) : (
@@ -277,19 +338,6 @@ export function Califica() {
       )}
 
       {/* El eco de la última respuesta: acá está la persuasión. */}
-      {/* El eco es contenido complementario y se renderiza visible:
-          nada acá puede depender de que corra una animación. */}
-      <div className="min-h-[3.2rem]">
-        {ultimoEco && !terminado && (
-          <p
-            key={ultimoEco}
-            className="border-l border-ink/30 pl-4 text-[14.5px] leading-snug text-ink-soft"
-          >
-            {ultimoEco}
-          </p>
-        )}
-      </div>
-
       {paso > 0 && !terminado && (
         <button
           type="button"
