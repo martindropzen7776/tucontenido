@@ -58,23 +58,48 @@ function armarPasos(r: Rubro): Paso[] {
       ],
     },
     {
-      clave: "contacto",
-      pregunta: `¿Cómo te contactan tus ${r.cliente} hoy?`,
+      clave: "llegan",
+      pregunta: `¿Cómo te llegan los ${r.cliente} hoy?`,
       opciones: [
         {
-          id: "llaman",
-          texto: "Me llaman por teléfono",
-          eco: "Cada llamada perdida es un cliente perdido. Con la web te escriben cuando pueden, no cuando atendés.",
+          id: "boca",
+          texto: "Por recomendación",
+          eco: "El boca a boca no escala y depende de que alguien se acuerde de vos. La web trabaja sola.",
         },
         {
-          id: "insta",
-          texto: "Por Instagram o WhatsApp",
-          eco: "Ya te escriben. La web es lo que hace que te encuentren los que todavía no te siguen.",
+          id: "redes",
+          texto: "Por Instagram o redes",
+          eco: "Ya te encuentran los que te siguen. La web es lo que convierte al que todavía no.",
         },
         {
-          id: "presencial",
-          texto: r.presencial,
-          eco: "Estás dependiendo del que ya pasa por la puerta. La web te trae al que te busca en Google.",
+          id: "google",
+          texto: "Me buscan en Google",
+          eco: "Si te buscan en Google y no tenés web, están encontrando a tu competencia.",
+        },
+      ],
+    },
+    {
+      /* La pregunta de la llamada. No vende: hace que el prospecto
+         reviva la fricción del proceso de siempre. Y las tres
+         respuestas terminan en el mismo lugar — acá el precio se
+         dice ahora. */
+      clave: "presupuesto",
+      pregunta: "¿Alguna vez pediste presupuesto para una web?",
+      opciones: [
+        {
+          id: "llamada",
+          texto: "Sí, y me hicieron agendar una llamada",
+          eco: "Y en esa llamada tampoco te dijeron el precio. Acá lo tenés ahora: USD 500, sin reuniones.",
+        },
+        {
+          id: "fantasma",
+          texto: "Sí, pero nunca me contestaron",
+          eco: "Pasa todo el tiempo. Acá contestás tres preguntas y ya sabés cuánto sale y cuánto tarda.",
+        },
+        {
+          id: "primera",
+          texto: "No, es la primera vez",
+          eco: "Entonces te ahorrás la parte fea. USD 500, siete días, y la web queda a tu nombre.",
         },
       ],
     },
@@ -142,18 +167,23 @@ export function Califica() {
   }
 
   function mensajeFinal() {
-    const l = [
+    const NL = String.fromCharCode(10);
+    const datos = [
+      `· Web: ${respuestas.web?.texto ?? "-"}`,
+      `· Le llegan: ${respuestas.llegan?.texto ?? "-"}`,
+      `· Presupuestó antes: ${respuestas.presupuesto?.texto ?? "-"}`,
+      `· Plazo: ${respuestas.cuando?.texto ?? "-"}`,
+    ];
+    if (rubroClave !== "general") datos.push(`· Rubro: ${rubroClave}`);
+
+    return [
       nombre.trim() ? `Hola! Soy ${nombre.trim()}.` : "Hola!",
       califica
         ? "Quiero mi web en 7 días. Te paso lo que respondí:"
         : "Quiero que miren mi web actual. Te paso lo que respondí:",
       "",
-      `· Web: ${respuestas.web?.texto ?? "-"}`,
-      `· Contacto: ${respuestas.contacto?.texto ?? "-"}`,
-      `· Plazo: ${respuestas.cuando?.texto ?? "-"}`,
-      rubroClave !== "general" ? `· Rubro: ${rubroClave}` : "",
-    ].filter(Boolean);
-    return l.join(String.fromCharCode(10));
+      ...datos,
+    ].join(NL);
   }
 
   function alEnviar() {

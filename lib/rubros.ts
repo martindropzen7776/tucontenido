@@ -22,8 +22,6 @@ export type Rubro = {
   cliente: string;
   /** Lo que alguien tipea en Google para encontrarlo. */
   busqueda: string;
-  /** La tercera opción de "cómo te contactan hoy". */
-  presencial: string;
   /** Lo que se muestra al pie de la página. */
   pie: string;
 };
@@ -32,7 +30,6 @@ const GENERICO: Rubro = {
   local: "negocio",
   cliente: "clientes",
   busqueda: "un negocio como el tuyo",
-  presencial: "Vienen al local",
   pie: "Negocios de Buenos Aires",
 };
 
@@ -41,49 +38,42 @@ export const RUBROS: Record<string, Rubro> = {
     local: "consultorio",
     cliente: "pacientes",
     busqueda: "un odontólogo en su zona",
-    presencial: "Vienen al consultorio",
     pie: "Odontología · Buenos Aires",
   },
   estetica: {
     local: "centro",
     cliente: "clientas",
     busqueda: "un centro de estética cerca",
-    presencial: "Vienen al centro",
     pie: "Estética · Buenos Aires",
   },
   gimnasio: {
     local: "gimnasio",
     cliente: "socios",
     busqueda: "un gimnasio en el barrio",
-    presencial: "Pasan por el gimnasio",
     pie: "Gimnasios · Buenos Aires",
   },
   veterinaria: {
     local: "veterinaria",
     cliente: "clientes",
     busqueda: "una veterinaria cerca",
-    presencial: "Vienen a la veterinaria",
     pie: "Veterinarias · Buenos Aires",
   },
   contador: {
     local: "estudio",
     cliente: "clientes",
     busqueda: "un contador en su zona",
-    presencial: "Vienen al estudio",
     pie: "Estudios contables · Buenos Aires",
   },
   abogados: {
     local: "estudio",
     cliente: "clientes",
     busqueda: "un abogado en su zona",
-    presencial: "Vienen al estudio",
     pie: "Estudios jurídicos · Buenos Aires",
   },
   inmobiliaria: {
     local: "inmobiliaria",
     cliente: "clientes",
     busqueda: "una inmobiliaria de la zona",
-    presencial: "Pasan por la oficina",
     pie: "Inmobiliarias · Buenos Aires",
   },
 };
