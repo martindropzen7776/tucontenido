@@ -59,7 +59,7 @@ function armarPasos(r: Rubro): Paso[] {
         {
           id: "bien",
           texto: "Aparece mi web y está bien",
-          eco: "Entonces no somos lo que necesitás. Si querés te la miramos igual, gratis.",
+          eco: "Entonces frenamos acá.",
           sirve: false,
         },
       ],
@@ -153,12 +153,14 @@ export function Califica() {
      durante un momento y despues avanza sola: asi la reaccion queda
      pegada a la respuesta y no debajo de la pregunta siguiente. */
   const [elegida, setElegida] = useState<Opcion | null>(null);
+  /* Si contesta algo que lo deja fuera del servicio, la encuesta
+     termina ahi. Hacerle contestar tres preguntas mas a alguien que
+     ya sabemos que no entra es hacerle perder el tiempo a los dos. */
+  const [salida, setSalida] = useState(false);
   const reloj = useRef<number | null>(null);
 
   const actual = PASOS[paso];
   const terminado = paso >= TOTAL;
-  const elegidas = PASOS.map((p) => respuestas[p.clave]).filter(Boolean);
-  const califica = elegidas.every((o) => o.sirve !== false);
   useEffect(() => () => { if (reloj.current) window.clearTimeout(reloj.current); }, []);
 
   function avanzar(op: Opcion) {
@@ -166,6 +168,16 @@ export function Califica() {
     reloj.current = null;
     setRespuestas((r) => ({ ...r, [actual.clave]: op }));
     setElegida(null);
+    if (op.sirve === false) {
+      setSalida(true);
+      const w = window as unknown as { fbq?: (...a: unknown[]) => void };
+      /* Evento propio: estos NO tienen que entrar en la optimizacion
+         de las campañas, o Meta va a buscar mas gente como esta. */
+      if (typeof w.fbq === "function") {
+        w.fbq("trackCustom", "NoCalifica", { motivo: op.id, rubro: rubroClave });
+      }
+      return;
+    }
     setPaso((p) => p + 1);
   }
 
@@ -191,6 +203,14 @@ export function Califica() {
     setPaso((p) => Math.max(0, p - 1));
   }
 
+  function reiniciar() {
+    if (reloj.current) window.clearTimeout(reloj.current);
+    setSalida(false);
+    setElegida(null);
+    setRespuestas({});
+    setPaso(0);
+  }
+
   function mensajeFinal() {
     const NL = String.fromCharCode(10);
     const datos = [
@@ -203,9 +223,7 @@ export function Califica() {
 
     return [
       nombre.trim() ? `Hola! Soy ${nombre.trim()}.` : "Hola!",
-      califica
-        ? "Quiero mi web en 7 días. Te paso lo que respondí:"
-        : "Quiero que miren mi web actual. Te paso lo que respondí:",
+      "Quiero mi web en 7 días. Te paso lo que respondí:",
       "",
       ...datos,
     ].join(NL);
@@ -214,14 +232,14 @@ export function Califica() {
   function alEnviar() {
     const w = window as unknown as { fbq?: (...a: unknown[]) => void };
     if (typeof w.fbq === "function") {
-      w.fbq("track", "Lead", { califica, rubro: rubroClave, nombre: !!nombre.trim() });
+      w.fbq("track", "Lead", { rubro: rubroClave, nombre: !!nombre.trim() });
     }
   }
 
   return (
     <div className="flex w-full max-w-[38rem] flex-col gap-7">
       {/* Avance: rayas, no puntitos. Dice cuánto falta de un vistazo. */}
-      <div className="flex items-center gap-2.5">
+      <div className={`flex items-center gap-2.5 ${salida ? "invisible" : ""}`}>
         {PASOS.map((p, i) => (
           <span
             key={p.clave}
@@ -239,7 +257,50 @@ export function Califica() {
           instante. Si dependiera de que termine una animación de salida,
           un frame perdido dejaría al lead en una pantalla muerta. Y en un
           calificador el cambio instantáneo además se siente más rápido. */}
-      {!terminado ? (
+      {salida ? (
+        <div className="flex flex-col gap-6">
+          <h1 className="disp text-[clamp(28px,6vw,46px)] leading-[1.04] tracking-[-0.028em] text-balance">
+            No somos lo que estás buscando
+          </h1>
+
+          <div className="flex flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
+            <p>
+              Esto es para negocios que no tienen web, o que tienen una de hace
+              diez años. Si la tuya ya funciona, cambiarla sería gastar por gastar
+              — y no te lo vamos a vender.
+            </p>
+            <p className="text-ink">
+              Lo que sí podemos hacer: mirarla y decirte en qué está floja.
+              Velocidad en el celular, si aparecés en Google, si el contacto está
+              donde tiene que estar. Gratis, y sin que te ofrezcamos nada después.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3 pt-1">
+            <a
+              href={wa(
+                "Hola! Hice el cuestionario y me dio que no califico porque mi web funciona bien. ¿Me la miran igual?"
+              )}
+              target="_blank"
+              rel="noopener"
+              onClick={alEnviar}
+              className="btn min-h-[58px] justify-center text-[16px]"
+            >
+              Que me la revisen igual
+              <svg className="arw" width="15" height="12" viewBox="0 0 15 12" fill="none" aria-hidden="true">
+                <path d="M1 6h12M9 1.5 13.5 6 9 10.5" stroke="currentColor" strokeWidth="2" />
+              </svg>
+            </a>
+            <button
+              type="button"
+              onClick={reiniciar}
+              className="mono self-start !text-[11px] text-ink-soft underline underline-offset-4 transition-opacity hover:opacity-70"
+            >
+              Me equivoqué, volver a empezar
+            </button>
+          </div>
+        </div>
+      ) : !terminado ? (
         <div key={actual.clave} className="flex flex-col gap-6">
             <h1 className="disp text-[clamp(28px,6vw,46px)] leading-[1.04] tracking-[-0.028em] text-balance">
               {actual.pregunta}
@@ -304,13 +365,11 @@ export function Califica() {
       ) : (
         <div className="flex flex-col gap-6">
             <h1 className="disp text-[clamp(28px,6vw,46px)] leading-[1.04] tracking-[-0.028em] text-balance">
-              {califica ? "Listo. ¿Cómo te llamás?" : "Te la miramos igual"}
+              Listo. ¿Cómo te llamás?
             </h1>
 
             <p className="text-[15.5px] leading-relaxed text-ink-soft">
-              {califica
-                ? "Te escribimos por WhatsApp con el precio cerrado y los tiempos. Sin llamadas ni reuniones."
-                : "Te decimos qué le falta a tu web actual, gratis y sin vueltas. Si después querés una nueva, hablamos."}
+              Te escribimos por WhatsApp con el precio cerrado y los tiempos. Sin llamadas ni reuniones.
             </p>
 
             <input
@@ -329,7 +388,7 @@ export function Califica() {
               onClick={alEnviar}
               className="btn min-h-[60px] justify-center text-[16px]"
             >
-              {califica ? "Pedir mi web por WhatsApp" : "Que me la revisen"}
+              Pedir mi web por WhatsApp
               <svg className="arw" width="15" height="12" viewBox="0 0 15 12" fill="none" aria-hidden="true">
                 <path d="M1 6h12M9 1.5 13.5 6 9 10.5" stroke="currentColor" strokeWidth="2" />
               </svg>
