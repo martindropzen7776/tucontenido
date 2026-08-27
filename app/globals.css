@@ -222,3 +222,65 @@ button:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+/* ─── Prosa legal ───
+   Los textos legales se leen distinto: en columna angosta, con
+   más aire entre párrafos y jerarquía clara. Nadie los lee de
+   corrido, se los escanea buscando una cláusula. */
+.prosa {
+  font-size: 16.5px;
+  line-height: 1.75;
+  color: var(--color-ink-soft);
+}
+.prosa h1 {
+  font-family: var(--font-disp);
+  font-weight: 800;
+  font-stretch: 88%;
+  font-size: clamp(32px, 6vw, 52px);
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  color: var(--color-ink);
+  text-wrap: balance;
+  margin-bottom: 1.6rem;
+}
+.prosa h2 {
+  font-family: var(--font-disp);
+  font-weight: 700;
+  font-stretch: 90%;
+  font-size: clamp(20px, 2.6vw, 25px);
+  line-height: 1.2;
+  letter-spacing: -0.018em;
+  color: var(--color-ink);
+  margin: 2.8rem 0 0.9rem;
+}
+.prosa h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--color-ink);
+  margin: 1.8rem 0 0.5rem;
+}
+.prosa p { margin-bottom: 1.05rem; max-width: 66ch; }
+.prosa ul { margin: 0 0 1.05rem 0; padding: 0; list-style: none; max-width: 66ch; }
+.prosa li {
+  position: relative;
+  padding-left: 1.3rem;
+  margin-bottom: 0.6rem;
+}
+.prosa li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 6px;
+  height: 1px;
+  background: var(--color-ink-soft);
+}
+.prosa strong { color: var(--color-ink); font-weight: 600; }
+.prosa a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prosa a:hover { opacity: 0.7; }
+.prosa .no-prosa a { text-decoration: none; }

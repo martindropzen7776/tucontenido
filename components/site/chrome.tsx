@@ -2,6 +2,7 @@
 
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { EMAIL, INSTAGRAM } from "@/lib/site";
+import { PAGINAS_LEGALES } from "@/lib/legal";
 import { WaLink } from "./wa-link";
 
 const NAV = [
@@ -101,7 +102,31 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="mono !text-[11px] flex flex-wrap items-center justify-between gap-3.5 pt-6 text-bone/40">
+      {/* Disposición 954/2025: el botón de arrepentimiento tiene que estar
+          a simple vista y en el primer acceso, sin registro previo. */}
+      <div className="flex flex-wrap gap-x-6 gap-y-2 pt-6">
+        {PAGINAS_LEGALES.map((l) => (
+          <a
+            key={l.href}
+            href={l.href}
+            className={`text-[13px] underline underline-offset-4 transition-colors hover:text-acid ${
+              l.href.includes("arrepentimiento") ? "text-bone" : "text-bone/55"
+            }`}
+          >
+            {l.titulo}
+          </a>
+        ))}
+      </div>
+
+      <p className="mt-6 max-w-[70ch] text-[12.5px] leading-relaxed text-bone/40">
+        Usamos herramientas de inteligencia artificial en parte del proceso de
+        diseño y redacción; el resultado lo revisa y aprueba una persona antes de
+        entregarlo. No estamos asociados, patrocinados ni avalados por Meta
+        Platforms, Google ni ninguna de las plataformas mencionadas: sus marcas
+        pertenecen a sus titulares.
+      </p>
+
+      <div className="mono !text-[11px] mt-6 flex flex-wrap items-center justify-between gap-3.5 text-bone/40">
         <span>© 2026 Tu Contenido · Argentina</span>
         <span>Hecha con este mismo proceso</span>
       </div>
