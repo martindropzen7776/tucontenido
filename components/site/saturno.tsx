@@ -15,13 +15,24 @@ import { useEffect, useRef } from "react";
       Kepler. Si giraran todos igual parecería un disco rígido.
    3. La mitad lejana va más tenue y más chica: da profundidad.
 
-   Es canvas 2D, sin librería. Se apaga solo cuando sale de
-   pantalla y respeta prefers-reduced-motion.
+   ── Sobre el rendimiento ──
+   La primera versión ocupaba todo el hero: en un teléfono eso son
+   750x2574 píxeles de buffer, o sea casi dos megapíxeles que se
+   borraban y repintaban sesenta veces por segundo para dibujar en
+   el 13% del área. La animación caía a unos pocos cuadros y se
+   veía congelada.
+
+   Ahora el canvas es un cuadrado del tamaño de los anillos, el
+   devicePixelRatio se limita a 1.5 en pantallas chicas (las
+   partículas son puntos de un píxel, no ganan nada con más) y en
+   móvil corre a 30 cuadros por segundo, que en una órbita lenta
+   es indistinguible de 60. Entre las tres, el trabajo por segundo
+   baja más de veinte veces.
    ═══════════════════════════════════════════════════════════ */
 
 type P = {
   a: number;      // ángulo en el anillo
-  r: number;      // radio, en fracción del ancho de referencia
+  r: number;      // radio, en fracción del lado del canvas
   vel: number;    // velocidad angular
   brillo: number;
   tam: number;
@@ -39,26 +50,24 @@ export function Saturno({ className = "" }: { className?: string }) {
     const menosMovimiento = matchMedia("(prefers-reduced-motion: reduce)");
     const chico = matchMedia("(max-width: 720px)");
 
-    let ancho = 0;
-    let alto = 0;
-    let dpr = 1;
+    let lado = 0;
     let particulas: P[] = [];
     let raf = 0;
     let corriendo = false;
-    let t = 0;
+    let ultimo = 0;
 
     /* Cuatro bandas con un hueco en el medio: la División de Cassini
        es lo que hace que un anillo parezca "de Saturno" y no un aro. */
     const BANDAS = [
-      { desde: 0.42, hasta: 0.58, densidad: 0.20, brillo: 0.30 },
-      { desde: 0.60, hasta: 0.80, densidad: 0.34, brillo: 0.55 },
+      { desde: 0.42, hasta: 0.58, densidad: 0.2, brillo: 0.3 },
+      { desde: 0.6, hasta: 0.8, densidad: 0.34, brillo: 0.55 },
       // hueco (Cassini)
-      { desde: 0.86, hasta: 1.02, densidad: 0.30, brillo: 0.42 },
+      { desde: 0.86, hasta: 1.02, densidad: 0.3, brillo: 0.42 },
       { desde: 1.06, hasta: 1.14, densidad: 0.16, brillo: 0.22 },
     ];
 
     function sembrar() {
-      const total = chico.matches ? 620 : 1500;
+      const total = chico.matches ? 700 : 1500;
       particulas = [];
       for (const b of BANDAS) {
         const n = Math.round(total * b.densidad);
@@ -67,8 +76,7 @@ export function Saturno({ className = "" }: { className?: string }) {
           particulas.push({
             a: Math.random() * Math.PI * 2,
             r,
-            // Kepler: más lejos, más lento.
-            vel: 0.055 / Math.pow(r, 1.5),
+            vel: 0.055 / Math.pow(r, 1.5), // Kepler: más lejos, más lento
             brillo: b.brillo * (0.35 + Math.random() * 0.65),
             tam: Math.random() < 0.08 ? 1.9 : 1.05,
           });
@@ -78,48 +86,40 @@ export function Saturno({ className = "" }: { className?: string }) {
 
     function medir() {
       const rect = cv!.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      ancho = Math.max(1, Math.round(rect.width));
-      alto = Math.max(1, Math.round(rect.height));
-      cv!.width = Math.round(ancho * dpr);
-      cv!.height = Math.round(alto * dpr);
+      /* Las partículas son puntos de un píxel: por encima de 1.5 el
+         buffer crece al cuadrado sin que se note la diferencia. */
+      const dpr = Math.min(window.devicePixelRatio || 1, chico.matches ? 1.5 : 2);
+      lado = Math.max(1, Math.round(Math.min(rect.width, rect.height)));
+      cv!.width = Math.round(lado * dpr);
+      cv!.height = Math.round(lado * dpr);
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
     function pintar() {
-      ctx!.clearRect(0, 0, ancho, alto);
+      ctx!.clearRect(0, 0, lado, lado);
 
-      /* El sistema se ancla a la derecha y algo arriba: deja la
-         columna izquierda libre para el texto. */
-      const cx = ancho * (chico.matches ? 0.5 : 0.72);
-      const cy = alto * (chico.matches ? 0.42 : 0.46);
-      const escala = Math.min(ancho, alto) * (chico.matches ? 0.46 : 0.5);
+      const cx = lado / 2;
+      const cy = lado / 2;
+      const escala = lado * 0.42;
 
-      const inclinacion = 0.30;        // cuánto se achata la elipse
-      const giro = -0.34;              // rotación del plano, en radianes
+      const inclinacion = 0.3; // cuánto se achata la elipse
+      const giro = -0.34; // rotación del plano, en radianes
       const cosG = Math.cos(giro);
       const senG = Math.sin(giro);
       const radioPlaneta = escala * 0.34;
 
-      const proyectar = (p: P) => {
-        const x = Math.cos(p.a) * p.r * escala;
-        const y = Math.sin(p.a) * p.r * escala * inclinacion;
-        return {
-          x: cx + x * cosG - y * senG,
-          y: cy + x * senG + y * cosG,
-          lejos: Math.sin(p.a) < 0,
-          prof: (Math.sin(p.a) + 1) / 2, // 0 lejos, 1 cerca
-        };
-      };
-
       const dibujar = (soloLejos: boolean) => {
         for (const p of particulas) {
-          const q = proyectar(p);
-          if (q.lejos !== soloLejos) continue;
-          const atenua = 0.45 + q.prof * 0.55;
-          ctx!.globalAlpha = p.brillo * atenua;
-          const s = p.tam * (0.75 + q.prof * 0.35);
-          ctx!.fillRect(q.x - s / 2, q.y - s / 2, s, s);
+          const lejos = Math.sin(p.a) < 0;
+          if (lejos !== soloLejos) continue;
+          const x = Math.cos(p.a) * p.r * escala;
+          const y = Math.sin(p.a) * p.r * escala * inclinacion;
+          const px = cx + x * cosG - y * senG;
+          const py = cy + x * senG + y * cosG;
+          const prof = (Math.sin(p.a) + 1) / 2; // 0 lejos, 1 cerca
+          ctx!.globalAlpha = p.brillo * (0.45 + prof * 0.55);
+          const s = p.tam * (0.75 + prof * 0.35);
+          ctx!.fillRect(px - s / 2, py - s / 2, s, s);
         }
       };
 
@@ -142,7 +142,6 @@ export function Saturno({ className = "" }: { className?: string }) {
       ctx!.fillStyle = g;
       ctx!.fill();
 
-      // borde: el planeta tiene que recortarse contra los anillos
       ctx!.globalAlpha = 0.5;
       ctx!.strokeStyle = "#3A3A46";
       ctx!.lineWidth = 1;
@@ -155,17 +154,24 @@ export function Saturno({ className = "" }: { className?: string }) {
       ctx!.globalAlpha = 1;
     }
 
-    function paso() {
+    /* En móvil, 30 cuadros por segundo. La órbita es lenta: nadie
+       distingue la diferencia y el teléfono hace la mitad del trabajo. */
+    const intervalo = chico.matches ? 1000 / 30 : 0;
+
+    function paso(t: number) {
       if (!corriendo) return;
-      t += 1;
-      for (const p of particulas) p.a += p.vel * 0.016;
-      pintar();
       raf = requestAnimationFrame(paso);
+      if (intervalo && t - ultimo < intervalo) return;
+      const dt = ultimo ? Math.min((t - ultimo) / 1000, 0.1) : 0.016;
+      ultimo = t;
+      for (const p of particulas) p.a += p.vel * dt;
+      pintar();
     }
 
     function arrancar() {
       if (corriendo || menosMovimiento.matches) return;
       corriendo = true;
+      ultimo = 0;
       raf = requestAnimationFrame(paso);
     }
     function frenar() {
@@ -185,9 +191,17 @@ export function Saturno({ className = "" }: { className?: string }) {
     );
     io.observe(cv);
 
+    /* Solo re-sembramos si el lado cambió de verdad. En móvil la barra
+       de direcciones dispara resizes constantes al scrollear, y
+       re-sembrar en cada uno reinicia las órbitas. */
+    let ladoPrevio = lado;
     const ro = new ResizeObserver(() => {
+      const antes = ladoPrevio;
       medir();
-      sembrar();
+      if (Math.abs(lado - antes) > 8) {
+        sembrar();
+        ladoPrevio = lado;
+      }
       pintar();
     });
     ro.observe(cv);
@@ -212,7 +226,7 @@ export function Saturno({ className = "" }: { className?: string }) {
     <canvas
       ref={ref}
       aria-hidden="true"
-      className={`pointer-events-none absolute inset-0 h-full w-full ${className}`}
+      className={`pointer-events-none absolute ${className}`}
     />
   );
 }

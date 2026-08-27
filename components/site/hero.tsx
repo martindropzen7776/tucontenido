@@ -41,7 +41,12 @@ export function Hero() {
                  lg:grid lg:min-h-svh lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]
                  lg:items-center lg:gap-[clamp(40px,6vw,88px)] lg:pb-0"
     >
-      <Saturno className="-z-10 opacity-90" />
+      {/* Un cuadrado del tamaño de los anillos, no una capa a pantalla
+          completa: en móvil eso bajaba a 3 cuadros por segundo. */}
+      <Saturno className="-z-10 opacity-70
+                          -right-[26%] top-[3%] h-[min(86vw,380px)] w-[min(86vw,380px)]
+                          lg:right-[2%] lg:top-1/2 lg:h-[min(46vw,620px)] lg:w-[min(46vw,620px)]
+                          lg:-translate-y-1/2 lg:opacity-90" />
 
       <div className="order-1 flex flex-col">
         {/* Sin rótulo arriba. El titular no necesita que le avisen

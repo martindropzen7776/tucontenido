@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { wa } from "@/lib/site";
+import { leerRubro, type Rubro } from "@/lib/rubros";
 
 /* ═══════════════════════════════════════════════════════════
    Calificador.
@@ -32,76 +33,87 @@ type Paso = {
   opciones: Opcion[];
 };
 
-const PASOS: Paso[] = [
-  {
-    clave: "web",
-    pregunta: "¿Tu consultorio ya tiene página web?",
-    opciones: [
-      {
-        id: "no",
-        texto: "No, todavía no",
-        eco: "Cuando alguien busca un odontólogo en su zona y no aparecés, el turno se lo lleva otro consultorio.",
-      },
-      {
-        id: "vieja",
-        texto: "Sí, pero está vieja",
-        eco: "Una web desactualizada trabaja en contra: el paciente asume que el consultorio está igual.",
-      },
-      {
-        id: "anda",
-        texto: "Sí, y funciona bien",
-        eco: "Entonces no somos lo que necesitás. Igual te la miramos gratis y te decimos qué le falta.",
-        sirve: false,
-      },
-    ],
-  },
-  {
-    clave: "turnos",
-    pregunta: "¿Cómo sacan turno tus pacientes hoy?",
-    opciones: [
-      {
-        id: "llaman",
-        texto: "Me llaman por teléfono",
-        eco: "Cada llamada perdida es un turno perdido. Con la web te escriben cuando pueden, no cuando atendés.",
-      },
-      {
-        id: "insta",
-        texto: "Por Instagram o WhatsApp",
-        eco: "Ya te escriben. La web es lo que hace que te encuentren los que todavía no te siguen.",
-      },
-      {
-        id: "mostrador",
-        texto: "Vienen al consultorio",
-        eco: "Estás dependiendo del que ya pasa por la puerta. La web te trae al que te busca en Google.",
-      },
-    ],
-  },
-  {
-    clave: "cuando",
-    pregunta: "¿Para cuándo la necesitás online?",
-    opciones: [
-      {
-        id: "ya",
-        texto: "Cuanto antes",
-        eco: "Si mandás el material hoy, el primer boceto lo ves en 72 horas.",
-      },
-      {
-        id: "mes",
-        texto: "Este mes",
-        eco: "Entra cómodo. El plazo son siete días desde que mandás logo y fotos.",
-      },
-      {
-        id: "viendo",
-        texto: "Estoy averiguando",
-        eco: "Sin problema. Te pasamos el precio y los tiempos, y decidís cuando quieras.",
-      },
-    ],
-  },
-];
-
-const TOTAL = PASOS.length;
+function armarPasos(r: Rubro): Paso[] {
+  return [
+    {
+      clave: "web",
+      pregunta: `¿Tu ${r.local} ya tiene página web?`,
+      opciones: [
+        {
+          id: "no",
+          texto: "No, todavía no",
+          eco: `Cuando alguien busca ${r.busqueda} y no aparecés, se lo lleva otro.`,
+        },
+        {
+          id: "vieja",
+          texto: "Sí, pero está vieja",
+          eco: `Una web desactualizada trabaja en contra: el que entra asume que el ${r.local} está igual.`,
+        },
+        {
+          id: "anda",
+          texto: "Sí, y funciona bien",
+          eco: "Entonces no somos lo que necesitás. Igual te la miramos gratis y te decimos qué le falta.",
+          sirve: false,
+        },
+      ],
+    },
+    {
+      clave: "contacto",
+      pregunta: `¿Cómo te contactan tus ${r.cliente} hoy?`,
+      opciones: [
+        {
+          id: "llaman",
+          texto: "Me llaman por teléfono",
+          eco: "Cada llamada perdida es un cliente perdido. Con la web te escriben cuando pueden, no cuando atendés.",
+        },
+        {
+          id: "insta",
+          texto: "Por Instagram o WhatsApp",
+          eco: "Ya te escriben. La web es lo que hace que te encuentren los que todavía no te siguen.",
+        },
+        {
+          id: "presencial",
+          texto: r.presencial,
+          eco: "Estás dependiendo del que ya pasa por la puerta. La web te trae al que te busca en Google.",
+        },
+      ],
+    },
+    {
+      clave: "cuando",
+      pregunta: "¿Para cuándo la necesitás online?",
+      opciones: [
+        {
+          id: "ya",
+          texto: "Cuanto antes",
+          eco: "Si mandás el material hoy, el primer boceto lo ves en 72 horas.",
+        },
+        {
+          id: "mes",
+          texto: "Este mes",
+          eco: "Entra cómodo. El plazo son siete días desde que mandás logo y fotos.",
+        },
+        {
+          id: "viendo",
+          texto: "Estoy averiguando",
+          eco: "Sin problema. Te pasamos el precio y los tiempos, y decidís cuando quieras.",
+        },
+      ],
+    },
+  ];
+}
 
 export function Califica() {
+  /* El rubro sale de la URL (?r=odontologia) y se lee despues de
+     montar: asi el HTML prerenderizado trae la version generica y
+     Google nunca ve una variante a medias. */
+  const [{ clave: rubroClave, rubro }, setRubro] = useState(() => leerRubro(null));
+  useEffect(() => {
+    setRubro(leerRubro(new URLSearchParams(location.search).get("r")));
+  }, []);
+
+  const PASOS = armarPasos(rubro);
+  const TOTAL = PASOS.length;
+
   const [paso, setPaso] = useState(0);
   const [respuestas, setRespuestas] = useState<Record<string, Opcion>>({});
   const [nombre, setNombre] = useState("");
@@ -117,7 +129,11 @@ export function Califica() {
     setPaso((p) => p + 1);
     const w = window as unknown as { fbq?: (...a: unknown[]) => void };
     if (typeof w.fbq === "function") {
-      w.fbq("trackCustom", "PasoCalificador", { paso: paso + 1, respuesta: op.id });
+      w.fbq("trackCustom", "PasoCalificador", {
+        paso: paso + 1,
+        respuesta: op.id,
+        rubro: rubroClave,
+      });
     }
   }
 
@@ -133,16 +149,17 @@ export function Califica() {
         : "Quiero que miren mi web actual. Te paso lo que respondí:",
       "",
       `· Web: ${respuestas.web?.texto ?? "-"}`,
-      `· Turnos: ${respuestas.turnos?.texto ?? "-"}`,
+      `· Contacto: ${respuestas.contacto?.texto ?? "-"}`,
       `· Plazo: ${respuestas.cuando?.texto ?? "-"}`,
-    ];
-    return l.join("\n");
+      rubroClave !== "general" ? `· Rubro: ${rubroClave}` : "",
+    ].filter(Boolean);
+    return l.join(String.fromCharCode(10));
   }
 
   function alEnviar() {
     const w = window as unknown as { fbq?: (...a: unknown[]) => void };
     if (typeof w.fbq === "function") {
-      w.fbq("track", "Lead", { califica, nombre: !!nombre.trim() });
+      w.fbq("track", "Lead", { califica, rubro: rubroClave, nombre: !!nombre.trim() });
     }
   }
 
