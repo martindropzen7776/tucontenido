@@ -36,54 +36,55 @@ type Paso = {
 function armarPasos(r: Rubro): Paso[] {
   return [
     {
-      /* Abre con una escena, no con un trámite. "¿Tenés web?" es un
-         campo de formulario; esto es algo que el dueño ya se preguntó. */
-      clave: "google",
-      pregunta: "¿Qué pasa hoy si alguien te busca en Google?",
+      /* El momento de la recomendación: alguien ya decidió considerarte
+         y te busca. Ahí es donde una mala presencia cuesta caro, y es
+         algo que el dueño sabe de memoria sin tener que verificar nada. */
+      clave: "encuentra",
+      pregunta: "Cuando te recomiendan, ¿qué encuentra el que te busca?",
       opciones: [
         {
-          id: "nada",
-          texto: "No aparezco",
-          eco: "Es el problema más caro que tenés y el más barato de arreglar.",
+          id: "ficha",
+          texto: "Mi ficha de Google y nada más",
+          eco: "La ficha dice que existís. No dice por qué elegirte a vos y no al de la otra cuadra.",
         },
         {
           id: "insta",
-          texto: "Aparece mi Instagram",
-          eco: "Instagram te muestra. Una web te explica: qué hacés, cuánto sale y cómo contactarte.",
+          texto: "Mi Instagram",
+          eco: `Instagram muestra el día a día. La web es la que dice quién es tu ${r.local} y qué hace.`,
         },
         {
           id: "vieja",
-          texto: "Aparece mi web, pero está vieja",
-          eco: `Y se nota. El que la abre asume que el ${r.local} está igual de desactualizado.`,
+          texto: "Una web vieja que no me representa",
+          eco: "Y te juzga por eso antes de leer una línea. Una web vieja dice más de lo que quisieras.",
         },
         {
           id: "bien",
-          texto: "Aparece mi web y está bien",
+          texto: "Una web que me representa bien",
           eco: "Entonces frenamos acá.",
           sirve: false,
         },
       ],
     },
     {
-      /* El momento de la cuenta. No se la hacemos nosotros: elige él
-         el número y el eco solo lo termina de decir en voz alta. */
-      clave: "cuantos",
-      pregunta: `¿Cuántos ${r.cliente} nuevos por mes harían que valga la pena?`,
+      /* Qué quiere transmitir. No es paja: sale de acá el material con
+         el que después se arma la maqueta. */
+      clave: "transmite",
+      pregunta: "¿Qué querés que transmita?",
       opciones: [
         {
-          id: "pocos",
-          texto: "Con dos o tres ya está",
-          eco: "Dos clientes nuevos y la web ya se pagó. De ahí en adelante sigue trabajando sin costo.",
+          id: "serio",
+          texto: "Que somos serios y profesionales",
+          eco: "Eso se transmite con tipografía, orden y espacio. No con más secciones ni más efectos.",
         },
         {
-          id: "medio",
-          texto: "Unos cinco",
-          eco: "Cinco por mes son sesenta al año. La web se paga una sola vez.",
+          id: "actual",
+          texto: "Que estamos al día",
+          eco: "Fotos propias y bien tomadas hacen más por eso que cualquier animación.",
         },
         {
-          id: "muchos",
-          texto: "Diez o más",
-          eco: "Para ese volumen la web deja de ser un gasto y pasa a ser infraestructura.",
+          id: "claro",
+          texto: "Lo que hacemos, bien explicado",
+          eco: "La mayoría de las webs lo dicen todo y no se entiende nada. Es un problema de orden.",
         },
       ],
     },
@@ -214,8 +215,8 @@ export function Califica() {
   function mensajeFinal() {
     const NL = String.fromCharCode(10);
     const datos = [
-      `· En Google: ${respuestas.google?.texto ?? "-"}`,
-      `· Le alcanzaría con: ${respuestas.cuantos?.texto ?? "-"}`,
+      `· Hoy encuentran: ${respuestas.encuentra?.texto ?? "-"}`,
+      `· Quiere transmitir: ${respuestas.transmite?.texto ?? "-"}`,
       `· Presupuestó antes: ${respuestas.presupuesto?.texto ?? "-"}`,
       `· Plazo: ${respuestas.cuando?.texto ?? "-"}`,
     ];

@@ -25,7 +25,7 @@ export function Incluye() {
   return (
     <section id="incluye" className="sec pad-x">
       <Aparece>
-        <h2 className="disp h2 max-w-[16ch]">Todo lo que necesita un negocio para vender</h2>
+        <h2 className="disp h2 max-w-[16ch]">Todo lo que hace que un negocio se vea serio</h2>
         <p className="lede mt-7">
           Alcance cerrado y publicado. Sabés qué recibís antes de pagar y nosotros
           sabemos qué construir.
