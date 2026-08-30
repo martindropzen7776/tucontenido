@@ -1,21 +1,15 @@
-# Next.js 16 con App Router.
-# Este archivo pisa lo que esté configurado en la UI de Netlify:
-# si quedó un comando o un publish directory de la versión anterior
-# en HTML plano, acá se anula.
+# El sitio se exporta estático: `next build` produce la carpeta out/
+# con HTML plano. No hace falta el plugin de Next ni ningún runtime.
+#
+# Este archivo pisa lo que esté configurado en la UI de Netlify.
 
 [build]
   command = "npm run build"
-  publish = ".next"
+  publish = "out"
 
 [build.environment]
   NODE_VERSION = "22"
 
-# El plugin oficial es lo que hace que Next funcione en Netlify.
-# Se declara explícito en vez de confiar en la autodetección.
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
-# ── Cabeceras ──────────────────────────────────────────────
 [[headers]]
   for = "/*"
   [headers.values]
@@ -24,7 +18,6 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
 
-# Las fuentes y los assets con hash en el nombre se cachean para siempre.
 [[headers]]
   for = "/_next/static/*"
   [headers.values]
