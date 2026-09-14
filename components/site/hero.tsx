@@ -55,8 +55,9 @@ export function Hero() {
         <h1 className="disp h1 max-w-[13ch]">Tu web lista en 7 días</h1>
 
         <p className="lede mt-[clamp(26px,3.4vw,38px)]">
-          Nos escribís por WhatsApp, mandás el logo y listo. Sin llamada de venta,
-          sin reuniones para coordinar reuniones, sin briefs de cuarenta preguntas.{" "}
+          Nos escribís por WhatsApp y hacemos una llamada corta para conocernos,
+          así sabés con quién vas a trabajar antes de pagar. Sin briefs de cuarenta
+          preguntas ni reuniones para coordinar reuniones.{" "}
           <b className="font-semibold text-ink">En 72 horas ya estás viendo tu web.</b>
         </p>
 

@@ -22,8 +22,11 @@ const PASOS_ELLOS = [
   "Recién ahí empiezan a diseñar",
 ];
 
+/* La diferencia no es que no haya llamada: es que hay una sola, corta,
+   para conocerse, y el precio ya se sabe antes de hacerla. */
 const PASOS_NOSOTROS = [
   "Nos escribís por WhatsApp y te decimos el precio en el momento",
+  "Una llamada de 15 minutos para conocernos, si la querés",
   "Mandás el logo y las fotos que tengas",
 ];
 
@@ -150,7 +153,7 @@ export function Diff() {
           <div className="flex flex-col border-t-2 border-ink bg-ink p-5 text-bone min-[900px]:border-l-2 min-[900px]:border-t-0 sm:p-[clamp(28px,3.4vw,48px)]">
             <div className="mono !text-[11px] text-bone/55">Acá</div>
             <div className="disp mb-6 mt-2.5 text-[clamp(26px,3.4vw,40px)] leading-none tracking-[-0.03em]">
-              Dos mensajes y a diseñar
+              Tres pasos y a diseñar
             </div>
             <ul className="mb-6 flex flex-col">
               {PASOS_NOSOTROS.map((p, n) => (

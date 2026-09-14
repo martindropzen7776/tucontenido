@@ -57,7 +57,7 @@ export function Incluye() {
 /* ══════════ LOS 7 DÍAS ══════════ */
 
 const DIAS: [string, string, string][] = [
-  ["Día 0", "Nos contás el negocio", "Te mandamos un formulario corto por WhatsApp. Logo, fotos si tenés y cuatro preguntas sobre a quién le vendés. Diez minutos, no más."],
+  ["Día 0", "Nos conocemos", "Una llamada corta para que nos cuentes el negocio y sepas con quién trabajás. Si preferís, lo hacemos por WhatsApp. Nos mandás el logo, fotos si tenés, y listo."],
   ["Días 1 a 3", "Ves el primer boceto", "La web entera diseñada y navegable, con los textos escritos. No una imagen: entrás desde el celular y la recorrés como la va a ver tu cliente."],
   ["Días 4 a 5", "Ajustamos lo que haga falta", "Dos rondas de cambios incluidas. Nos decís todo junto por WhatsApp y lo aplicamos: colores, textos, fotos, el orden de las secciones."],
   ["Días 6 a 7", "Queda online y es tuya", "Conectamos el dominio, te transferimos el proyecto a tu cuenta y te enseñamos a manejarla. Desde ese momento sos el dueño y podés seguir con quien quieras."],
@@ -258,8 +258,8 @@ const QA: [string, React.ReactNode][] = [
    <>Son dos cosas distintas. Los <b>USD 10 mensuales</b> son el alojamiento y los pagás vos directo a la plataforma donde vive tu web. Nosotros no te cobramos <b>nada</b> por mes. Es a propósito: si el alojamiento estuviera a nuestro nombre, el día que quisieras irte tendrías que pedirnos permiso. Necesitás una tarjeta habilitada para pagos en dólares.</>],
   ["¿La web es realmente mía?",
    <>Sí, y no es una forma de decir. Al terminar te transferimos el proyecto a <b>tu cuenta</b> y el dominio se compra directamente a tu nombre. Podés editarla, cambiar de diseñador o darla de baja sin hablar con nosotros.</>],
-  ["¿En serio no hay ninguna llamada?",
-   <>Ninguna, salvo que vos la quieras. Todo se resuelve por WhatsApp: te decimos el precio en el momento, mandás el material cuando puedas y el primer boceto te llega por el mismo chat. <b>No es un requisito para empezar.</b></>],
+  ["¿Hay que hacer una llamada?",
+   <>Te la ofrecemos y te la recomendamos: son <b>15 minutos para conocernos</b>, que nos cuentes tu negocio y que sepas con quién vas a trabajar antes de pagar. No es una llamada de venta, porque el precio ya lo sabés. Si preferís, hacemos todo por WhatsApp.</>],
   ["¿Y si después necesito cambiar algo?",
    <>Lo cambiás vos, y te enseñamos cómo <b>sin costo</b>. Al entregarte la web te mostramos paso a paso cómo cambiar textos, fotos, precios, horarios y datos de contacto, y cómo mantenerla al día. Si más adelante te trabás, nos preguntás. Secciones nuevas o rediseños son presupuesto aparte, y te lo decimos antes de tocar nada.</>],
   ["¿Y si no me llevo bien con la computadora?",
@@ -334,7 +334,8 @@ export function Cierre() {
         </div>
         <p className="lede mt-7">
           Escribinos por WhatsApp y te decimos en el momento si tu negocio entra en
-          los $500.000 o necesita algo distinto. Sin llamadas, sin reuniones, sin vueltas.
+          los $500.000 o necesita algo distinto. Después hacemos una llamada corta
+          para conocernos, y arrancamos.
         </p>
         <div className="mt-9">
           <WaLink msg="Hola! Quiero mi web en 7 días. Mi negocio es:" className="btn">

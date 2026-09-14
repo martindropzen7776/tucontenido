@@ -8,7 +8,7 @@ import { Saturno } from "@/components/site/saturno";
 export const metadata: Metadata = {
   title: "Tu web en 7 días — Tu Contenido",
   description:
-    "Tres preguntas y te decimos si tu negocio entra en los $500.000. Sin llamadas ni reuniones.",
+    "Unas preguntas rápidas y te decimos si tu negocio entra en los $500.000. Después, una llamada corta para conocernos.",
   robots: { index: false, follow: true },
 };
 
@@ -36,7 +36,7 @@ export default function Empezar() {
       </div>
 
       <footer className="mono !text-[11px] flex flex-wrap justify-end gap-x-6 gap-y-1 text-ink-soft/70">
-        <span>Sin llamadas · sin reuniones</span>
+        <span>Precio publicado · una llamada para conocernos</span>
       </footer>
     </main>
   );

@@ -13,8 +13,8 @@ import { leerRubro, type Rubro } from "@/lib/rubros";
 
    Al final arma el mensaje de WhatsApp con las respuestas ya
    adentro, así la conversación no arranca de cero: cuando el
-   lead escribe, ya sabés si tiene web, para cuándo la quiere y
-   cuántos consultorios maneja.
+   lead escribe, ya sabés si tiene web, si acepta el precio,
+   para cuándo la quiere y si quiere la llamada para conocernos.
    ═══════════════════════════════════════════════════════════ */
 
 type Opcion = {
@@ -96,7 +96,7 @@ function armarPasos(r: Rubro): Paso[] {
         {
           id: "llamada",
           texto: "Sí, y me hicieron agendar una llamada",
-          eco: "Y en la llamada tampoco te dijeron el precio. Acá ya lo sabés: $500.000.",
+          eco: "Y en esa llamada tampoco te dijeron el precio. Acá lo sabés antes: $500.000.",
         },
         {
           id: "fantasma",
@@ -106,7 +106,34 @@ function armarPasos(r: Rubro): Paso[] {
         {
           id: "primera",
           texto: "No, es la primera vez",
-          eco: "Mejor. Te ahorrás la parte fea: acá el precio está publicado y no hay reunión.",
+          eco: "Mejor. Te ahorrás la parte fea: acá el precio está publicado desde el principio.",
+        },
+      ],
+    },
+    {
+      /* El filtro de presupuesto. Va justo después de la pregunta que
+         termina diciendo el precio, así no aparece de la nada. Quien
+         dice que no sale acá: hacerle contestar el resto es hacerle
+         perder el tiempo, y meterlo como lead ensucia las campañas. */
+      clave: "precio",
+      pregunta: "¿Estás dispuesto a pagar $500.000 por una web para tu negocio?",
+      ayuda: "Pago único. No hay cuota mensual con nosotros.",
+      opciones: [
+        {
+          id: "si",
+          texto: "Sí, es lo que busco",
+          eco: "Entonces hablamos el mismo idioma. Mitad para arrancar y mitad cuando la ves terminada.",
+        },
+        {
+          id: "conocer",
+          texto: "Sí, pero antes quiero conocerlos",
+          eco: "Es lo más lógico. Para eso está la llamada: nadie debería pagar sin saber con quién trabaja.",
+        },
+        {
+          id: "no",
+          texto: "No, por ahora no",
+          eco: "Entonces frenamos acá.",
+          sirve: false,
         },
       ],
     },
@@ -129,6 +156,25 @@ function armarPasos(r: Rubro): Paso[] {
           id: "viendo",
           texto: "Estoy averiguando",
           eco: "Está bien. Te dejamos el precio y los tiempos por escrito y lo pensás.",
+        },
+      ],
+    },
+    {
+      /* La llamada se ofrece, no se exige. Lo que elija viaja en el
+         mensaje, así el closer sabe si llamar o seguir por escrito. */
+      clave: "llamada",
+      pregunta: "¿Querés que hagamos una llamada para conocernos?",
+      ayuda: "Son 15 minutos, para que sepas con quién vas a trabajar. No es una llamada de venta: el precio ya lo sabés.",
+      opciones: [
+        {
+          id: "si",
+          texto: "Sí, prefiero hablar antes",
+          eco: "Buenísimo. Te escribimos para coordinar un horario que te quede cómodo.",
+        },
+        {
+          id: "whatsapp",
+          texto: "No, sigamos por WhatsApp",
+          eco: "Perfecto. Te mandamos todo por escrito y seguimos por ahí.",
         },
       ],
     },
@@ -156,8 +202,10 @@ export function Califica() {
   const [elegida, setElegida] = useState<Opcion | null>(null);
   /* Si contesta algo que lo deja fuera del servicio, la encuesta
      termina ahi. Hacerle contestar tres preguntas mas a alguien que
-     ya sabemos que no entra es hacerle perder el tiempo a los dos. */
-  const [salida, setSalida] = useState(false);
+     ya sabemos que no entra es hacerle perder el tiempo a los dos.
+     Guarda la clave de la pregunta que lo sacó: cada motivo tiene
+     su propia pantalla de salida. */
+  const [salida, setSalida] = useState<string | null>(null);
   const reloj = useRef<number | null>(null);
 
   const actual = PASOS[paso];
@@ -170,7 +218,7 @@ export function Califica() {
     setRespuestas((r) => ({ ...r, [actual.clave]: op }));
     setElegida(null);
     if (op.sirve === false) {
-      setSalida(true);
+      setSalida(actual.clave);
       const w = window as unknown as { fbq?: (...a: unknown[]) => void };
       /* Evento propio: estos NO tienen que entrar en la optimizacion
          de las campañas, o Meta va a buscar mas gente como esta. */
@@ -206,11 +254,13 @@ export function Califica() {
 
   function reiniciar() {
     if (reloj.current) window.clearTimeout(reloj.current);
-    setSalida(false);
+    setSalida(null);
     setElegida(null);
     setRespuestas({});
     setPaso(0);
   }
+
+  const quiereLlamada = respuestas.llamada?.id === "si";
 
   function mensajeFinal() {
     const NL = String.fromCharCode(10);
@@ -218,13 +268,17 @@ export function Califica() {
       `· Hoy encuentran: ${respuestas.encuentra?.texto ?? "-"}`,
       `· Quiere transmitir: ${respuestas.transmite?.texto ?? "-"}`,
       `· Presupuestó antes: ${respuestas.presupuesto?.texto ?? "-"}`,
+      `· Pagar $500.000: ${respuestas.precio?.texto ?? "-"}`,
       `· Plazo: ${respuestas.cuando?.texto ?? "-"}`,
+      `· Llamada: ${respuestas.llamada?.texto ?? "-"}`,
     ];
     if (rubroClave !== "general") datos.push(`· Rubro: ${rubroClave}`);
 
     return [
       nombre.trim() ? `Hola! Soy ${nombre.trim()}.` : "Hola!",
-      "Quiero mi web en 7 días. Te paso lo que respondí:",
+      quiereLlamada
+        ? "Quiero mi web en 7 días y me gustaría hacer una llamada para conocernos. Te paso lo que respondí:"
+        : "Quiero mi web en 7 días. Te paso lo que respondí:",
       "",
       ...datos,
     ].join(NL);
@@ -234,6 +288,15 @@ export function Califica() {
     const w = window as unknown as { fbq?: (...a: unknown[]) => void };
     if (typeof w.fbq === "function") {
       w.fbq("track", "Lead", { rubro: rubroClave, nombre: !!nombre.trim() });
+    }
+  }
+
+  /* El que no califica y escribe igual NO es un Lead: si lo fuera,
+     Meta buscaría más gente como él. Va con un evento propio. */
+  function alEnviarSalida() {
+    const w = window as unknown as { fbq?: (...a: unknown[]) => void };
+    if (typeof w.fbq === "function") {
+      w.fbq("trackCustom", "ContactoNoCalifica", { motivo: salida, rubro: rubroClave });
     }
   }
 
@@ -261,33 +324,50 @@ export function Califica() {
       {salida ? (
         <div className="flex flex-col gap-6">
           <h1 className="disp text-[clamp(28px,6vw,46px)] leading-[1.04] tracking-[-0.028em] text-balance">
-            No somos lo que estás buscando
+            {salida === "precio" ? "Por ahora no somos para vos" : "No somos lo que estás buscando"}
           </h1>
 
-          <div className="flex flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
-            <p>
-              Esto es para negocios que no tienen web, o que tienen una de hace
-              diez años. Si la tuya ya funciona, cambiarla sería gastar por gastar
-              — y no te lo vamos a vender.
-            </p>
-            <p className="text-ink">
-              Lo que sí podemos hacer: mirarla y decirte en qué está floja.
-              Velocidad en el celular, si aparecés en Google, si el contacto está
-              donde tiene que estar. Gratis, y sin que te ofrezcamos nada después.
-            </p>
-          </div>
+          {salida === "precio" ? (
+            <div className="flex flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
+              <p>
+                $500.000 es lo que cuesta una web a medida, con los textos escritos
+                y a tu nombre. No la abaratamos sacándole partes, porque después la
+                web no cumple su trabajo.
+              </p>
+              <p className="text-ink">
+                Si más adelante cambia, el precio va a seguir publicado acá. Y si
+                tenés alguna duda sobre lo que incluye, escribinos igual y te
+                contestamos.
+              </p>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
+              <p>
+                Esto es para negocios que no tienen web, o que tienen una de hace
+                diez años. Si la tuya ya funciona, cambiarla sería gastar por gastar
+                — y no te lo vamos a vender.
+              </p>
+              <p className="text-ink">
+                Lo que sí podemos hacer: mirarla y decirte en qué está floja.
+                Velocidad en el celular, si aparecés en Google, si el contacto está
+                donde tiene que estar. Gratis, y sin que te ofrezcamos nada después.
+              </p>
+            </div>
+          )}
 
           <div className="flex flex-col gap-3 pt-1">
             <a
               href={wa(
-                "Hola! Hice el cuestionario y me dio que no califico porque mi web funciona bien. ¿Me la miran igual?"
+                salida === "precio"
+                  ? "Hola! Hice el cuestionario. Me interesa la web pero hoy no llego a los $500.000. Tengo una duda:"
+                  : "Hola! Hice el cuestionario y me dio que no califico porque mi web funciona bien. ¿Me la miran igual?"
               )}
               target="_blank"
               rel="noopener"
-              onClick={alEnviar}
+              onClick={alEnviarSalida}
               className="btn min-h-[58px] justify-center text-[16px]"
             >
-              Que me la revisen igual
+              {salida === "precio" ? "Escribirles igual" : "Que me la revisen igual"}
               <svg className="arw" width="15" height="12" viewBox="0 0 15 12" fill="none" aria-hidden="true">
                 <path d="M1 6h12M9 1.5 13.5 6 9 10.5" stroke="currentColor" strokeWidth="2" />
               </svg>
@@ -303,9 +383,14 @@ export function Califica() {
         </div>
       ) : !terminado ? (
         <div key={actual.clave} className="flex flex-col gap-6">
-            <h1 className="disp text-[clamp(28px,6vw,46px)] leading-[1.04] tracking-[-0.028em] text-balance">
-              {actual.pregunta}
-            </h1>
+            <div className="flex flex-col gap-3">
+              <h1 className="disp text-[clamp(28px,6vw,46px)] leading-[1.04] tracking-[-0.028em] text-balance">
+                {actual.pregunta}
+              </h1>
+              {actual.ayuda && (
+                <p className="text-[15px] leading-snug text-ink-soft">{actual.ayuda}</p>
+              )}
+            </div>
 
             <div className="flex flex-col gap-2.5">
               {actual.opciones.map((op) => {
@@ -370,7 +455,9 @@ export function Califica() {
             </h1>
 
             <p className="text-[15.5px] leading-relaxed text-ink-soft">
-              Te escribimos por WhatsApp con el precio cerrado y los tiempos. Sin llamadas ni reuniones.
+              {quiereLlamada
+                ? "Te escribimos por WhatsApp para coordinar la llamada en un horario que te quede cómodo."
+                : "Te escribimos por WhatsApp con el precio cerrado y los tiempos, todo por escrito."}
             </p>
 
             <input
@@ -398,7 +485,7 @@ export function Califica() {
       )}
 
       {/* El eco de la última respuesta: acá está la persuasión. */}
-      {paso > 0 && !terminado && (
+      {paso > 0 && !terminado && !salida && (
         <button
           type="button"
           onClick={volver}
