@@ -22,7 +22,7 @@ export default function Empezar() {
 
       {/* Cabecera mínima: quién sos y qué vendés, en una línea. */}
       <header className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-        <a href="/" className="disp text-[17px] tracking-[-0.03em]">
+        <a href="/web/" className="disp text-[17px] tracking-[-0.03em]">
           tucontenido<i className="not-italic text-ink-soft">.</i>
         </a>
         <p className="mono !text-[11px] text-ink-soft">

@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Instrument_Sans, Space_Mono } from "next/font/google";
-import { SITE_URL, FAQ_SCHEMA } from "@/lib/site";
+import { SITE_URL } from "@/lib/site";
 import { BannerCookies, Pixel } from "@/components/site/cookies";
 import "./globals.css";
 
@@ -24,21 +24,17 @@ const spaceMono = Space_Mono({
   display: "swap",
 });
 
+/* La raíz del dominio es la página de la agencia (public/index.html),
+   que no pasa por Next. Este layout envuelve solo las rutas del
+   servicio de webs, así que acá no va nada que sea de una página en
+   particular: ni canonical, ni schema. Eso vive en cada page.tsx. */
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Tu web en 7 días — Tu Contenido",
-  description:
-    "Tu web en 7 días por $500.000, a medida y con los textos escritos. Llave en mano: te enseñamos a administrarla, sin cuota de mantenimiento.",
-  alternates: { canonical: "/" },
+  title: "Tu Contenido",
   openGraph: {
     type: "website",
     locale: "es_AR",
     siteName: "Tu Contenido",
-    title: "Tu web en 7 días — $500.000",
-    description:
-      "A medida, andando en el celular y con los textos escritos. Te la entregamos llave en mano y te enseñamos a manejarla, sin cuota de mantenimiento.",
-    url: SITE_URL,
-    images: [{ url: "/og.jpg", width: 1200, height: 630 }],
   },
   twitter: { card: "summary_large_image" },
   icons: {
@@ -50,41 +46,6 @@ export const viewport: Viewport = {
   themeColor: "#1F35D4",
 };
 
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: "Tu Contenido",
-  description:
-    "Diseño y desarrollo de sitios web para negocios en Argentina. Entrega en 7 días.",
-  url: SITE_URL,
-  areaServed: { "@type": "Country", name: "Argentina" },
-  priceRange: "$500.000",
-  makesOffer: {
-    "@type": "Offer",
-    name: "Sitio web profesional",
-    priceCurrency: "ARS",
-    price: "500000",
-    availability: "https://schema.org/InStock",
-    itemOffered: {
-      "@type": "Service",
-      name: "Diseño web a medida",
-      serviceType: "Diseño y desarrollo web",
-    },
-  },
-};
-
-/* FAQPage: es lo que habilita el bloque desplegable en los resultados
-   de Google y captura búsquedas de cola larga tipo "cuánto sale una web". */
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: FAQ_SCHEMA.map(([q, a]) => ({
-    "@type": "Question",
-    name: q,
-    acceptedAnswer: { "@type": "Answer", text: a },
-  })),
-};
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
@@ -93,15 +54,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body>
         {children}
-
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
 
         {/* El píxel vive detrás del consentimiento: si no lo aceptan,
             el script no se descarga. Ver components/site/cookies.tsx */}

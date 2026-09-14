@@ -1,6 +1,13 @@
 # tucontenido
 
-Landing del servicio de webs a $500.000 para negocios argentinos: llave en mano, sin mantenimiento, con capacitación para que el cliente la administre.
+Dos páginas en un mismo dominio:
+
+| Ruta | Qué es | Dónde vive |
+|---|---|---|
+| `/` | Tu Contenido .ads, la agencia general de paid media | `public/index.html` — HTML plano, no pasa por Next |
+| `/web` | Landing del servicio de webs a $500.000: llave en mano, sin mantenimiento, con capacitación para que el cliente la administre | `app/web/page.tsx` |
+
+El resto de las rutas (`/empezar`, `/entrega`, `/legal/*`) son del servicio de webs.
 
 Next.js 16 · React 19 · Tailwind 4 · Motion · componentes de [beUI](https://beui.dev)
 
@@ -26,8 +33,12 @@ de Google).
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
+npm run dev      # http://localhost:3000/web
 ```
+
+En desarrollo la raíz da 404: Next sirve `public/index.html` en
+`/index.html`, no en `/`. En el build sí queda en la raíz, porque la
+exportación copia `public/` tal cual a `out/`.
 
 ## Build
 
@@ -42,9 +53,11 @@ y el plugin oficial de Next.
 ## Estructura
 
 ```
+public/
+  index.html        la página de la agencia (raíz del dominio)
 app/
-  layout.tsx        metadata, fuentes, píxel, schema (ProfessionalService + FAQPage)
-  page.tsx          el orden de las secciones
+  layout.tsx        fuentes, píxel y cookies, comunes a las rutas de Next
+  web/page.tsx      la landing de webs: orden de secciones, metadata y schema
   globals.css       tokens de color, tipografía y escala de motion
 components/
   site/             las secciones de la página
