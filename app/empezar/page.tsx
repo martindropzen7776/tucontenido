@@ -23,24 +23,17 @@ export default function Empezar() {
                           -translate-x-1/2 -translate-y-1/2
                           lg:h-[620px] lg:w-[620px]" />
 
-      {/* Cabecera mínima: quién sos y qué vendés, en una línea. */}
-      <header className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+      {/* Cabecera mínima: solo la marca. */}
+      <header>
         <a href="/web/" className="disp text-[17px] tracking-[-0.03em]">
           tucontenido<i className="not-italic text-ink-soft">.</i>
         </a>
-        <p className="mono !text-[11px] text-ink-soft">
-          Web en 7 días · $500.000 · a tu nombre
-        </p>
       </header>
 
       {/* El calificador ocupa el centro de la pantalla. */}
       <div className="flex flex-1 items-center justify-center py-8">
         <Califica />
       </div>
-
-      <footer className="mono !text-[11px] flex flex-wrap justify-end gap-x-6 gap-y-1 text-ink-soft/70">
-        <span>Precio publicado · una llamada para conocernos</span>
-      </footer>
     </main>
   );
 }
