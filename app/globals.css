@@ -128,17 +128,45 @@ button:focus-visible {
   inset: 0;
   z-index: -1;
   pointer-events: none;
+  overflow: hidden;
+  background: #0a0a0c;
+}
+/* Las luces van en su propia capa, más grande que la pantalla, para
+   poder desplazarla sin que se vean los bordes. */
+.fondo::before {
+  content: "";
+  position: absolute;
+  inset: -15%;
   background:
-    radial-gradient(70vmax 50vmax at 88% 12%, rgba(244, 244, 241, 0.13), transparent 62%),
-    radial-gradient(60vmax 45vmax at 6% 96%, rgba(244, 244, 241, 0.07), transparent 60%),
-    radial-gradient(45vmax 35vmax at 45% 55%, rgba(154, 154, 164, 0.05), transparent 70%),
-    #0a0a0c;
+    radial-gradient(60vmax 44vmax at 82% 20%, rgba(244, 244, 241, 0.13), transparent 62%),
+    radial-gradient(52vmax 40vmax at 12% 88%, rgba(244, 244, 241, 0.07), transparent 60%),
+    radial-gradient(40vmax 30vmax at 45% 55%, rgba(154, 154, 164, 0.05), transparent 70%);
+  will-change: transform;
+  animation: fondo-luces 38s ease-in-out infinite alternate;
 }
 .fondo svg {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  inset: -6%;
+  width: 112%;
+  height: 112%;
+  transform-origin: 75% 50%;
+  will-change: transform;
+  animation: fondo-anillos 26s ease-in-out infinite alternate;
+}
+/* Solo transform: la placa de video mueve las capas ya dibujadas, sin
+   repintar nada. Es lo que permite que el fondo se mueva en el
+   teléfono sin repetir el congelamiento que tuvo el Saturno cuando
+   ocupaba toda la pantalla. */
+@keyframes fondo-anillos {
+  from { transform: rotate(-2.5deg) scale(1); }
+  to   { transform: rotate(2.5deg) scale(1.05); }
+}
+@keyframes fondo-luces {
+  from { transform: translate3d(-4%, 3%, 0); }
+  to   { transform: translate3d(4%, -3%, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fondo::before, .fondo svg { animation: none; }
 }
 
 /* En la capa de componentes y no sueltas: así una utilidad de

@@ -7,10 +7,12 @@
    centro cae donde está ese planeta en la computadora: arriba de
    todo se leen como su continuación.
 
-   Es un SVG quieto a propósito. El vidrio de las superficies lo
-   desenfoca al pasar por encima, que es todo el efecto; si además
-   se moviera, el teléfono tendría que redibujar el desenfoque en
-   cada cuadro, y el Saturno ya enseñó que eso lo congela.
+   Se mueve despacio (los anillos se mecen, las luces se desplazan),
+   pero solo con transform sobre capas ya dibujadas: la placa de
+   video las corre sin repintar. El dibujo en sí nunca cambia; si
+   cambiara, el teléfono tendría que repintar toda la pantalla en
+   cada cuadro, y el Saturno ya enseñó que eso lo congela. Las
+   animaciones están en globals.css (.fondo).
    ═══════════════════════════════════════════════════════════ */
 
 const CX = 1210;
