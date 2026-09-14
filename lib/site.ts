@@ -11,6 +11,11 @@ export const WHATSAPP = "5491100000000";
 /** ID del píxel de Meta. */
 export const PIXEL_ID = "TU_PIXEL_ID";
 
+/** Un ID de píxel real son solo dígitos. Con el de ejemplo, el píxel
+ *  no se carga: inicializarlo con un ID inválido ensucia la consola y
+ *  no mide nada. */
+export const PIXEL_LISTO = /^\d{10,20}$/.test(PIXEL_ID);
+
 export const SITE_URL = "https://tucontenido.ar";
 export const EMAIL = "hola@tucontenido.ar";
 export const INSTAGRAM = "";

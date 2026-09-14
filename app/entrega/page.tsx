@@ -5,6 +5,8 @@ import { Entrega } from "@/components/site/entrega";
    en Google ni compartir señal con la home. */
 export const metadata: Metadata = {
   title: "Hoja de entrega — Tu Contenido",
+  description:
+    "Lo que tenés que saber de tu sitio nuevo: el dominio, cómo hacerle cambios y cómo seguir sin depender de nadie.",
   robots: { index: false, follow: false },
 };
 

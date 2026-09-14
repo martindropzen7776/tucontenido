@@ -35,15 +35,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_AR",
     siteName: "Tu Contenido",
+    images: [{ url: "/og/agencia.png", width: 1200, height: 630, alt: "Tu Contenido: publicidad que se mide en ventas." }],
   },
   twitter: { card: "summary_large_image" },
-  icons: {
-    icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231F35D4'/%3E%3Crect x='7' y='14' width='18' height='4' fill='%23D8F24B'/%3E%3C/svg%3E",
-  },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1F35D4",
+  themeColor: "#0a0a0c",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

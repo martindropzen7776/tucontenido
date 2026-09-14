@@ -6,10 +6,13 @@ import { Saturno } from "@/components/site/saturno";
    el contenido es corto por diseño, así que se marca noindex para
    no diluir la página que sí tiene que rankear. */
 export const metadata: Metadata = {
-  title: "Tu web en 7 días — Tu Contenido",
+  title: "Pedí tu web — Tu Contenido",
   description:
     "Unas preguntas rápidas y te decimos si tu negocio entra en los $500.000. Después, una llamada corta para conocernos.",
   robots: { index: false, follow: true },
+  openGraph: {
+    images: [{ url: "/og/web.png", width: 1200, height: 630, alt: "Tu Contenido: tu web lista en 7 días por $500.000." }],
+  },
 };
 
 export default function Empezar() {

@@ -21,6 +21,7 @@ export const metadata: Metadata = {
     description:
       "Campañas de Facebook e Instagram, anuncios, landings y medición en un solo lugar. Diagnóstico sin cargo.",
     url: "/",
+    images: [{ url: "/og/agencia.png", width: 1200, height: 630, alt: "Tu Contenido: publicidad que se mide en ventas. Diagnóstico sin cargo." }],
   },
 };
 

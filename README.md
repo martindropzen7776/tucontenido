@@ -7,7 +7,16 @@ Dos páginas en un mismo dominio:
 | `/` | Tu Contenido .ads, la agencia general de publicidad paga | `app/page.tsx` + `components/site/agencia.tsx` |
 | `/web` | Landing del servicio de webs a $500.000: llave en mano, sin mantenimiento, con capacitación para que el cliente la administre | `app/web/page.tsx` |
 
-El resto de las rutas (`/empezar`, `/entrega`, `/legal/*`) son del servicio de webs.
+El resto de las rutas:
+
+| Ruta | Qué es |
+|---|---|
+| `/empezar` | Calificador para tráfico pago (noindex) |
+| `/gracias` | Adonde llega el calificador después de abrir WhatsApp (noindex) |
+| `/entrega` | Generador de la hoja de entrega para el cliente (interna, fuera de robots) |
+| `/legal/*` | Términos, privacidad, cookies y arrepentimiento, para los dos servicios |
+
+`robots.txt`, `sitemap.xml`, la 404 y los íconos salen del build.
 
 Next.js 16 · React 19 · Tailwind 4 · Motion · componentes de [beUI](https://beui.dev)
 
@@ -28,6 +37,21 @@ También conviene revisar los medios de pago en las preguntas frecuentes
 (`components/site/sections.tsx` y `FAQ_SCHEMA` en `lib/site.ts` — están en
 los dos lados porque uno es el texto visible y el otro alimenta el schema
 de Google).
+
+Cada build avisa si todavía quedan datos de ejemplo en `lib/site.ts`
+(`scripts/verificar.mjs`). No lo frena, pero si el aviso aparece en el
+build de producción, el sitio sale roto.
+
+## Imágenes
+
+`scripts/imagenes.mjs` genera las de Open Graph (`public/og/*.png`)
+antes de cada `dev` y `build`, con las fuentes de `assets/fonts`. Si
+cambia un titular, se cambia ahí. No se usa `opengraph-image.tsx` de
+Next porque con exportación estática sale sin extensión y WhatsApp no
+la muestra.
+
+Los íconos (`app/favicon.ico`, `app/apple-icon.png`) se regeneran con
+`npm run iconos`; `app/icon.svg` es el mismo signo a mano.
 
 ## Correr en local
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Script from "next/script";
-import { PIXEL_ID } from "@/lib/site";
+import { PIXEL_ID, PIXEL_LISTO } from "@/lib/site";
 
 /* ═══════════════════════════════════════════════════════════
    Cookies y píxel.
@@ -60,7 +60,7 @@ function useDecision() {
 /* ── El píxel: solo existe si lo aceptaron ── */
 export function Pixel() {
   const { decision } = useDecision();
-  if (decision !== "aceptado") return null;
+  if (decision !== "aceptado" || !PIXEL_LISTO) return null;
 
   return (
     <>

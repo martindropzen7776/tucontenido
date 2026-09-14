@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     description:
       "A medida, andando en el celular y con los textos escritos. Te la entregamos llave en mano y te enseñamos a manejarla, sin cuota de mantenimiento.",
     url: "/web/",
-    images: [{ url: "/og.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/og/web.png", width: 1200, height: 630, alt: "Tu Contenido: tu web lista en 7 días por $500.000." }],
   },
 };
 

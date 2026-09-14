@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { wa } from "@/lib/site";
 import { leerRubro, type Rubro } from "@/lib/rubros";
+import { guardarLead } from "@/lib/lead";
 
 /* ═══════════════════════════════════════════════════════════
    Calificador.
@@ -196,6 +197,12 @@ export function Califica() {
   const [paso, setPaso] = useState(0);
   const [respuestas, setRespuestas] = useState<Record<string, Opcion>>({});
   const [nombre, setNombre] = useState("");
+  /* El nombre es obligatorio: sin él, el closer arranca la conversación
+     sin saber a quién le habla. El error aparece recién al intentar
+     enviar, no mientras escribe. */
+  const [errorNombre, setErrorNombre] = useState(false);
+  const [enviando, setEnviando] = useState(false);
+  const campoNombre = useRef<HTMLInputElement>(null);
   /* La opcion recien tocada. Se muestra marcada con su eco debajo
      durante un momento y despues avanza sola: asi la reaccion queda
      pegada a la respuesta y no debajo de la pregunta siguiente. */
@@ -284,11 +291,30 @@ export function Califica() {
     ].join(NL);
   }
 
-  function alEnviar() {
+  /* El link abre WhatsApp en otra pestaña (o la app, en el celular).
+     Esta pestaña, mientras tanto, pasa a /gracias: cuando el
+     prospecto vuelve, encuentra qué sigue y un link por si WhatsApp
+     no se abrió. Si el nombre falta, no se abre nada. */
+  function alEnviar(e: React.MouseEvent<HTMLAnchorElement>) {
+    if (nombre.trim().length < 2) {
+      e.preventDefault();
+      setErrorNombre(true);
+      campoNombre.current?.focus();
+      return;
+    }
+    if (enviando) {
+      e.preventDefault();
+      return;
+    }
+    setEnviando(true);
     const w = window as unknown as { fbq?: (...a: unknown[]) => void };
     if (typeof w.fbq === "function") {
-      w.fbq("track", "Lead", { rubro: rubroClave, nombre: !!nombre.trim() });
+      w.fbq("track", "Lead", { rubro: rubroClave });
     }
+    guardarLead({ link: wa(mensajeFinal()), nombre: nombre.trim(), llamada: quiereLlamada });
+    window.setTimeout(() => {
+      location.href = "/gracias/";
+    }, 700);
   }
 
   /* El que no califica y escribe igual NO es un Lead: si lo fuera,
@@ -460,26 +486,57 @@ export function Califica() {
                 : "Te escribimos por WhatsApp con el precio cerrado y los tiempos, todo por escrito."}
             </p>
 
-            <input
-              type="text"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              placeholder="Tu nombre"
-              autoComplete="name"
-              className="min-h-[60px] w-full border border-ink/30 bg-transparent px-5 text-[17px] outline-none transition-colors placeholder:text-ink-soft/60 focus:border-ink"
-            />
+            <div className="flex flex-col gap-2">
+              <label htmlFor="nombre" className="sr-only">Tu nombre</label>
+              <input
+                id="nombre"
+                ref={campoNombre}
+                type="text"
+                value={nombre}
+                onChange={(e) => {
+                  setNombre(e.target.value);
+                  if (errorNombre && e.target.value.trim().length >= 2) setErrorNombre(false);
+                }}
+                placeholder="Tu nombre"
+                autoComplete="name"
+                required
+                aria-invalid={errorNombre}
+                aria-describedby={errorNombre ? "error-nombre" : undefined}
+                className={`min-h-[60px] w-full border bg-transparent px-5 text-[17px] outline-none transition-colors placeholder:text-ink-soft/60 ${
+                  errorNombre ? "border-[#ff7a6b] focus:border-[#ff7a6b]" : "border-ink/30 focus:border-ink"
+                }`}
+              />
+              {errorNombre && (
+                <p id="error-nombre" role="alert" className="text-[14px] leading-snug text-[#ff7a6b]">
+                  Escribí tu nombre para que sepamos cómo llamarte.
+                </p>
+              )}
+            </div>
 
             <a
               href={wa(mensajeFinal())}
               target="_blank"
               rel="noopener"
               onClick={alEnviar}
-              className="btn min-h-[60px] justify-center text-[16px]"
+              aria-busy={enviando}
+              className={`btn min-h-[60px] justify-center text-[16px] ${enviando ? "pointer-events-none opacity-80" : ""}`}
             >
-              Pedir mi web por WhatsApp
-              <svg className="arw" width="15" height="12" viewBox="0 0 15 12" fill="none" aria-hidden="true">
-                <path d="M1 6h12M9 1.5 13.5 6 9 10.5" stroke="currentColor" strokeWidth="2" />
-              </svg>
+              {enviando ? (
+                <>
+                  <span
+                    className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"
+                    aria-hidden="true"
+                  />
+                  Abriendo WhatsApp…
+                </>
+              ) : (
+                <>
+                  Pedir mi web por WhatsApp
+                  <svg className="arw" width="15" height="12" viewBox="0 0 15 12" fill="none" aria-hidden="true">
+                    <path d="M1 6h12M9 1.5 13.5 6 9 10.5" stroke="currentColor" strokeWidth="2" />
+                  </svg>
+                </>
+              )}
             </a>
         </div>
       )}

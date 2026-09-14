@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/imagenes.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/imagenes.mjs && node scripts/verificar.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "iconos": "node scripts/imagenes.mjs --iconos"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

@@ -180,14 +180,82 @@ function Referido({ nombre }: { nombre: string }) {
 }
 
 /* Lo que ve el dueño cuando abre la página sin parámetros. */
+
+const DOMINIO = /^(?!https?:)[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,}$/i;
+
+/* Devuelve el error de cada campo, o null. Un campo vacío no es
+   error mientras no sea obligatorio: solo el nombre lo es. */
+function validar(f: { n: string; d: string; v: string; u: string }) {
+  return {
+    n: f.n.trim() ? null : "Falta el nombre del negocio.",
+    d: !f.d || DOMINIO.test(f.d.trim()) ? null : "Escribilo sin https:// ni barras, así: consultorioperez.com.ar",
+    v: !f.v || !Number.isNaN(new Date(f.v).getTime()) ? null : "La fecha no es válida.",
+    u: !f.u || /^https?:\/\/[^\s.]+\.[^\s]+$/i.test(f.u.trim()) ? null : "Tiene que empezar con https://",
+  };
+}
+
+function Campo({
+  id,
+  error,
+  mostrar,
+  ...rest
+}: { id: string; error: string | null; mostrar: boolean } & React.ComponentPropsWithoutRef<"input">) {
+  const conError = mostrar && !!error;
+  return (
+    <div className="flex flex-col gap-1.5">
+      <input
+        id={id}
+        aria-label={rest["aria-label"] ?? rest.placeholder}
+        aria-invalid={conError}
+        aria-describedby={conError ? `${id}-error` : undefined}
+        className={`min-h-[52px] w-full border bg-transparent px-4 text-[15px] outline-none transition-colors placeholder:text-ink-soft/60 ${
+          conError ? "border-[#ff7a6b] focus:border-[#ff7a6b]" : "border-ink/30 focus:border-ink"
+        }`}
+        {...rest}
+      />
+      {conError && (
+        <p id={`${id}-error`} role="alert" className="text-[13.5px] leading-snug text-[#ff7a6b]">
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
+
 function ComoUsar() {
   const [f, setF] = useState({ n: "", d: "", v: "", u: "" });
+  /* El error de un campo aparece cuando se sale de él, no mientras
+     se escribe: nadie quiere un cartel rojo en la segunda letra. */
+  const [tocado, setTocado] = useState<Record<string, boolean>>({});
+  const [copia, setCopia] = useState<"" | "ok" | "error">("");
+  const errores = validar(f);
+  const valido = !Object.values(errores).some(Boolean);
+
   const link =
     typeof window !== "undefined"
-      ? `${location.origin}/entrega/?n=${encodeURIComponent(f.n)}&d=${encodeURIComponent(f.d)}&v=${encodeURIComponent(f.v)}&u=${encodeURIComponent(f.u)}`
+      ? `${location.origin}/entrega/?n=${encodeURIComponent(f.n.trim())}&d=${encodeURIComponent(f.d.trim())}&v=${encodeURIComponent(f.v)}&u=${encodeURIComponent(f.u.trim())}`
       : "";
 
-  const campo = "min-h-[52px] w-full border border-ink/30 bg-transparent px-4 text-[15px] outline-none transition-colors placeholder:text-ink-soft/60 focus:border-ink";
+  const props = (k: keyof typeof f) => ({
+    value: f[k],
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+      setF({ ...f, [k]: e.target.value });
+      setCopia("");
+    },
+    onBlur: () => setTocado((t) => ({ ...t, [k]: true })),
+    error: errores[k],
+    mostrar: !!tocado[k],
+  });
+
+  async function copiar() {
+    try {
+      await navigator.clipboard.writeText(link);
+      setCopia("ok");
+      window.setTimeout(() => setCopia(""), 1800);
+    } catch {
+      setCopia("error");
+    }
+  }
 
   return (
     <>
@@ -195,32 +263,49 @@ function ComoUsar() {
         Armar una hoja de entrega
       </h1>
       <p className="mt-5 max-w-[58ch] text-[16px] leading-relaxed text-ink-soft">
-        Completá los cuatro datos y copiá el enlace. Se lo mandás al cliente por
+        Completá los datos y copiá el enlace. Se lo mandás al cliente por
         WhatsApp el día que termina el trabajo.
       </p>
 
       <div className="mt-9 flex flex-col gap-3">
-        <input className={campo} placeholder="Nombre del negocio" value={f.n} onChange={(e) => setF({ ...f, n: e.target.value })} />
-        <input className={campo} placeholder="Dominio (consultorioperez.com.ar)" value={f.d} onChange={(e) => setF({ ...f, d: e.target.value })} />
-        <input className={campo} placeholder="Vence (2027-03-15)" value={f.v} onChange={(e) => setF({ ...f, v: e.target.value })} />
-        <input className={campo} placeholder="URL del sitio (https://...)" value={f.u} onChange={(e) => setF({ ...f, u: e.target.value })} />
+        <Campo id="n" placeholder="Nombre del negocio" autoComplete="off" {...props("n")} />
+        <Campo id="d" placeholder="Dominio (consultorioperez.com.ar)" autoComplete="off" {...props("d")} />
+        <label htmlFor="v" className="mono !text-[11px] mt-1 text-ink-soft">
+          Vencimiento del dominio
+        </label>
+        <Campo id="v" type="date" {...props("v")} />
+        <Campo id="u" type="url" placeholder="URL del sitio (https://...)" autoComplete="off" {...props("u")} />
       </div>
 
-      {f.n && (
+      {f.n.trim() && (
         <div className="mt-8 border border-ink/25 p-5">
           <p className="mono !text-[11px] mb-3 text-ink-soft">El enlace para mandarle</p>
-          <p className="break-all font-mono text-[13px] leading-relaxed">{link}</p>
-          <div className="mt-5 flex flex-wrap gap-3">
+          {valido ? (
+            <p className="break-all font-mono text-[13px] leading-relaxed">{link}</p>
+          ) : (
+            <p className="text-[14.5px] leading-relaxed text-[#ff7a6b]">
+              Corregí los campos marcados para generar el enlace.
+            </p>
+          )}
+          <div className="mt-5 flex flex-wrap items-center gap-3">
             <button
               type="button"
-              onClick={() => navigator.clipboard?.writeText(link)}
-              className="btn min-h-[48px] px-6 text-[14px]"
+              onClick={copiar}
+              disabled={!valido}
+              className="btn min-h-[48px] px-6 text-[14px] disabled:pointer-events-none disabled:opacity-40"
             >
-              Copiar enlace
+              {copia === "ok" ? "Copiado" : "Copiar enlace"}
             </button>
-            <a href={link} className="btn btn-line min-h-[48px] px-6 text-[14px]">
-              Ver cómo queda
-            </a>
+            {valido && (
+              <a href={link} className="btn btn-line min-h-[48px] px-6 text-[14px]">
+                Ver cómo queda
+              </a>
+            )}
+            {copia === "error" && (
+              <p role="alert" className="text-[13.5px] text-[#ff7a6b]">
+                No se pudo copiar. Seleccioná el enlace y copialo a mano.
+              </p>
+            )}
           </div>
         </div>
       )}

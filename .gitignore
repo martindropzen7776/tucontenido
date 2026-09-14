@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Imágenes de Open Graph: las genera scripts/imagenes.mjs antes de cada build
+/public/og/
