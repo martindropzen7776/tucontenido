@@ -16,7 +16,13 @@ export const PIXEL_ID = "TU_PIXEL_ID";
  *  no mide nada. */
 export const PIXEL_LISTO = /^\d{10,20}$/.test(PIXEL_ID);
 
-export const SITE_URL = "https://tucontenido.ar";
+/** La dirección pública del sitio: la usan el canonical, el sitemap y
+ *  la imagen que muestra WhatsApp al compartir, así que tiene que ser
+ *  una que exista. En Netlify sale de URL, que Netlify completa en
+ *  cada build con la dirección principal del sitio: hoy
+ *  tucontenidoia.netlify.app, y el dominio propio el día que se
+ *  conecte, sin tocar nada acá. Fuera de Netlify, el respaldo. */
+export const SITE_URL = (process.env.URL || "https://tucontenido.ar").replace(/\/$/, "");
 export const EMAIL = "hola@tucontenido.ar";
 export const INSTAGRAM = "";
 
