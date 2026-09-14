@@ -78,8 +78,11 @@ export function Semana() {
         <div className="relative pl-9">
           <div className="absolute bottom-2 left-[7px] top-3 w-px bg-bone/25" />
           {DIAS.map(([tag, tit, txt], i) => (
-            <Aparece key={tit} delay={i * 0.04}>
-              <article className="relative pb-[clamp(36px,4.5vw,56px)] last:pb-0">
+            /* El aire va en el envoltorio de Aparece, no en el article:
+               cada article es el único hijo de su envoltorio, así que un
+               last:pb-0 ahí adentro le sacaba el espacio a todos. */
+            <Aparece key={tit} delay={i * 0.04} className="pb-[clamp(36px,4.5vw,56px)] last:pb-0">
+              <article className="relative">
                 <span className="absolute -left-9 top-[9px] h-[15px] w-[15px] rounded-full bg-bone" />
                 <div className="mono !text-[11px] text-bone/50">{tag}</div>
                 <h3 className="disp mb-2.5 mt-2 text-[clamp(21px,2.6vw,28px)] leading-tight tracking-[-0.018em]">

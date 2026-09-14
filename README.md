@@ -4,7 +4,7 @@ Dos páginas en un mismo dominio:
 
 | Ruta | Qué es | Dónde vive |
 |---|---|---|
-| `/` | Tu Contenido .ads, la agencia general de paid media | `public/index.html` — HTML plano, no pasa por Next |
+| `/` | Tu Contenido .ads, la agencia general de publicidad paga | `app/page.tsx` + `components/site/agencia.tsx` |
 | `/web` | Landing del servicio de webs a $500.000: llave en mano, sin mantenimiento, con capacitación para que el cliente la administre | `app/web/page.tsx` |
 
 El resto de las rutas (`/empezar`, `/entrega`, `/legal/*`) son del servicio de webs.
@@ -33,12 +33,8 @@ de Google).
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000/web
+npm run dev      # http://localhost:3000 (agencia) y /web (webs)
 ```
-
-En desarrollo la raíz da 404: Next sirve `public/index.html` en
-`/index.html`, no en `/`. En el build sí queda en la raíz, porque la
-exportación copia `public/` tal cual a `out/`.
 
 ## Build
 
@@ -53,14 +49,13 @@ y el plugin oficial de Next.
 ## Estructura
 
 ```
-public/
-  index.html        la página de la agencia (raíz del dominio)
 app/
-  layout.tsx        fuentes, píxel y cookies, comunes a las rutas de Next
+  layout.tsx        fuentes, píxel y cookies, comunes a todas las páginas
+  page.tsx          la agencia: orden de secciones, metadata y schema
   web/page.tsx      la landing de webs: orden de secciones, metadata y schema
   globals.css       tokens de color, tipografía y escala de motion
 components/
-  site/             las secciones de la página
+  site/             las secciones (agencia.tsx es la raíz; el resto, /web)
   motion/           componentes de beUI (número, tilt, marquee, reveals…)
 lib/site.ts         ← lo único que hay que tocar para publicar
 ```

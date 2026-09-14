@@ -5,7 +5,11 @@ import { EMAIL, INSTAGRAM } from "@/lib/site";
 import { PAGINAS_LEGALES } from "@/lib/legal";
 import { WaLink } from "./wa-link";
 
-const NAV = [
+type Enlace = { href: string; label: string };
+
+/* Los valores por defecto son los de /web. La página de la agencia
+   (la raíz) pasa los suyos: mismo esqueleto, otro contenido. */
+const NAV: Enlace[] = [
   { href: "#diferencia", label: "La diferencia" },
   { href: "#incluye", label: "Qué incluye" },
   { href: "#dias", label: "Los 7 días" },
@@ -13,16 +17,27 @@ const NAV = [
   { href: "#precio", label: "Precio" },
 ];
 
-export function Nav() {
+const MSG_WEB = "Hola! Quiero mi web en 7 días.";
+
+export function Nav({
+  enlaces = NAV,
+  msg = MSG_WEB,
+  sufijo = ".",
+}: {
+  enlaces?: Enlace[];
+  msg?: string;
+  /** Lo que va después de "tucontenido": "." en /web, ".ads" en la agencia. */
+  sufijo?: string;
+}) {
   return (
     <>
       <ScrollProgress variant="bar" position="top" height={3} className="!bg-cobalt z-[300]" />
       <nav className="pad-x fixed inset-x-0 top-0 z-[200] flex h-[68px] items-center justify-between gap-4 border-b border-[var(--rule)] bg-bone max-[620px]:h-[60px]">
         <a href="#" className="disp tap text-[19px] tracking-[-0.03em]">
-          tucontenido<i className="not-italic text-cobalt">.</i>
+          tucontenido<i className={`not-italic ${sufijo === "." ? "text-cobalt" : "text-ink-soft"}`}>{sufijo}</i>
         </a>
         <div className="hidden gap-[34px] lg:flex">
-          {NAV.map((n) => (
+          {enlaces.map((n) => (
             <a
               key={n.href}
               href={n.href}
@@ -33,7 +48,7 @@ export function Nav() {
           ))}
         </div>
         <WaLink
-          msg="Hola! Quiero mi web en 7 días."
+          msg={msg}
           className="tap bg-cobalt px-5 py-[11px] text-[13px] font-semibold text-bone transition-colors hover:bg-ink max-[620px]:px-4 max-[620px]:text-xs"
         >
           Escribinos
@@ -43,24 +58,35 @@ export function Nav() {
   );
 }
 
-export function Footer() {
+export function Footer({
+  bio = "Diseñamos webs para negocios que quieren vender por internet sin quedar atados a una agencia. Siete días y queda a tu nombre.",
+  titulo = "Servicio",
+  enlaces = NAV.slice(1, 4),
+  msg = "Hola! Quiero consultar por una web.",
+  sufijo = ".",
+  firma = "Hecha con este mismo proceso",
+}: {
+  bio?: string;
+  titulo?: string;
+  enlaces?: Enlace[];
+  msg?: string;
+  sufijo?: string;
+  firma?: string;
+}) {
   return (
     <footer className="pad-x bg-ink pb-[30px] pt-[clamp(52px,6vw,76px)] text-bone">
       <div className="grid gap-[clamp(28px,4vw,60px)] border-b border-bone/15 pb-10 min-[620px]:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr]">
         <div>
           <span className="disp text-[19px] tracking-[-0.03em]">
-            tucontenido<i className="not-italic text-acid">.</i>
+            tucontenido<i className={`not-italic ${sufijo === "." ? "text-acid" : "text-bone/50"}`}>{sufijo}</i>
           </span>
-          <p className="mt-3.5 max-w-[34ch] text-[15px] leading-relaxed text-bone/60">
-            Diseñamos webs para negocios que quieren vender por internet sin quedar
-            atados a una agencia. Siete días y queda a tu nombre.
-          </p>
+          <p className="mt-3.5 max-w-[34ch] text-[15px] leading-relaxed text-bone/60">{bio}</p>
         </div>
 
         <div>
-          <h5 className="mono !text-[11px] mb-4 text-bone/40">Servicio</h5>
+          <h5 className="mono !text-[11px] mb-4 text-bone/40">{titulo}</h5>
           <ul>
-            {NAV.slice(1, 4).map((n) => (
+            {enlaces.map((n) => (
               <li key={n.href}>
                 <a href={n.href} className="tap text-[15px] text-bone/60 hover:text-bone">
                   {n.label}
@@ -75,7 +101,7 @@ export function Footer() {
           <ul>
             <li>
               <WaLink
-                msg="Hola! Quiero consultar por una web."
+                msg={msg}
                 className="tap text-[15px] text-bone/60 hover:text-bone"
               >
                 WhatsApp
@@ -128,16 +154,16 @@ export function Footer() {
 
       <div className="mono !text-[11px] mt-6 flex flex-wrap items-center justify-between gap-3.5 text-bone/40">
         <span>© 2026 Tu Contenido · Argentina</span>
-        <span>Hecha con este mismo proceso</span>
+        {firma && <span>{firma}</span>}
       </div>
     </footer>
   );
 }
 
-export function WaFab() {
+export function WaFab({ msg = MSG_WEB }: { msg?: string }) {
   return (
     <WaLink
-      msg="Hola! Quiero mi web en 7 días."
+      msg={msg}
       aria-label="Escribinos por WhatsApp"
       className="fixed bottom-4 right-4 z-[900] inline-flex items-center gap-[11px] border-2 border-ink bg-ink px-[15px] py-3.5 text-sm font-semibold text-bone shadow-[5px_5px_0_rgba(244,244,241,0.2)] transition-transform hover:-translate-x-[3px] hover:-translate-y-[3px] sm:bottom-5 sm:right-5 sm:px-[22px]"
     >
