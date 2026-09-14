@@ -16,6 +16,9 @@ if (valor("WHATSAPP") === "5491100000000")
   avisos.push("WHATSAPP es el número de ejemplo: todos los botones de contacto abren un chat que no existe.");
 if (!/^\d{10,20}$/.test(valor("PIXEL_ID") ?? ""))
   avisos.push("PIXEL_ID no es un ID real: el píxel no se carga y no se mide ninguna campaña.");
+const email = valor("EMAIL") ?? "";
+if (!email.endsWith("@tucontenido.online") && email.endsWith("@tucontenido.ar"))
+  avisos.push(`EMAIL es ${email}, de un dominio que no es el del sitio: el contacto y el botón de arrepentimiento mandan a una casilla que no existe.`);
 if (/listo: false/.test(site))
   avisos.push("TRABAJOS tiene proyectos sin URL: /web muestra tarjetas punteadas con \"Falta URL\".");
 

@@ -19,10 +19,12 @@ export const PIXEL_LISTO = /^\d{10,20}$/.test(PIXEL_ID);
 /** La dirección pública del sitio: la usan el canonical, el sitemap y
  *  la imagen que muestra WhatsApp al compartir, así que tiene que ser
  *  una que exista. En Netlify sale de URL, que Netlify completa en
- *  cada build con la dirección principal del sitio: hoy
- *  tucontenidoia.netlify.app, y el dominio propio el día que se
- *  conecte, sin tocar nada acá. Fuera de Netlify, el respaldo. */
-export const SITE_URL = (process.env.URL || "https://tucontenido.ar").replace(/\/$/, "");
+ *  cada build con el dominio principal del sitio (tucontenido.online);
+ *  si algún día cambia, se actualiza solo. Fuera de Netlify, el
+ *  respaldo. */
+export const SITE_URL = (process.env.URL || "https://tucontenido.online").replace(/\/$/, "");
+/** Casilla de contacto. También es la del botón de arrepentimiento,
+ *  que es obligatorio: tiene que ser una casilla que exista. */
 export const EMAIL = "hola@tucontenido.ar";
 export const INSTAGRAM = "";
 

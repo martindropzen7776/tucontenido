@@ -16,11 +16,13 @@
    previo — que es lo que la norma exige.
    ═══════════════════════════════════════════════════════════ */
 
+import { EMAIL } from "./site";
+
 export const TITULAR = {
   /** Nombre comercial: el que ve el cliente. */
   marca: "Tu Contenido",
   /** Casilla donde llegan consultas, reclamos, bajas y ejercicio de derechos. */
-  email: "hola@tucontenido.ar",
+  email: EMAIL,
   /** Jurisdicción a efectos de ley aplicable. No es un domicilio. */
   jurisdiccion: "Ciudad Autónoma de Buenos Aires, República Argentina",
 };
