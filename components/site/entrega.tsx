@@ -116,11 +116,13 @@ export function Entrega() {
               </p>
             </Punto>
 
-            <Punto n={2} titulo="Para cambiar algo, escribime">
+            <Punto n={2} titulo="Los cambios los hacés vos">
               <p>
-                Textos, fotos, precios, horarios y datos de contacto los cambio{" "}
-                <b>sin costo</b> y sin límite de veces. No hace falta que aprendas
-                ninguna herramienta ni que entres a ningún panel.
+                Textos, fotos, precios, horarios y datos de contacto los cambiás
+                desde tu cuenta, como te enseñé en la entrega. No tenés que pedirle
+                permiso a nadie ni esperar a que te contesten. Si te olvidás cómo
+                se hacía algo, escribime y te lo explico de nuevo,{" "}
+                <b>sin costo</b>.
               </p>
               <p className="mt-2">
                 Secciones nuevas o rediseños son otra cosa y te los presupuesto

@@ -107,11 +107,12 @@ function Ticket() {
       <Fila k="Textos de venta" v="Incluido" />
       <Fila k="WhatsApp y Google" v="Incluido" />
       <Fila k="Dos rondas de ajustes" v="Incluido" />
+      <Fila k="Te enseñamos a manejarla" v="Incluido" />
       <Fila k="Cuota de mantenimiento" v="$0" />
       <div className="mt-5 flex items-baseline justify-between border-t border-bone pt-[18px]">
         <span className="mono">Total</span>
         <span className="disp text-[clamp(32px,4vw,46px)] leading-none tracking-[-0.03em]">
-          USD 500
+          $500.000
         </span>
       </div>
     </div>

@@ -19,6 +19,7 @@ const INCLUYE: [string, string][] = [
   ["Textos incluidos", "Escribimos nosotros lo que dice la web. No tenés que sentarte a redactar ni mandarnos un documento con todo listo."],
   ["Lista para Google", "Títulos, descripciones, datos estructurados y velocidad de carga configurados desde el día uno."],
   ["WhatsApp integrado", "Botón flotante y enlaces con el mensaje ya escrito. El cliente toca y te llega al teléfono."],
+  ["La manejás vos", "Te la entregamos llave en mano y te enseñamos a administrarla: cambiar textos, fotos, precios y horarios sin depender de nadie. Enseñarte no se cobra."],
 ];
 
 export function Incluye() {
@@ -59,7 +60,7 @@ const DIAS: [string, string, string][] = [
   ["Día 0", "Nos contás el negocio", "Te mandamos un formulario corto por WhatsApp. Logo, fotos si tenés y cuatro preguntas sobre a quién le vendés. Diez minutos, no más."],
   ["Días 1 a 3", "Ves el primer boceto", "La web entera diseñada y navegable, con los textos escritos. No una imagen: entrás desde el celular y la recorrés como la va a ver tu cliente."],
   ["Días 4 a 5", "Ajustamos lo que haga falta", "Dos rondas de cambios incluidas. Nos decís todo junto por WhatsApp y lo aplicamos: colores, textos, fotos, el orden de las secciones."],
-  ["Días 6 a 7", "Queda online y es tuya", "Conectamos el dominio y te transferimos el proyecto a tu cuenta. Desde ese momento sos el dueño y podés seguir con quien quieras."],
+  ["Días 6 a 7", "Queda online y es tuya", "Conectamos el dominio, te transferimos el proyecto a tu cuenta y te enseñamos a manejarla. Desde ese momento sos el dueño y podés seguir con quien quieras."],
 ];
 
 export function Semana() {
@@ -165,6 +166,7 @@ const ENTRA = [
   "WhatsApp y formulario de contacto",
   "Dos rondas de ajustes",
   "Dominio conectado y sitio transferido a tu cuenta",
+  "Capacitación para que la administres vos",
 ];
 
 const NO_ENTRA = [
@@ -187,13 +189,13 @@ export function Precio() {
         <div className="mt-[clamp(40px,5vw,64px)] grid border border-ink/25 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
           <div className="p-[clamp(26px,3.6vw,52px)]">
             <div className="flex items-start gap-3">
-              <span className="mono !text-[15px] !tracking-[0.1em] pt-3 text-ink-soft">USD</span>
-              <span className="disp text-[clamp(60px,11vw,124px)] leading-[0.82] tracking-[-0.04em]">
-                500
+              <span className="disp pt-1 text-[clamp(26px,4.2vw,52px)] leading-none text-ink-soft">$</span>
+              <span className="disp text-[clamp(52px,9vw,112px)] leading-[0.82] tracking-[-0.04em]">
+                500.000
               </span>
             </div>
             <div className="mt-4 text-[15px] text-ink-soft">
-              Pago único, sin cuota de mantenimiento
+              Pago único, llave en mano, sin cuota de mantenimiento
             </div>
 
             <ul className="mt-8">
@@ -216,7 +218,7 @@ export function Precio() {
             </p>
 
             <div className="mt-8">
-              <WaLink msg="Hola! Quiero mi web por USD 500. ¿Cómo arrancamos?" className="btn">
+              <WaLink msg="Hola! Quiero mi web por $500.000. ¿Cómo arrancamos?" className="btn">
                 Quiero mi web
                 <Arrow />
               </WaLink>
@@ -237,7 +239,7 @@ export function Precio() {
               ))}
             </ul>
             <p className="mt-8 border-l border-ink/40 pl-5 text-sm leading-relaxed text-ink-soft">
-              Nada de esto es imposible, pero no entra en los USD 500. Si lo necesitás,{" "}
+              Nada de esto es imposible, pero no entra en los $500.000. Si lo necesitás,{" "}
               <b className="font-semibold text-ink">decilo antes de arrancar</b> y te
               pasamos un presupuesto aparte. Preferimos eso a que te enteres a mitad
               de camino.
@@ -259,8 +261,10 @@ const QA: [string, React.ReactNode][] = [
   ["¿En serio no hay ninguna llamada?",
    <>Ninguna, salvo que vos la quieras. Todo se resuelve por WhatsApp: te decimos el precio en el momento, mandás el material cuando puedas y el primer boceto te llega por el mismo chat. <b>No es un requisito para empezar.</b></>],
   ["¿Y si después necesito cambiar algo?",
-   <>Los cambios chicos te los hacemos <b>sin costo</b>: textos, fotos, precios, horarios, datos de contacto. Secciones nuevas o rediseños son presupuesto aparte, y te lo decimos antes de tocar nada.</>],
-  ["¿Cómo pago los USD 500?",
+   <>Lo cambiás vos, y te enseñamos cómo <b>sin costo</b>. Al entregarte la web te mostramos paso a paso cómo cambiar textos, fotos, precios, horarios y datos de contacto, y cómo mantenerla al día. Si más adelante te trabás, nos preguntás. Secciones nuevas o rediseños son presupuesto aparte, y te lo decimos antes de tocar nada.</>],
+  ["¿Y si no me llevo bien con la computadora?",
+   <>No hace falta saber de diseño ni de programación. Te enseñamos <b>sobre tu propia web</b>, con los cambios que vas a hacer de verdad, no con un tutorial genérico. Y si te olvidás de algo, te lo volvemos a explicar.</>],
+  ["¿Cómo pago los $500.000?",
    <>Mercado Pago, transferencia bancaria o USDT. Se abona <b>50% para arrancar y 50% contra entrega</b>, así ninguno de los dos queda expuesto.</>],
   ["¿De verdad son 7 días?",
    <>Sí, pero el reloj arranca cuando nos mandás el material, no cuando pagás. Con el material completo, el <b>primer boceto lo ves en 72 horas</b>.</>],
@@ -330,7 +334,7 @@ export function Cierre() {
         </div>
         <p className="lede mt-7">
           Escribinos por WhatsApp y te decimos en el momento si tu negocio entra en
-          los USD 500 o necesita algo distinto. Sin llamadas, sin reuniones, sin vueltas.
+          los $500.000 o necesita algo distinto. Sin llamadas, sin reuniones, sin vueltas.
         </p>
         <div className="mt-9">
           <WaLink msg="Hola! Quiero mi web en 7 días. Mi negocio es:" className="btn">

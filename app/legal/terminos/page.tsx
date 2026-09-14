@@ -30,11 +30,12 @@ export default function Terminos() {
 
       <h2>Qué incluye el servicio</h2>
       <p>
-        Por el precio publicado de <strong>USD 500</strong> entregamos un sitio web
+        Por el precio publicado de <strong>$500.000</strong> entregamos un sitio web
         de hasta seis secciones, con diseño propio, adaptado a teléfono y
         computadora, con los textos redactados por nosotros, configuración básica
-        para buscadores, integración de WhatsApp y formulario de contacto, y hasta{" "}
-        <strong>dos rondas de ajustes</strong>.
+        para buscadores, integración de WhatsApp y formulario de contacto, hasta{" "}
+        <strong>dos rondas de ajustes</strong> y una{" "}
+        <strong>capacitación para que puedas administrarlo vos</strong>.
       </p>
       <p>
         <strong>No incluye:</strong> tienda online con carrito o pagos, sistemas de
@@ -58,9 +59,11 @@ export default function Terminos() {
 
       <h2>Precio y forma de pago</h2>
       <p>
-        El precio es de USD 500, o su equivalente en pesos al tipo de cambio del día
-        de pago. Se abona <strong>50% para comenzar y 50% contra entrega</strong>.
-        Aceptamos transferencia bancaria, Mercado Pago y USDT.
+        El precio es de <strong>$500.000 (quinientos mil pesos argentinos)</strong>,
+        en un único pago por el trabajo, sin cuotas mensuales de nuestra parte. Se
+        abona <strong>50% para comenzar y 50% contra entrega</strong>. Aceptamos
+        transferencia bancaria, Mercado Pago y USDT; si pagás en USDT, el importe
+        se calcula al tipo de cambio del día de pago.
       </p>
       <p>
         El precio publicado puede cambiar en cualquier momento, pero{" "}
@@ -98,13 +101,18 @@ export default function Terminos() {
         escrito.
       </p>
 
-      <h2>Cambios posteriores</h2>
+      <h2>Mantenimiento y cambios posteriores</h2>
       <p>
-        Después de la entrega hacemos sin cargo los cambios menores: textos, fotos,
-        precios, horarios y datos de contacto. Secciones nuevas, rediseños o
-        funcionalidades que no estaban en el alcance original se presupuestan aparte.
-        Esto es una práctica comercial, no una obligación contractual, y podemos
-        discontinuarla avisando.
+        El precio <strong>no incluye mantenimiento</strong>. En su lugar, te
+        entregamos el sitio llave en mano y te enseñamos, sin cargo, a
+        administrarlo: cómo cambiar textos, fotos, precios, horarios y datos de
+        contacto, y cómo mantenerlo al día. Si después de la entrega te surge una
+        duda sobre cómo hacer alguno de esos cambios, te lo volvemos a explicar sin
+        costo.
+      </p>
+      <p>
+        Secciones nuevas, rediseños o funcionalidades que no estaban en el alcance
+        original se presupuestan aparte y se acuerdan por escrito antes de empezar.
       </p>
 
       <h2>Qué no prometemos</h2>

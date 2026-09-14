@@ -1,6 +1,6 @@
 # tucontenido
 
-Landing del servicio de webs a USD 500 para negocios argentinos.
+Landing del servicio de webs a $500.000 para negocios argentinos: llave en mano, sin mantenimiento, con capacitación para que el cliente la administre.
 
 Next.js 16 · React 19 · Tailwind 4 · Motion · componentes de [beUI](https://beui.dev)
 

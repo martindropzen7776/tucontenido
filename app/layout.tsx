@@ -28,15 +28,15 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "Tu web en 7 días — Tu Contenido",
   description:
-    "Diseñamos tu web en 7 días por USD 500. A medida, andando en el celular y con los textos escritos. Queda a tu nombre: sin cuota de mantenimiento y sin depender de nadie.",
+    "Tu web en 7 días por $500.000, a medida y con los textos escritos. Llave en mano: te enseñamos a administrarla, sin cuota de mantenimiento.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "es_AR",
     siteName: "Tu Contenido",
-    title: "Tu web en 7 días — USD 500",
+    title: "Tu web en 7 días — $500.000",
     description:
-      "A medida, andando en el celular y con los textos escritos. Queda a tu nombre, sin cuota de mantenimiento.",
+      "A medida, andando en el celular y con los textos escritos. Te la entregamos llave en mano y te enseñamos a manejarla, sin cuota de mantenimiento.",
     url: SITE_URL,
     images: [{ url: "/og.jpg", width: 1200, height: 630 }],
   },
@@ -58,12 +58,12 @@ const schema = {
     "Diseño y desarrollo de sitios web para negocios en Argentina. Entrega en 7 días.",
   url: SITE_URL,
   areaServed: { "@type": "Country", name: "Argentina" },
-  priceRange: "USD 500",
+  priceRange: "$500.000",
   makesOffer: {
     "@type": "Offer",
     name: "Sitio web profesional",
-    priceCurrency: "USD",
-    price: "500",
+    priceCurrency: "ARS",
+    price: "500000",
     availability: "https://schema.org/InStock",
     itemOffered: {
       "@type": "Service",

@@ -22,7 +22,7 @@ type Opcion = {
   texto: string;
   /* La devolución que aparece debajo después de elegir. */
   eco: string;
-  /* Si es false, el prospecto no entra en el servicio de USD 500. */
+  /* Si es false, el prospecto no entra en el servicio de $500.000. */
   sirve?: boolean;
 };
 
@@ -96,7 +96,7 @@ function armarPasos(r: Rubro): Paso[] {
         {
           id: "llamada",
           texto: "Sí, y me hicieron agendar una llamada",
-          eco: "Y en la llamada tampoco te dijeron el precio. Acá ya lo sabés: USD 500.",
+          eco: "Y en la llamada tampoco te dijeron el precio. Acá ya lo sabés: $500.000.",
         },
         {
           id: "fantasma",

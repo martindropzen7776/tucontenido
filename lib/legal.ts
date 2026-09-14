@@ -26,7 +26,7 @@ export const TITULAR = {
 };
 
 /** Última revisión de los textos legales. Actualizar al cambiarlos. */
-export const VIGENCIA = "27 de agosto de 2026";
+export const VIGENCIA = "14 de septiembre de 2026";
 
 /** Plazo de arrepentimiento que fija la Ley 24.240, art. 34. */
 export const DIAS_ARREPENTIMIENTO = 10;

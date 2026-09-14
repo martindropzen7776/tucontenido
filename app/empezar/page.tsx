@@ -8,7 +8,7 @@ import { Saturno } from "@/components/site/saturno";
 export const metadata: Metadata = {
   title: "Tu web en 7 días — Tu Contenido",
   description:
-    "Tres preguntas y te decimos si tu negocio entra en los USD 500. Sin llamadas ni reuniones.",
+    "Tres preguntas y te decimos si tu negocio entra en los $500.000. Sin llamadas ni reuniones.",
   robots: { index: false, follow: true },
 };
 
@@ -26,7 +26,7 @@ export default function Empezar() {
           tucontenido<i className="not-italic text-ink-soft">.</i>
         </a>
         <p className="mono !text-[11px] text-ink-soft">
-          Web en 7 días · USD 500 · a tu nombre
+          Web en 7 días · $500.000 · a tu nombre
         </p>
       </header>
 
