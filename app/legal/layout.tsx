@@ -6,10 +6,9 @@ import { PAGINAS_LEGALES, VIGENCIA, TITULAR } from "@/lib/legal";
 export default function LegalLayout({ children }: { children: React.ReactNode }) {
   return (
     <main className="pad-x mx-auto min-h-svh max-w-[46rem] pb-24 pt-24">
-      {/* Estos textos son del servicio de webs: vuelven a /web, no a la
-          raíz, que es la página de la agencia. */}
+      {/* Estos textos cubren los dos servicios, así que vuelven a la raíz. */}
       <Link
-        href="/web/"
+        href="/"
         className="mono !text-[11px] text-ink-soft underline underline-offset-4 transition-opacity hover:opacity-70"
       >
         ← Volver al inicio

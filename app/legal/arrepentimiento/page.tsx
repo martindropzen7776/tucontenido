@@ -67,6 +67,12 @@ export default function Arrepentimiento() {
         Si querés dar de baja un servicio en curso, usá el segundo botón. La baja se
         hace efectiva sin que tengamos que ofrecerte alternativas ni retenerte.
       </p>
+      <p>
+        En los servicios que se pagan por período, como la gestión de publicidad,
+        desde la baja no se generan nuevos cargos: se abona lo trabajado hasta ese
+        día. Las cuentas publicitarias siguen siendo tuyas y podés retirarnos el
+        acceso en el mismo momento.
+      </p>
 
       <h2>Qué pasa después</h2>
       <p>

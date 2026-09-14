@@ -29,8 +29,10 @@ export default function Privacidad() {
         <strong>Los que nos das vos.</strong> Cuando completás el cuestionario o nos
         escribís por WhatsApp o email: tu nombre, tu número de teléfono, tu correo,
         el rubro de tu negocio y las respuestas que elegiste. Si después contratás,
-        también los datos necesarios para facturar y el material del sitio (logo,
-        fotos, textos, datos de contacto de tu negocio).
+        también los datos necesarios para facturar y el material del trabajo (logo,
+        fotos, textos, datos de contacto de tu negocio). Si pedís un diagnóstico o
+        contratás la gestión de publicidad, además los accesos que nos des a tus
+        cuentas publicitarias.
       </p>
       <p>
         <strong>Los que se recogen solos.</strong> Si aceptaste las cookies de
@@ -47,7 +49,8 @@ export default function Privacidad() {
 
       <h2>Para qué los usamos</h2>
       <ul>
-        <li>Responderte y pasarte un presupuesto.</li>
+        <li>Responderte y pasarte un presupuesto o una propuesta.</li>
+        <li>Hacer el diagnóstico de tus campañas, si lo pedís.</li>
         <li>Prestarte el servicio si lo contratás, y facturarlo.</li>
         <li>
           Medir qué anuncios y qué páginas funcionan, para no gastar en los que no.
@@ -86,6 +89,28 @@ export default function Privacidad() {
         pueden no tener un nivel de protección equivalente. Al usar el sitio y
         contactarnos, prestás conformidad a esa transferencia internacional, que se
         limita a lo indispensable para prestar el servicio.
+      </p>
+
+      <h2>Cuando manejamos tus campañas: los datos de tus clientes</h2>
+      <p>
+        Al gestionar tu publicidad podemos acceder a datos personales de tus
+        clientes o prospectos: por ejemplo, los contactos que dejan en un formulario
+        de Meta, o los eventos que se envían a la plataforma para medir ventas.
+        Respecto de esos datos, <strong>el responsable sos vos</strong>, y nosotros
+        actuamos como prestadores del servicio por cuenta tuya, en los términos del
+        artículo 25 de la Ley 25.326.
+      </p>
+      <ul>
+        <li>Los usamos solo para prestarte el servicio que contrataste.</li>
+        <li>No los usamos para nosotros ni los cedemos a terceros.</li>
+        <li>
+          Al terminar el servicio, los devolvemos o los eliminamos, según nos
+          indiques.
+        </li>
+      </ul>
+      <p>
+        Vos sos responsable de contar con la base legal para tratarlos, por ejemplo
+        el consentimiento de tus clientes y tu propia política de privacidad.
       </p>
 
       <h2>Cuánto tiempo los guardamos</h2>

@@ -253,6 +253,19 @@ button:focus-visible {
   color: var(--color-ink);
   margin: 2.8rem 0 0.9rem;
 }
+/* Un h2 seguido de h3 es el título de una parte, no de una cláusula
+   (los términos se dividen por servicio). Lleva regla arriba y más
+   tamaño para que el cambio de parte se vea al escanear. En las
+   páginas donde los h2 son cláusulas, no se aplica. */
+.prosa h2:has(+ h3) {
+  font-size: clamp(25px, 3.4vw, 32px);
+  border-top: 1px solid var(--rule);
+  padding-top: 2.6rem;
+  margin-top: 3.6rem;
+}
+.prosa h2:has(+ h3) + h3 {
+  margin-top: 1.1rem;
+}
 .prosa h3 {
   font-family: var(--font-body);
   font-weight: 600;
