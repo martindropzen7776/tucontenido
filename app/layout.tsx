@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Instrument_Sans, Space_Mono } from "next/font/google";
 import { SITE_URL } from "@/lib/site";
 import { BannerCookies, Pixel } from "@/components/site/cookies";
+import { Fondo } from "@/components/site/fondo";
 import "./globals.css";
 
 /* Las fuentes se auto-hospedan: sin request a Google, sin salto de layout. */
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${bricolage.variable} ${instrument.variable} ${spaceMono.variable}`}
     >
       <body>
+        <Fondo />
         {children}
 
         {/* El píxel vive detrás del consentimiento: si no lo aceptan,

@@ -50,8 +50,11 @@ html {
   background: #0a0a0c;
 }
 
+/* El body es transparente a propósito: detrás está el fondo fijo
+   (components/site/fondo.tsx), y el vidrio de las superficies
+   necesita ver algo para desenfocarlo. El color de base lo pone html. */
 body {
-  background: var(--color-bone);
+  background: transparent;
   color: var(--color-ink);
   font-family: var(--font-body);
   font-size: 17px;
@@ -110,11 +113,106 @@ button:focus-visible {
   color: var(--color-ink-soft);
 }
 
-/* ─── Superficies ─── */
-/* .on-c es la sección clara: invierte todo el bloque. */
+/* ─── Fondo y vidrio ───
+   Detrás de todo, un fondo fijo con los anillos del Saturno en
+   grande y dos luces grises. Encima, las superficies son de vidrio:
+   translúcidas y con desenfoque, así los anillos se adivinan a
+   través de ellas mientras se scrollea.
+
+   El desenfoque es caro en el teléfono. Va solo en superficies
+   chicas (menú, remitos, tarjetas) y en las secciones claras solo
+   en pantallas grandes; en el celular esas quedan con tinte, sin
+   desenfoque, que sobre un fondo casi liso se ve casi igual. */
+.fondo {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(70vmax 50vmax at 88% 12%, rgba(244, 244, 241, 0.13), transparent 62%),
+    radial-gradient(60vmax 45vmax at 6% 96%, rgba(244, 244, 241, 0.07), transparent 60%),
+    radial-gradient(45vmax 35vmax at 45% 55%, rgba(154, 154, 164, 0.05), transparent 70%),
+    #0a0a0c;
+}
+.fondo svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* En la capa de componentes y no sueltas: así una utilidad de
+   Tailwind (hover:bg-ink en las opciones del calificador, por
+   ejemplo) todavía puede pisarlas. Sueltas les ganarían siempre. */
+@layer components {
+  .vidrio {
+    background: rgba(18, 18, 22, 0.5);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    backdrop-filter: blur(22px) saturate(140%);
+  }
+  .vidrio-claro {
+    background: rgba(244, 244, 241, 0.91);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    backdrop-filter: blur(22px) saturate(140%);
+  }
+  /* Para bloques grandes: tinte sin desenfoque. */
+  .velo {
+    background: rgba(19, 19, 24, 0.62);
+  }
+  /* Lo fijo (menú, aviso de cookies) desenfoca siempre: es chico y
+     es donde más se nota, porque el contenido le pasa por debajo. */
+  .vidrio-fijo {
+    background: rgba(18, 18, 22, 0.55);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    backdrop-filter: blur(22px) saturate(140%);
+  }
+  /* En el teléfono, las superficies grandes que scrollean quedan
+     con tinte y sin desenfoque: cada una obliga a recalcular el
+     desenfoque en cada cuadro del scroll, y sobre un fondo casi
+     liso la diferencia apenas se ve. */
+  @media (max-width: 720px) {
+    .vidrio {
+      background: rgba(18, 18, 22, 0.72);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+    .vidrio-claro {
+      background: rgba(244, 244, 241, 0.94);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .vidrio, .vidrio-fijo { background: #131318; }
+    .vidrio-claro { background: var(--color-ink); }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .vidrio, .vidrio-fijo, .velo { background: #131318; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    .vidrio-claro { background: var(--color-ink); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  }
+}
+
+/* .on-c es la sección clara: invierte todo el bloque. Ahora es un
+   vidrio claro; con desenfoque solo donde hay mouse y pantalla ancha. */
 .on-c {
-  background: var(--color-ink);
+  background: rgba(244, 244, 241, 0.93);
   color: var(--color-bone);
+}
+@media (min-width: 900px) and (hover: hover) {
+  .on-c {
+    background: rgba(244, 244, 241, 0.91);
+    -webkit-backdrop-filter: blur(26px) saturate(140%);
+    backdrop-filter: blur(26px) saturate(140%);
+  }
+}
+
+/* Sin soporte de desenfoque, o si la persona pidió menos
+   transparencia en su sistema: superficies opacas, como antes. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .on-c { background: var(--color-ink); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .on-c { background: var(--color-ink); -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
 .on-c .lede {
   color: #5f5f68;

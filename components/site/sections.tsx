@@ -104,7 +104,7 @@ export function Semana() {
 
 export function Trabajos() {
   return (
-    <section id="trabajos" className="sec pad-x bg-bone-2">
+    <section id="trabajos" className="sec pad-x velo">
       <Aparece>
         <h2 className="disp h2 max-w-[14ch]">Webs que ya están andando</h2>
         <p className="lede mt-7">
@@ -119,7 +119,7 @@ export function Trabajos() {
           const cuerpo = (
             <div
               className={`flex h-full flex-col justify-between gap-8 border border-ink/25 p-6 transition-colors sm:p-8 ${
-                t.listo ? "bg-bone hover:border-ink/60" : "border-dashed opacity-45"
+                t.listo ? "vidrio hover:border-ink/60" : "border-dashed opacity-45"
               } ${grande ? "min-h-[15rem] sm:min-h-[19rem]" : "min-h-[11rem] sm:min-h-[13rem]"}`}
             >
               <span className="mono !text-[11px] text-ink-soft">{t.rubro}</span>
@@ -189,7 +189,7 @@ export function Precio() {
       </Aparece>
 
       <Aparece delay={0.05}>
-        <div className="mt-[clamp(40px,5vw,64px)] grid border border-ink/25 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+        <div className="mt-[clamp(40px,5vw,64px)] grid border border-ink/25 vidrio lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
           <div className="p-[clamp(26px,3.6vw,52px)]">
             <div className="flex items-start gap-3">
               <span className="disp pt-1 text-[clamp(26px,4.2vw,52px)] leading-none text-ink-soft">$</span>
@@ -228,7 +228,7 @@ export function Precio() {
             </div>
           </div>
 
-          <div className="border-t border-ink/25 bg-bone-2 p-[clamp(26px,3.6vw,52px)] lg:border-l lg:border-t-0">
+          <div className="border-t border-ink/25 bg-bone/30 p-[clamp(26px,3.6vw,52px)] lg:border-l lg:border-t-0">
             <div className="text-[15px] font-semibold">Esto no entra</div>
             <ul className="mt-6">
               {NO_ENTRA.map((x) => (

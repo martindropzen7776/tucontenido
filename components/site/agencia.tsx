@@ -37,7 +37,7 @@ function Fila({ k, v }: { k: string; v: string }) {
    Es la puerta de entrada, así que va donde en /web va el precio. */
 function Diagnostico() {
   return (
-    <div className="relative border border-ink bg-ink p-[clamp(24px,3vw,38px)] text-bone">
+    <div className="relative border border-ink vidrio-claro p-[clamp(24px,3vw,38px)] text-bone">
       <div className="mb-5 flex items-baseline justify-between border-b border-dashed border-[var(--rule-on-c)] pb-4">
         <span className="mono text-bone/45">Diagnóstico</span>
         <span className="mono text-bone/45">Nº 001</span>

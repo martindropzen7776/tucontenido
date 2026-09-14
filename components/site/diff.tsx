@@ -129,7 +129,7 @@ export function Diff() {
 
       <Aparece delay={0.08}>
         <div className="grid border-2 border-ink/25 min-[900px]:grid-cols-2">
-          <div className="flex flex-col bg-bone-2 p-5 sm:p-[clamp(28px,3.4vw,48px)]">
+          <div className="flex flex-col vidrio p-5 sm:p-[clamp(28px,3.4vw,48px)]">
             <div className="mono !text-[11px] text-ink-soft">En otros lados</div>
             <div className="disp mb-6 mt-2.5 text-[clamp(26px,3.4vw,40px)] leading-none tracking-[-0.03em]">
               Seis pasos antes de ver un solo diseño
@@ -150,7 +150,7 @@ export function Diff() {
             <Letania />
           </div>
 
-          <div className="flex flex-col border-t-2 border-ink bg-ink p-5 text-bone min-[900px]:border-l-2 min-[900px]:border-t-0 sm:p-[clamp(28px,3.4vw,48px)]">
+          <div className="flex flex-col border-t-2 border-ink vidrio-claro p-5 text-bone min-[900px]:border-l-2 min-[900px]:border-t-0 sm:p-[clamp(28px,3.4vw,48px)]">
             <div className="mono !text-[11px] text-bone/55">Acá</div>
             <div className="disp mb-6 mt-2.5 text-[clamp(26px,3.4vw,40px)] leading-none tracking-[-0.03em]">
               Tres pasos y a diseñar

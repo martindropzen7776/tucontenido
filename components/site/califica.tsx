@@ -437,7 +437,7 @@ export function Califica() {
                       ? "border-ink bg-ink text-bone"
                       : otra
                         ? "border-ink/12 text-ink/30"
-                        : "border-ink/30 transition-colors duration-200 hover:border-ink hover:bg-ink hover:text-bone"
+                        : "vidrio border-ink/30 transition-colors duration-200 hover:border-ink hover:bg-ink hover:text-bone"
                   }`}
                 >
                   {op.texto}

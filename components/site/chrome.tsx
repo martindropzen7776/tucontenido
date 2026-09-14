@@ -32,7 +32,7 @@ export function Nav({
   return (
     <>
       <ScrollProgress variant="bar" position="top" height={3} className="!bg-cobalt z-[300]" />
-      <nav className="pad-x fixed inset-x-0 top-0 z-[200] flex h-[68px] items-center justify-between gap-4 border-b border-[var(--rule)] bg-bone max-[620px]:h-[60px]">
+      <nav className="pad-x fixed inset-x-0 top-0 z-[200] flex h-[68px] items-center justify-between gap-4 border-b border-[var(--rule)] vidrio-fijo max-[620px]:h-[60px]">
         <a href="#" className="disp tap text-[19px] tracking-[-0.03em]">
           tucontenido<i className={`not-italic ${sufijo === "." ? "text-cobalt" : "text-ink-soft"}`}>{sufijo}</i>
         </a>
@@ -74,7 +74,7 @@ export function Footer({
   firma?: string;
 }) {
   return (
-    <footer className="pad-x bg-ink pb-[30px] pt-[clamp(52px,6vw,76px)] text-bone">
+    <footer className="pad-x vidrio-claro pb-[30px] pt-[clamp(52px,6vw,76px)] text-bone">
       <div className="grid gap-[clamp(28px,4vw,60px)] border-b border-bone/15 pb-10 min-[620px]:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr]">
         <div>
           <span className="disp text-[19px] tracking-[-0.03em]">

@@ -103,7 +103,7 @@ export function BannerCookies() {
       role="dialog"
       aria-live="polite"
       aria-label="Aviso de cookies"
-      className="fixed inset-x-0 bottom-0 z-[1000] border-t border-ink/25 bg-bone-2 px-5 py-5 sm:px-8"
+      className="fixed inset-x-0 bottom-0 z-[1000] border-t border-ink/25 vidrio-fijo px-5 py-5 sm:px-8"
     >
       <div className="mx-auto flex max-w-[62rem] flex-col gap-4 lg:flex-row lg:items-center lg:gap-8">
         <p className="text-[14.5px] leading-relaxed text-ink-soft">
