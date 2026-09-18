@@ -30,9 +30,7 @@ export default function Privacidad() {
         escribís por WhatsApp o email: tu nombre, tu número de teléfono, tu correo,
         el rubro de tu negocio y las respuestas que elegiste. Si después contratás,
         también los datos necesarios para facturar y el material del trabajo (logo,
-        fotos, textos, datos de contacto de tu negocio). Si pedís un diagnóstico o
-        contratás la gestión de publicidad, además los accesos que nos des a tus
-        cuentas publicitarias.
+        fotos, textos, datos de contacto de tu negocio).
       </p>
       <p>
         <strong>Los que se recogen solos.</strong> Si aceptaste las cookies de
@@ -50,7 +48,6 @@ export default function Privacidad() {
       <h2>Para qué los usamos</h2>
       <ul>
         <li>Responderte y pasarte un presupuesto o una propuesta.</li>
-        <li>Hacer el diagnóstico de tus campañas, si lo pedís.</li>
         <li>Prestarte el servicio si lo contratás, y facturarlo.</li>
         <li>
           Medir qué anuncios y qué páginas funcionan, para no gastar en los que no.
@@ -80,8 +77,9 @@ export default function Privacidad() {
           queda sujeta además a las políticas de WhatsApp.
         </li>
         <li>
-          <strong>La plataforma de alojamiento</strong> del sitio que te entreguemos,
-          si contratás, y solo con los datos necesarios para publicarlo.
+          <strong>La plataforma de alojamiento</strong> del sitio que te entreguemos
+          y los servicios que use el sistema de reservas, si contratás, y solo con
+          los datos necesarios para que funcionen.
         </li>
       </ul>
       <p>
@@ -91,14 +89,14 @@ export default function Privacidad() {
         limita a lo indispensable para prestar el servicio.
       </p>
 
-      <h2>Cuando manejamos tus campañas: los datos de tus clientes</h2>
+      <h2>Cuando tu web tiene reservas: los datos de tus clientes</h2>
       <p>
-        Al gestionar tu publicidad podemos acceder a datos personales de tus
-        clientes o prospectos: por ejemplo, los contactos que dejan en un formulario
-        de Meta, o los eventos que se envían a la plataforma para medir ventas.
-        Respecto de esos datos, <strong>el responsable sos vos</strong>, y nosotros
-        actuamos como prestadores del servicio por cuenta tuya, en los términos del
-        artículo 25 de la Ley 25.326.
+        Si contratás la web con reservas, el sistema guarda datos personales de tus
+        clientes: los que dejan al sacar un turno (por ejemplo, nombre y teléfono),
+        sus turnos y lo que cargues en su ficha. Respecto de esos datos,{" "}
+        <strong>el responsable sos vos</strong>, y nosotros actuamos como
+        prestadores del servicio por cuenta tuya, en los términos del artículo 25
+        de la Ley 25.326.
       </p>
       <ul>
         <li>Los usamos solo para prestarte el servicio que contrataste.</li>
@@ -110,7 +108,9 @@ export default function Privacidad() {
       </ul>
       <p>
         Vos sos responsable de contar con la base legal para tratarlos, por ejemplo
-        el consentimiento de tus clientes y tu propia política de privacidad.
+        el consentimiento de tus clientes y tu propia política de privacidad. Si en
+        la ficha cargás datos sensibles, como información de salud en un
+        consultorio, su tratamiento también queda bajo tu responsabilidad.
       </p>
 
       <h2>Cuánto tiempo los guardamos</h2>

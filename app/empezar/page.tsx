@@ -8,10 +8,10 @@ import { Saturno } from "@/components/site/saturno";
 export const metadata: Metadata = {
   title: "Pedí tu web — Tu Contenido",
   description:
-    "Unas preguntas rápidas y te decimos si tu negocio entra en los $500.000. Después, una llamada corta para conocernos.",
+    "Unas preguntas rápidas y te decimos qué plan le sirve a tu negocio. Después, una llamada corta para conocernos.",
   robots: { index: false, follow: true },
   openGraph: {
-    images: [{ url: "/og/web.png", width: 1200, height: 630, alt: "Tu Contenido: tu web lista en 7 días por $500.000." }],
+    images: [{ url: "/og/web.png", width: 1200, height: 630, alt: "Tu Contenido: tu web lista en 7 días, desde $500.000." }],
   },
 };
 
@@ -25,7 +25,7 @@ export default function Empezar() {
 
       {/* Cabecera mínima: solo la marca. */}
       <header>
-        <a href="/web/" className="disp text-[17px] tracking-[-0.03em]">
+        <a href="/" className="disp text-[17px] tracking-[-0.03em]">
           tucontenido<i className="not-italic text-ink-soft">.</i>
         </a>
       </header>

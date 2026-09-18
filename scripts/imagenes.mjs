@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════
    Genera las imágenes del sitio que no son fotos:
 
-   - public/og/agencia.png y public/og/web.png (Open Graph, 1200×630)
+   - public/og/web.png (Open Graph, 1200×630)
    - app/favicon.ico, app/apple-icon.png (con --iconos)
 
    Corre solo antes de cada build (npm "prebuild"), así las de Open
@@ -92,17 +92,11 @@ function tarjeta({ sufijo, titular, bajada, bloque }) {
 await mkdir(join(RAIZ, "public/og"), { recursive: true });
 
 const OG = {
-  agencia: {
-    sufijo: ".ads",
-    titular: ["Publicidad que se", "mide en ventas"],
-    bajada: "Campañas en Meta, anuncios, landings y medición, en un solo lugar.",
-    bloque: "Diagnóstico sin cargo",
-  },
   web: {
     sufijo: ".",
     titular: ["Tu web lista", "en 7 días"],
-    bajada: "A medida, a tu nombre y sin cuota de mantenimiento.",
-    bloque: "$500.000",
+    bajada: "A medida y a tu nombre. Si trabajás con turnos, con reservas.",
+    bloque: "Desde $500.000",
   },
 };
 

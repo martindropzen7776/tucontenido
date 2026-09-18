@@ -98,6 +98,61 @@ export function Semana() {
   );
 }
 
+/* ══════════ RESERVAS ══════════
+   El segundo plan: la misma web con un sistema de turnos adentro.
+   Lo que dice cada fila es lo que el sistema hace de verdad (reservas,
+   agenda, ficha de clientes, recordatorios): si se suma o se saca algo,
+   cambiarlo también en el plan de PRECIO y en los términos. */
+
+const RESERVAS: [string, string][] = [
+  ["Reservas online", "El cliente elige el servicio, el día y el horario desde tu web. No te tiene que escribir ni esperar a que contestes."],
+  ["Una sola agenda", "Todos los turnos caen en el mismo lugar, así no se pisan ni se pierden en el chat."],
+  ["La ficha de cada cliente", "Sus datos y su historial juntos: quién es, cuándo vino y qué le hiciste."],
+  ["Recordatorios automáticos", "Antes del turno, el cliente recibe un aviso. Menos gente que se olvida."],
+];
+
+export function Reservas() {
+  return (
+    <section id="reservas" className="sec pad-x">
+      <div className="grid items-start gap-[clamp(36px,6vw,90px)] lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)]">
+        <Aparece className="lg:sticky lg:top-[120px]">
+          <h2 className="disp h2 max-w-[15ch]">Si trabajás con turnos, que la web también los dé</h2>
+          <p className="lede mt-7">
+            La misma web, con un sistema de reservas adentro. Tus clientes sacan
+            turno solos, a cualquier hora, y vos tenés todo en un lugar.
+          </p>
+          <p className="mt-6 text-[15px] text-ink-soft">
+            <b className="font-semibold text-ink">$700.000</b>, lista en 7 días.
+          </p>
+          <div className="mt-8">
+            <WaLink msg="Hola! Quiero la web con reservas. Mi negocio es:" className="btn">
+              Quiero la web con reservas
+              <Arrow />
+            </WaLink>
+          </div>
+        </Aparece>
+
+        <div>
+          {RESERVAS.map(([t, d], i) => (
+            <Aparece key={t} delay={i * 0.03}>
+              <article className="border-t border-[var(--rule)] py-6 sm:py-7">
+                <h3 className="disp text-[19px] leading-tight tracking-[-0.015em] sm:text-[21px]">{t}</h3>
+                <p className="mt-2 max-w-[52ch] text-[15px] leading-relaxed text-ink-soft">{d}</p>
+              </article>
+            </Aparece>
+          ))}
+          <Aparece>
+            <p className="border-t border-[var(--rule)] pt-6 text-[15px] leading-relaxed text-ink-soft">
+              Para consultorios, peluquerías, estudios, talleres y cualquier negocio
+              que viva de la agenda.
+            </p>
+          </Aparece>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ══════════ TRABAJOS ══════════
    Grilla asimétrica: el primero ocupa el doble. Además de romper
    la fila de tres, te obliga a poner adelante tu mejor trabajo. */
@@ -172,65 +227,117 @@ const ENTRA = [
   "Capacitación para que la administres vos",
 ];
 
+/* Lo que suma el plan con reservas sobre la web. Mismo contenido que
+   RESERVAS, dicho en corto. */
+const ENTRA_RESERVAS = [
+  "Todo lo de la web",
+  "Sistema de reservas online",
+  "Agenda de turnos en un solo lugar",
+  "Ficha de cada cliente, con su historial",
+  "Recordatorios automáticos antes del turno",
+];
+
 const NO_ENTRA = [
   "Tienda online con carrito y pagos",
-  "Sistema de turnos o reservas",
   "Más de seis secciones",
   "Blog con carga de notas",
   "Sesión de fotos del negocio",
-  "Campañas de publicidad",
 ];
+
+type Plan = {
+  nombre: string;
+  precio: string;
+  bajada: string;
+  entra: string[];
+  boton: string;
+  msg: string;
+};
+
+const PLANES: Plan[] = [
+  {
+    nombre: "Web",
+    precio: "500.000",
+    bajada: "Pago único, llave en mano, sin cuota de mantenimiento",
+    entra: ENTRA,
+    boton: "Quiero mi web",
+    msg: "Hola! Quiero mi web por $500.000. ¿Cómo arrancamos?",
+  },
+  {
+    nombre: "Web con reservas",
+    precio: "700.000",
+    bajada: "Pago único. Mantenimiento opcional: $50.000 por mes",
+    entra: ENTRA_RESERVAS,
+    boton: "Quiero la web con reservas",
+    msg: "Hola! Quiero la web con reservas por $700.000. ¿Cómo arrancamos?",
+  },
+];
+
+function TarjetaPlan({ p, destacado }: { p: Plan; destacado?: boolean }) {
+  return (
+    <div
+      className={`flex h-full flex-col border p-[clamp(26px,3.6vw,52px)] vidrio ${
+        destacado ? "border-ink/70" : "border-ink/25"
+      }`}
+    >
+      <div className="disp text-[clamp(20px,2.2vw,24px)] tracking-[-0.015em]">{p.nombre}</div>
+      <div className="mt-6 flex items-start gap-3">
+        <span className="disp pt-1 text-[clamp(24px,3.4vw,42px)] leading-none text-ink-soft">$</span>
+        <span className="disp text-[clamp(48px,7vw,92px)] leading-[0.82] tracking-[-0.04em]">{p.precio}</span>
+      </div>
+      <div className="mt-4 text-[15px] text-ink-soft">{p.bajada}</div>
+
+      <ul className="mt-8 flex-1">
+        {p.entra.map((x) => (
+          <li key={x} className="flex gap-3.5 border-t border-[var(--rule)] py-3 text-[15px] leading-snug">
+            <span className="mono !text-[13px] !tracking-normal shrink-0 text-ink">+</span>
+            {x}
+          </li>
+        ))}
+      </ul>
+
+      <div className="mt-8">
+        <WaLink msg={p.msg} className={destacado ? "btn" : "btn btn-line"}>
+          {p.boton}
+          <Arrow />
+        </WaLink>
+      </div>
+    </div>
+  );
+}
 
 export function Precio() {
   return (
     <section id="precio" className="sec pad-x">
       <Aparece>
-        <h2 className="disp h2 max-w-[15ch]">Un precio, publicado, sin vueltas</h2>
+        <h2 className="disp h2 max-w-[15ch]">Dos precios, publicados, sin vueltas</h2>
+        <p className="lede mt-7">
+          Si trabajás con turnos, te conviene la web con reservas. Si no, alcanza
+          con la web. Si no sabés, lo vemos juntos antes de arrancar.
+        </p>
       </Aparece>
 
+      <div className="mt-[clamp(40px,5vw,64px)] grid gap-3 lg:grid-cols-2">
+        {PLANES.map((p, i) => (
+          <Aparece key={p.nombre} delay={0.05 + i * 0.04} className="h-full">
+            <TarjetaPlan p={p} destacado={i === 1} />
+          </Aparece>
+        ))}
+      </div>
+
       <Aparece delay={0.05}>
-        <div className="mt-[clamp(40px,5vw,64px)] grid border border-ink/25 vidrio lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+        <div className="mt-3 grid border border-ink/25 bg-bone/30 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
           <div className="p-[clamp(26px,3.6vw,52px)]">
-            <div className="flex items-start gap-3">
-              <span className="disp pt-1 text-[clamp(26px,4.2vw,52px)] leading-none text-ink-soft">$</span>
-              <span className="disp text-[clamp(52px,9vw,112px)] leading-[0.82] tracking-[-0.04em]">
-                500.000
-              </span>
-            </div>
-            <div className="mt-4 text-[15px] text-ink-soft">
-              Pago único, llave en mano, sin cuota de mantenimiento
-            </div>
-
-            <ul className="mt-8">
-              {ENTRA.map((x) => (
-                <li
-                  key={x}
-                  className="flex gap-3.5 border-t border-[var(--rule)] py-3 text-[15px] leading-snug"
-                >
-                  <span className="mono !text-[13px] !tracking-normal shrink-0 text-ink">+</span>
-                  {x}
-                </li>
-              ))}
-            </ul>
-
-            <p className="mt-8 border-l border-ink pl-5 text-sm leading-relaxed text-ink-soft">
-              Aparte del pago único, el alojamiento cuesta{" "}
+            <div className="text-[15px] font-semibold">Aparte, en los dos planes</div>
+            <p className="mt-4 text-sm leading-relaxed text-ink-soft">
+              El alojamiento de la web cuesta{" "}
               <b className="font-semibold text-ink">USD 10 por mes</b> y lo pagás vos
               directo a la plataforma, con tu tarjeta. No pasa por nosotros: es lo que
               hace que la web sea realmente tuya y que no te podamos dejar sin nada.
             </p>
-
-            <div className="mt-8">
-              <WaLink msg="Hola! Quiero mi web por $500.000. ¿Cómo arrancamos?" className="btn">
-                Quiero mi web
-                <Arrow />
-              </WaLink>
-            </div>
           </div>
-
-          <div className="border-t border-ink/25 bg-bone/30 p-[clamp(26px,3.6vw,52px)] lg:border-l lg:border-t-0">
+          <div className="border-t border-ink/25 p-[clamp(26px,3.6vw,52px)] lg:border-l lg:border-t-0">
             <div className="text-[15px] font-semibold">Esto no entra</div>
-            <ul className="mt-6">
+            <ul className="mt-4">
               {NO_ENTRA.map((x) => (
                 <li
                   key={x}
@@ -241,11 +348,10 @@ export function Precio() {
                 </li>
               ))}
             </ul>
-            <p className="mt-8 border-l border-ink/40 pl-5 text-sm leading-relaxed text-ink-soft">
-              Nada de esto es imposible, pero no entra en los $500.000. Si lo necesitás,{" "}
-              <b className="font-semibold text-ink">decilo antes de arrancar</b> y te
-              pasamos un presupuesto aparte. Preferimos eso a que te enteres a mitad
-              de camino.
+            <p className="mt-6 text-sm leading-relaxed text-ink-soft">
+              Nada de esto es imposible, pero no entra en ninguno de los dos planes. Si
+              lo necesitás, <b className="font-semibold text-ink">decilo antes de arrancar</b>{" "}
+              y te pasamos un presupuesto aparte.
             </p>
           </div>
         </div>
@@ -257,8 +363,12 @@ export function Precio() {
 /* ══════════ PREGUNTAS ══════════ */
 
 const QA: [string, React.ReactNode][] = [
+  ["¿Cuál me conviene, la web o la web con reservas?",
+   <>Si tu negocio trabaja con turnos, como un consultorio, una peluquería o un taller, la de reservas te ahorra contestar mensajes para darlos. Si no, <b>alcanza con la web</b>. Si tenés dudas, lo vemos en la llamada y te decimos cuál, aunque sea la más barata.</>],
   ["¿Por qué hay 10 dólares por mes si dicen que no hay mantenimiento?",
-   <>Son dos cosas distintas. Los <b>USD 10 mensuales</b> son el alojamiento y los pagás vos directo a la plataforma donde vive tu web. Nosotros no te cobramos <b>nada</b> por mes. Es a propósito: si el alojamiento estuviera a nuestro nombre, el día que quisieras irte tendrías que pedirnos permiso. Necesitás una tarjeta habilitada para pagos en dólares.</>],
+   <>Son dos cosas distintas. Los <b>USD 10 mensuales</b> son el alojamiento y los pagás vos directo a la plataforma donde vive tu web. En la web sola no te cobramos <b>nada</b> por mes. Es a propósito: si el alojamiento estuviera a nuestro nombre, el día que quisieras irte tendrías que pedirnos permiso. Necesitás una tarjeta habilitada para pagos en dólares.</>],
+  ["¿El mantenimiento de la web con reservas es obligatorio?",
+   <>No. Es <b>opcional</b> y cuesta <b>$50.000 por mes</b>. Lo contratás si querés que nos ocupemos nosotros del sistema.</>],
   ["¿La web es realmente mía?",
    <>Sí, y no es una forma de decir. Al terminar te transferimos el proyecto a <b>tu cuenta</b> y el dominio se compra directamente a tu nombre. Podés editarla, cambiar de diseñador o darla de baja sin hablar con nosotros.</>],
   ["¿Hay que hacer una llamada?",
@@ -267,10 +377,10 @@ const QA: [string, React.ReactNode][] = [
    <>Lo cambiás vos, y te enseñamos cómo <b>sin costo</b>. Al entregarte la web te mostramos paso a paso cómo cambiar textos, fotos, precios, horarios y datos de contacto, y cómo mantenerla al día. Si más adelante te trabás, nos preguntás. Secciones nuevas o rediseños son presupuesto aparte, y te lo decimos antes de tocar nada.</>],
   ["¿Y si no me llevo bien con la computadora?",
    <>No hace falta saber de diseño ni de programación. Te enseñamos <b>sobre tu propia web</b>, con los cambios que vas a hacer de verdad, no con un tutorial genérico. Y si te olvidás de algo, te lo volvemos a explicar.</>],
-  ["¿Cómo pago los $500.000?",
-   <>Mercado Pago, transferencia bancaria o USDT. Se abona <b>50% para arrancar y 50% contra entrega</b>, así ninguno de los dos queda expuesto.</>],
+  ["¿Cómo se paga?",
+   <>Mercado Pago, transferencia bancaria o USDT. En los dos planes se abona <b>50% para arrancar y 50% contra entrega</b>, así ninguno de los dos queda expuesto.</>],
   ["¿De verdad son 7 días?",
-   <>Sí, pero el reloj arranca cuando nos mandás el material, no cuando pagás. Con el material completo, el <b>primer boceto lo ves en 72 horas</b>.</>],
+   <>Sí, también con reservas. El reloj arranca cuando nos mandás el material, no cuando pagás. Con el material completo, el <b>primer boceto lo ves en 72 horas</b>.</>],
 ];
 
 function Pregunta({ q, a }: { q: string; a: React.ReactNode }) {
@@ -336,8 +446,8 @@ export function Cierre() {
           <h2 className="disp h2">¿Arrancamos hoy mismo?</h2>
         </div>
         <p className="lede mt-7">
-          Escribinos por WhatsApp y te decimos en el momento si tu negocio entra en
-          los $500.000 o necesita algo distinto. Después hacemos una llamada corta
+          Escribinos por WhatsApp y te decimos en el momento qué plan le sirve a tu
+          negocio, o si necesita algo distinto. Después hacemos una llamada corta
           para conocernos, y arrancamos.
         </p>
         <div className="mt-9">

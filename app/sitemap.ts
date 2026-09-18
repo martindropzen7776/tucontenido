@@ -12,7 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const url = (ruta: string) => `${SITE_URL}${ruta.endsWith("/") ? ruta : `${ruta}/`}`;
   return [
     { url: url("/"), changeFrequency: "monthly", priority: 1 },
-    { url: url("/web/"), changeFrequency: "monthly", priority: 0.9 },
     ...PAGINAS_LEGALES.map((p) => ({
       url: url(p.href),
       changeFrequency: "yearly" as const,

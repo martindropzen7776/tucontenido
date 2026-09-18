@@ -62,8 +62,12 @@ export function trackContacto() {
    Las respuestas visibles viven en sections.tsx con su formato.
    Si cambiás una, cambiala en los dos lados.                */
 export const FAQ_SCHEMA: [string, string][] = [
+  ["¿Cuál me conviene, la web o la web con reservas?",
+   "Si tu negocio trabaja con turnos, como un consultorio, una peluquería o un taller, la de reservas te ahorra contestar mensajes para darlos. Si no, alcanza con la web. Si tenés dudas, lo vemos en la llamada y te decimos cuál, aunque sea la más barata."],
   ["¿Por qué hay 10 dólares por mes si dicen que no hay mantenimiento?",
-   "Son dos cosas distintas. Los USD 10 mensuales son el alojamiento y los pagás vos directo a la plataforma donde vive tu web. No cobramos nada por mes. Si el alojamiento estuviera a nuestro nombre, el día que quisieras irte tendrías que pedirnos permiso. Necesitás una tarjeta habilitada para pagos en dólares."],
+   "Son dos cosas distintas. Los USD 10 mensuales son el alojamiento y los pagás vos directo a la plataforma donde vive tu web. En la web sola no cobramos nada por mes. Si el alojamiento estuviera a nuestro nombre, el día que quisieras irte tendrías que pedirnos permiso. Necesitás una tarjeta habilitada para pagos en dólares."],
+  ["¿El mantenimiento de la web con reservas es obligatorio?",
+   "No. Es opcional y cuesta $50.000 por mes. Lo contratás si querés que nos ocupemos nosotros del sistema."],
   ["¿La web es realmente mía?",
    "Sí. Al terminar te transferimos el proyecto a tu cuenta y el dominio se compra directamente a tu nombre. Podés editarla, cambiar de diseñador o darla de baja sin hablar con nosotros."],
   ["¿Hay que hacer una llamada?",
@@ -72,8 +76,8 @@ export const FAQ_SCHEMA: [string, string][] = [
    "Lo cambiás vos, y te enseñamos cómo sin costo. Al entregarte la web te mostramos paso a paso cómo cambiar textos, fotos, precios, horarios y datos de contacto, y cómo mantenerla al día. Secciones nuevas o rediseños son presupuesto aparte."],
   ["¿Y si no me llevo bien con la computadora?",
    "No hace falta saber de diseño ni de programación. Te enseñamos sobre tu propia web, con los cambios que vas a hacer de verdad, y si te olvidás de algo te lo volvemos a explicar."],
-  ["¿Cómo pago los $500.000?",
-   "Mercado Pago, transferencia bancaria o USDT. Se abona 50% para arrancar y 50% contra entrega."],
+  ["¿Cómo se paga?",
+   "Mercado Pago, transferencia bancaria o USDT. En los dos planes se abona 50% para arrancar y 50% contra entrega."],
   ["¿De verdad son 7 días?",
-   "Sí, pero el reloj arranca cuando mandás el material, no cuando pagás. Con el material completo, el primer boceto lo ves en 72 horas."],
+   "Sí, también con reservas. El reloj arranca cuando mandás el material, no cuando pagás. Con el material completo, el primer boceto lo ves en 72 horas."],
 ];

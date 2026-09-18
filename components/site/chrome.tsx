@@ -7,14 +7,15 @@ import { WaLink } from "./wa-link";
 
 type Enlace = { href: string; label: string };
 
-/* Los valores por defecto son los de /web. La página de la agencia
-   (la raíz) pasa los suyos: mismo esqueleto, otro contenido. */
+/* Los valores por defecto son los de la página principal. Las props
+   quedan por si otra página necesita otro menú. */
 const NAV: Enlace[] = [
   { href: "#diferencia", label: "La diferencia" },
   { href: "#incluye", label: "Qué incluye" },
   { href: "#dias", label: "Los 7 días" },
+  { href: "#reservas", label: "Reservas" },
   { href: "#trabajos", label: "Trabajos" },
-  { href: "#precio", label: "Precio" },
+  { href: "#precio", label: "Precios" },
 ];
 
 const MSG_WEB = "Hola! Quiero mi web en 7 días.";
@@ -26,7 +27,7 @@ export function Nav({
 }: {
   enlaces?: Enlace[];
   msg?: string;
-  /** Lo que va después de "tucontenido": "." en /web, ".ads" en la agencia. */
+  /** Lo que va después de "tucontenido" en el logo. */
   sufijo?: string;
 }) {
   return (
@@ -61,7 +62,7 @@ export function Nav({
 export function Footer({
   bio = "Diseñamos webs para negocios que quieren vender por internet sin quedar atados a una agencia. Siete días y queda a tu nombre.",
   titulo = "Servicio",
-  enlaces = NAV.slice(1, 4),
+  enlaces = [NAV[1], NAV[3], NAV[5]],
   msg = "Hola! Quiero consultar por una web.",
   sufijo = ".",
   firma = "Hecha con este mismo proceso",

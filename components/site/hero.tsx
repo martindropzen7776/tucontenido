@@ -73,6 +73,13 @@ export function Hero() {
           </a>
         </div>
 
+        <a
+          href="#reservas"
+          className="mt-5 self-start text-[15px] text-ink-soft underline underline-offset-4 transition-colors hover:text-ink"
+        >
+          ¿Trabajás con turnos? Mirá la web con reservas
+        </a>
+
         <div className="mt-[clamp(38px,5.5vw,60px)] max-w-[30rem]">
           <Dato valor={7} etiqueta="Días de entrega" detalle="Desde que mandás el material" />
           <Dato valor={72} sufijo="h" etiqueta="Primer boceto" detalle="La web entera, navegable" />

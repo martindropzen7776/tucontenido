@@ -1,11 +1,15 @@
 # tucontenido
 
-Dos páginas en un mismo dominio:
+La landing del servicio de webs, en la raíz del dominio, con dos planes:
 
-| Ruta | Qué es | Dónde vive |
+| Plan | Precio | Qué es |
 |---|---|---|
-| `/` | Tu Contenido .ads, la agencia general de publicidad paga | `app/page.tsx` + `components/site/agencia.tsx` |
-| `/web` | Landing del servicio de webs a $500.000: llave en mano, sin mantenimiento, con capacitación para que el cliente la administre | `app/web/page.tsx` |
+| Web | $500.000 | Llave en mano, sin mantenimiento, con capacitación para que el cliente la administre |
+| Web con reservas | $700.000 | Lo mismo más reservas online, agenda, ficha de clientes y recordatorios. Mantenimiento opcional de $50.000 por mes |
+
+Hasta el 17/09/2026 la landing vivía en `/web` y la raíz era una agencia
+de publicidad (`agencia.tsx`, se puede ver en el historial de git). La
+agencia se sacó y `/web` redirige a `/` con un 301 (`netlify.toml`).
 
 El resto de las rutas:
 
@@ -14,7 +18,7 @@ El resto de las rutas:
 | `/empezar` | Calificador para tráfico pago (noindex) |
 | `/gracias` | Adonde llega el calificador después de abrir WhatsApp (noindex) |
 | `/entrega` | Generador de la hoja de entrega para el cliente (interna, fuera de robots) |
-| `/legal/*` | Términos, privacidad, cookies y arrepentimiento, para los dos servicios |
+| `/legal/*` | Términos, privacidad, cookies y arrepentimiento, para los dos planes |
 
 `robots.txt`, `sitemap.xml`, la 404 y los íconos salen del build.
 
@@ -57,7 +61,7 @@ Los íconos (`app/favicon.ico`, `app/apple-icon.png`) se regeneran con
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000 (agencia) y /web (webs)
+npm run dev      # http://localhost:3000
 ```
 
 ## Build
@@ -75,11 +79,10 @@ y el plugin oficial de Next.
 ```
 app/
   layout.tsx        fuentes, píxel y cookies, comunes a todas las páginas
-  page.tsx          la agencia: orden de secciones, metadata y schema
-  web/page.tsx      la landing de webs: orden de secciones, metadata y schema
+  page.tsx          la landing: orden de secciones, metadata y schema
   globals.css       tokens de color, tipografía y escala de motion
 components/
-  site/             las secciones (agencia.tsx es la raíz; el resto, /web)
+  site/             las secciones (los precios y los planes, en sections.tsx)
   motion/           componentes de beUI (número, tilt, marquee, reveals…)
 lib/site.ts         ← lo único que hay que tocar para publicar
 ```

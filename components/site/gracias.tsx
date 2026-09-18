@@ -68,7 +68,7 @@ export function Gracias() {
           ¿No se abrió WhatsApp? Abrilo acá
           <Arrow />
         </a>
-        <a href="/web/" className="btn btn-line min-h-[56px] justify-center text-[15px]">
+        <a href="/" className="btn btn-line min-h-[56px] justify-center text-[15px]">
           Volver a la página
         </a>
       </div>

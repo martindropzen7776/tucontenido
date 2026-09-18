@@ -10,6 +10,18 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Hasta el 17/09/2026 la landing de webs vivía en /web. Ahora es la raíz:
+# los links viejos (anuncios, posts, bio) siguen funcionando.
+[[redirects]]
+  from = "/web"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/web/*"
+  to = "/"
+  status = 301
+
 [[headers]]
   for = "/*"
   [headers.values]
