@@ -99,28 +99,29 @@ export function BannerCookies() {
   };
 
   return (
+    /* Franja compacta: en el celular el aviso anterior tapaba casi
+       media pantalla. Los dos botones van lado a lado y con el mismo
+       peso, para que rechazar sea tan fácil como aceptar. */
     <div
       role="dialog"
       aria-live="polite"
       aria-label="Aviso de cookies"
-      className="fixed inset-x-0 bottom-0 z-[1000] border-t border-ink/25 vidrio-fijo px-5 py-5 sm:px-8"
+      className="fixed inset-x-0 bottom-0 z-[1000] border-t border-ink/25 vidrio-fijo px-4 py-3 sm:px-8"
     >
-      <div className="mx-auto flex max-w-[62rem] flex-col gap-4 lg:flex-row lg:items-center lg:gap-8">
-        <p className="text-[14.5px] leading-relaxed text-ink-soft">
-          Usamos cookies de medición para saber qué anuncios traen consultas reales
-          y cuáles no. <strong className="font-semibold text-ink">Si las rechazás,
-          el sitio funciona igual</strong> y no se carga ningún rastreador.{" "}
+      <div className="mx-auto flex max-w-[62rem] flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-6">
+        <p className="text-[13px] leading-snug text-ink-soft sm:text-[14px]">
+          Usamos cookies de medición.{" "}
+          <strong className="font-semibold text-ink">Si las rechazás, el sitio funciona igual.</strong>{" "}
           <a href="/legal/cookies" className="underline underline-offset-4 hover:text-ink">
-            Cómo funcionan
+            Más info
           </a>
-          .
         </p>
 
-        <div className="flex shrink-0 flex-col gap-2.5 sm:flex-row">
-          <button type="button" onClick={() => decidir("rechazado")} className="btn btn-line min-h-[48px] justify-center px-6 text-[14px]">
+        <div className="flex shrink-0 gap-2">
+          <button type="button" onClick={() => decidir("rechazado")} className="btn btn-line min-h-[40px] flex-1 justify-center !px-5 !py-2.5 text-[13.5px] sm:flex-none">
             Rechazar
           </button>
-          <button type="button" onClick={() => decidir("aceptado")} className="btn min-h-[48px] justify-center px-6 text-[14px]">
+          <button type="button" onClick={() => decidir("aceptado")} className="btn min-h-[40px] flex-1 justify-center !px-5 !py-2.5 text-[13.5px] sm:flex-none">
             Aceptar
           </button>
         </div>
