@@ -76,9 +76,12 @@ export function Saturno({ className = "" }: { className?: string }) {
           particulas.push({
             a: Math.random() * Math.PI * 2,
             r,
-            vel: 0.055 / Math.pow(r, 1.5), // Kepler: más lejos, más lento
+            /* Kepler: más lejos, más lento. Con 0.055 la vuelta de
+               afuera tardaba más de dos minutos y se leía como quieto. */
+            vel: 0.1 / Math.pow(r, 1.5),
             brillo: b.brillo * (0.35 + Math.random() * 0.65),
-            tam: Math.random() < 0.08 ? 1.9 : 1.05,
+            /* En el teléfono un punto de un píxel casi no se ve moverse. */
+            tam: (Math.random() < 0.08 ? 1.9 : 1.05) * (chico.matches ? 1.4 : 1),
           });
         }
       }
@@ -164,12 +167,15 @@ export function Saturno({ className = "" }: { className?: string }) {
       if (intervalo && t - ultimo < intervalo) return;
       const dt = ultimo ? Math.min((t - ultimo) / 1000, 0.1) : 0.016;
       ultimo = t;
-      for (const p of particulas) p.a += p.vel * dt;
+      /* Con "reducir movimiento" no se congela: gira a un tercio. Es
+         una rotación lenta y continua, sin saltos ni destellos. */
+      const k = menosMovimiento.matches ? 0.35 : 1;
+      for (const p of particulas) p.a += p.vel * k * dt;
       pintar();
     }
 
     function arrancar() {
-      if (corriendo || menosMovimiento.matches) return;
+      if (corriendo) return;
       corriendo = true;
       ultimo = 0;
       raf = requestAnimationFrame(paso);
@@ -206,19 +212,10 @@ export function Saturno({ className = "" }: { className?: string }) {
     });
     ro.observe(cv);
 
-    const alCambiarPreferencia = () => {
-      if (menosMovimiento.matches) {
-        frenar();
-        pintar();
-      } else arrancar();
-    };
-    menosMovimiento.addEventListener("change", alCambiarPreferencia);
-
     return () => {
       frenar();
       io.disconnect();
       ro.disconnect();
-      menosMovimiento.removeEventListener("change", alCambiarPreferencia);
     };
   }, []);
 

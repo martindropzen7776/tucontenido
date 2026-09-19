@@ -42,11 +42,14 @@ export function Hero() {
                  lg:items-center lg:gap-[clamp(40px,6vw,88px)] lg:pb-0"
     >
       {/* Un cuadrado del tamaño de los anillos, no una capa a pantalla
-          completa: en móvil eso bajaba a 3 cuadros por segundo. */}
-      <Saturno className="-z-10 opacity-70
-                          -right-[26%] top-[3%] h-[min(86vw,380px)] w-[min(86vw,380px)]
-                          lg:right-[2%] lg:top-1/2 lg:h-[min(46vw,620px)] lg:w-[min(46vw,620px)]
-                          lg:-translate-y-1/2 lg:opacity-90" />
+          completa: en móvil eso bajaba a 3 cuadros por segundo.
+          En computadora va arriba a la derecha, por encima de la tarjeta
+          del presupuesto: centrado en la columna quedaba entero detrás
+          de ella y no se veía. */}
+      <Saturno className="-z-10 opacity-80
+                          -right-[16%] top-[28px] h-[min(90vw,400px)] w-[min(90vw,400px)]
+                          lg:-right-[3%] lg:-top-[70px] lg:h-[min(40vw,560px)] lg:w-[min(40vw,560px)]
+                          lg:opacity-100" />
 
       <div className="order-1 flex flex-col">
         {/* Sin rótulo arriba. El titular no necesita que le avisen
