@@ -113,7 +113,7 @@ function Ticket() {
       <Fila k="Diseño a medida" v="Incluido" />
       <Fila k="Hasta 6 secciones" v="Incluido" />
       <Fila k="Textos de venta" v="Incluido" />
-      <Fila k="WhatsApp y Google" v="Incluido" />
+      <Fila k="SEO básico y WhatsApp" v="Incluido" />
       <Fila k="Dos rondas de ajustes" v="Incluido" />
       <Fila k="Te enseñamos a manejarla" v="Incluido" />
       <Fila k="Cuota de mantenimiento" v="$0" />

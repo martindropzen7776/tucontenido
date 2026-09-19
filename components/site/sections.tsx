@@ -17,7 +17,7 @@ const INCLUYE: [string, string][] = [
   ["Hasta seis secciones", "Inicio, servicios, sobre el negocio, trabajos, preguntas y contacto. Alcanza para el noventa por ciento de los negocios."],
   ["Anda en el celular", "Siete de cada diez clientes te miran desde el teléfono. Se diseña primero para esa pantalla y después para la computadora."],
   ["Textos incluidos", "Escribimos nosotros lo que dice la web. No tenés que sentarte a redactar ni mandarnos un documento con todo listo."],
-  ["Lista para Google", "Títulos, descripciones, datos estructurados y velocidad de carga configurados desde el día uno."],
+  ["SEO básico", "Títulos, descripciones, datos estructurados, mapa del sitio y velocidad de carga configurados desde el día uno, para que Google entienda tu web y sepa qué ofrecés y dónde. Es la base: nadie puede garantizarte salir primero."],
   ["WhatsApp integrado", "Botón flotante y enlaces con el mensaje ya escrito. El cliente toca y te llega al teléfono."],
   ["La manejás vos", "Te la entregamos llave en mano y te enseñamos a administrarla: cambiar textos, fotos, precios y horarios sin depender de nadie. Enseñarte no se cobra."],
 ];
@@ -212,7 +212,7 @@ const ENTRA = [
   "Hasta seis secciones",
   "Adaptada a celular y computadora",
   "Textos de venta escritos por nosotros",
-  "Configuración base para Google",
+  "SEO básico: la web preparada para Google",
   "WhatsApp y formulario de contacto",
   "Dos rondas de ajustes",
   "Dominio conectado y sitio transferido a tu cuenta",
