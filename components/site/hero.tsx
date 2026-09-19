@@ -69,7 +69,7 @@ export function Hero() {
             </WaLink>
           </Magnetic>
           <a href="#trabajos" className="btn btn-line">
-            Ver trabajos
+            Ver ejemplos
           </a>
         </div>
 

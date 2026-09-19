@@ -14,7 +14,7 @@ const NAV: Enlace[] = [
   { href: "#incluye", label: "Qué incluye" },
   { href: "#dias", label: "Los 7 días" },
   { href: "#reservas", label: "Reservas" },
-  { href: "#trabajos", label: "Trabajos" },
+  { href: "#trabajos", label: "Ejemplos" },
   { href: "#precio", label: "Precios" },
 ];
 

@@ -161,53 +161,45 @@ export function Trabajos() {
   return (
     <section id="trabajos" className="sec pad-x velo">
       <Aparece>
-        <h2 className="disp h2 max-w-[14ch]">Webs que ya están andando</h2>
+        <h2 className="disp h2 max-w-[16ch]">Así puede quedar la tuya</h2>
         <p className="lede mt-7">
-          Tocá cualquiera para abrirla. Son sitios reales, en producción, hechos
-          con este mismo proceso.
+          Seis sitios de muestra, uno por rubro, hechos con el mismo proceso y
+          el mismo nivel que te entregamos. Los negocios son inventados; todo lo
+          demás funciona. Abrí cualquiera y recorrelo entero.
         </p>
       </Aparece>
 
-      <div className="mt-[clamp(40px,5vw,64px)] grid gap-3 min-[720px]:grid-cols-2">
-        {TRABAJOS.map((t, i) => {
-          const grande = i === 0;
-          const cuerpo = (
-            <div
-              className={`flex h-full flex-col justify-between gap-8 border border-ink/25 p-6 transition-colors sm:p-8 ${
-                t.listo ? "vidrio hover:border-ink/60" : "border-dashed opacity-45"
-              } ${grande ? "min-h-[15rem] sm:min-h-[19rem]" : "min-h-[11rem] sm:min-h-[13rem]"}`}
-            >
-              <span className="mono !text-[11px] text-ink-soft">{t.rubro}</span>
-              <span>
-                <span
-                  className={`disp block leading-none tracking-[-0.025em] ${
-                    grande ? "text-[clamp(30px,4.4vw,52px)]" : "text-[clamp(21px,2.4vw,28px)]"
-                  }`}
-                >
-                  {t.nombre}
-                </span>
-                <span className="mt-3 flex items-center gap-2.5 text-[13px] text-ink-soft">
+      <div className="mt-[clamp(40px,5vw,64px)] grid gap-x-4 gap-y-10 min-[720px]:grid-cols-2">
+        {TRABAJOS.map((t, i) => (
+          <Aparece key={t.nombre} delay={(i % 2) * 0.05}>
+            <a href={t.url} target="_blank" rel="noopener" className="group block">
+              <TiltCard max={5}>
+                <div className="overflow-hidden border border-ink/25 bg-ink/5 transition-colors group-hover:border-ink/60">
+                  <img
+                    src={t.img}
+                    alt={`Inicio del sitio de muestra de ${t.nombre}, ${t.rubro.toLowerCase()}`}
+                    width={960}
+                    height={600}
+                    loading="lazy"
+                    className="block aspect-[8/5] w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                </div>
+              </TiltCard>
+              <div className="mt-5 flex items-baseline justify-between gap-4">
+                <span className="disp text-[clamp(22px,2.4vw,30px)] leading-none tracking-[-0.025em]">{t.nombre}</span>
+                <span className="flex shrink-0 items-center gap-2 text-[13px] text-ink-soft transition-colors group-hover:text-ink">
                   Abrir sitio
                   <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
                     <path d="M3 10 10 3M4.5 3H10v5.5" stroke="currentColor" strokeWidth="1.8" />
                   </svg>
                 </span>
-              </span>
-            </div>
-          );
-
-          return (
-            <Aparece key={t.nombre} delay={i * 0.03} className={grande ? "min-[720px]:col-span-2" : ""}>
-              {t.listo ? (
-                <a href={t.url} target="_blank" rel="noopener" className="block h-full">
-                  <TiltCard max={8}>{cuerpo}</TiltCard>
-                </a>
-              ) : (
-                <div className="h-full">{cuerpo}</div>
-              )}
-            </Aparece>
-          );
-        })}
+              </div>
+              <p className="mt-2 text-[15px] text-ink-soft">
+                {t.rubro} · {t.reservas ? "Web con reservas" : "Web"}. {t.prueba}
+              </p>
+            </a>
+          </Aparece>
+        ))}
       </div>
     </section>
   );
