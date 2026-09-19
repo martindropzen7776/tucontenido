@@ -40,30 +40,22 @@ export function wa(mensaje = "Hola!") {
    Los repos son privados (martindropzen7776/muestra-*) y los
    publica Ramón en Netlify. La captura de cada uno vive en
    public/muestras/ y sale del inicio a 1440×900.
-   "reservas" marca los que muestran el plan con reservas.        */
+   La tarjeta muestra solo nombre y rubro: Ramón sacó el plan y
+   la línea de "qué probar adentro" porque sobraban.            */
 export type Trabajo = {
   nombre: string;
   rubro: string;
   url: string;
   img: string;
-  reservas: boolean;
-  /** Qué hay para tocar adentro, dicho en una línea. */
-  prueba: string;
 };
 
 export const TRABAJOS: Trabajo[] = [
-  { nombre: "Arenales Odontología", rubro: "Clínica dental", url: "https://arenalesdental.netlify.app/", img: "/muestras/dental.webp", reservas: true,
-    prueba: "Sacá un turno: motivo, profesional, día y horario." },
-  { nombre: "Clara", rubro: "Medicina estética", url: "https://esteticaclara.netlify.app/", img: "/muestras/estetica.webp", reservas: true,
-    prueba: "Tocá una zona del rostro y reservá la evaluación." },
-  { nombre: "Alma de Uco", rubro: "Hotel boutique", url: "https://hotelamladeuco.netlify.app/", img: "/muestras/hotel.webp", reservas: true,
-    prueba: "Elegí fechas, habitación y mirá el total." },
-  { nombre: "Forja Training Club", rubro: "Gimnasio", url: "https://forjagym0.netlify.app/", img: "/muestras/gym.webp", reservas: true,
-    prueba: "Reservá un lugar en una clase y mirá bajar el cupo." },
-  { nombre: "Lumbre", rubro: "Restaurante", url: "https://restolumbre.netlify.app/", img: "/muestras/resto.webp", reservas: true,
-    prueba: "Reservá mesa: turno, personas y barra frente al fuego." },
-  { nombre: "Ferrand Metalúrgica", rubro: "Pyme industrial", url: "https://industriaferrandd.netlify.app/", img: "/muestras/industrial.webp", reservas: false,
-    prueba: "Pedí una cotización y mirá llenarse el rótulo del plano." },
+  { nombre: "Arenales Odontología", rubro: "Clínica dental", url: "https://arenalesdental.netlify.app/", img: "/muestras/dental.webp" },
+  { nombre: "Clara", rubro: "Medicina estética", url: "https://esteticaclara.netlify.app/", img: "/muestras/estetica.webp" },
+  { nombre: "Alma de Uco", rubro: "Hotel boutique", url: "https://hotelamladeuco.netlify.app/", img: "/muestras/hotel.webp" },
+  { nombre: "Forja Training Club", rubro: "Gimnasio", url: "https://forjagym0.netlify.app/", img: "/muestras/gym.webp" },
+  { nombre: "Lumbre", rubro: "Restaurante", url: "https://restolumbre.netlify.app/", img: "/muestras/resto.webp" },
+  { nombre: "Ferrand Metalúrgica", rubro: "Pyme industrial", url: "https://industriaferrandd.netlify.app/", img: "/muestras/industrial.webp" },
 ];
 
 /** Dispara el evento Contact del píxel. Silencioso si no cargó. */

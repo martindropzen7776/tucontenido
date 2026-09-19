@@ -195,7 +195,7 @@ export function Trabajos() {
                 </span>
               </div>
               <p className="mt-2 text-[15px] text-ink-soft">
-                {t.rubro} · {t.reservas ? "Web con reservas" : "Web"}. {t.prueba}
+                {t.rubro}
               </p>
             </a>
           </Aparece>
