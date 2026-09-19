@@ -28,8 +28,8 @@ export function Incluye() {
       <Aparece>
         <h2 className="disp h2 max-w-[16ch]">Todo lo que hace que un negocio se vea serio</h2>
         <p className="lede mt-7">
-          Alcance cerrado y publicado. Sabés qué recibís antes de pagar y nosotros
-          sabemos qué construir.
+          Esto trae cualquiera de las dos webs. Alcance cerrado y publicado: sabés
+          qué recibís antes de pagar y nosotros sabemos qué construir.
         </p>
       </Aparece>
 
@@ -122,7 +122,7 @@ export function Reservas() {
             turno solos, a cualquier hora, y vos tenés todo en un lugar.
           </p>
           <p className="mt-6 text-[15px] text-ink-soft">
-            <b className="font-semibold text-ink">$700.000</b>, lista en 7 días.
+            Lista en los mismos 7 días.
           </p>
           <div className="mt-8">
             <WaLink msg="Hola! Quiero la web con reservas. Mi negocio es:" className="btn">

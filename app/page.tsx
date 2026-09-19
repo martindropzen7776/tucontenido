@@ -64,9 +64,12 @@ export default function Page() {
     <>
       <Nav />
       <Hero />
+      {/* Cómo trabajamos (la diferencia y los 7 días), qué trae
+          cualquier web, qué suma la de reservas, ejemplos, y recién
+          ahí los dos precios lado a lado. */}
       <Diff />
-      <Incluye />
       <Semana />
+      <Incluye />
       <Reservas />
       <Trabajos />
       <Precio />

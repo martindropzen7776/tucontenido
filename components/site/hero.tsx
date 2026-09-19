@@ -43,13 +43,13 @@ export function Hero() {
     >
       {/* Un cuadrado del tamaño de los anillos, no una capa a pantalla
           completa: en móvil eso bajaba a 3 cuadros por segundo.
-          En computadora va arriba a la derecha, por encima de la tarjeta
-          del presupuesto: centrado en la columna quedaba entero detrás
-          de ella y no se veía. */}
+          En computadora ocupa la columna derecha, que queda libre: el
+          precio no va arriba porque hay dos webs y se comparan en la
+          sección de precios. */}
       <Saturno className="-z-10 opacity-80
                           -right-[16%] top-[28px] h-[min(90vw,400px)] w-[min(90vw,400px)]
-                          lg:-right-[3%] lg:-top-[70px] lg:h-[min(40vw,560px)] lg:w-[min(40vw,560px)]
-                          lg:opacity-100" />
+                          lg:right-[2%] lg:top-1/2 lg:h-[min(46vw,620px)] lg:w-[min(46vw,620px)]
+                          lg:-translate-y-1/2 lg:opacity-100" />
 
       <div className="order-1 flex flex-col">
         {/* Sin rótulo arriba. El titular no necesita que le avisen
@@ -89,43 +89,6 @@ export function Hero() {
           <Dato valor={100} sufijo="%" etiqueta="A tu nombre" detalle="Se transfiere a tu cuenta" />
         </div>
       </div>
-
-      <aside className="order-2 self-stretch lg:self-center">
-        <Ticket />
-      </aside>
     </header>
-  );
-}
-
-function Fila({ k, v }: { k: string; v: string }) {
-  return (
-    <div className="flex justify-between gap-4 border-b border-dashed border-[var(--rule-on-c)] py-[11px] text-sm last:border-b-0">
-      <span className="font-medium">{k}</span>
-      <span className="text-right text-bone/55">{v}</span>
-    </div>
-  );
-}
-
-function Ticket() {
-  return (
-    <div className="relative border border-ink vidrio-claro p-[clamp(24px,3vw,38px)] text-bone">
-      <div className="mb-5 flex items-baseline justify-between border-b border-dashed border-[var(--rule-on-c)] pb-4">
-        <span className="mono text-bone/45">Presupuesto</span>
-        <span className="mono text-bone/45">Nº 001</span>
-      </div>
-      <Fila k="Diseño a medida" v="Incluido" />
-      <Fila k="Hasta 6 secciones" v="Incluido" />
-      <Fila k="Textos de venta" v="Incluido" />
-      <Fila k="SEO básico y WhatsApp" v="Incluido" />
-      <Fila k="Dos rondas de ajustes" v="Incluido" />
-      <Fila k="Te enseñamos a manejarla" v="Incluido" />
-      <Fila k="Cuota de mantenimiento" v="$0" />
-      <div className="mt-5 flex items-baseline justify-between border-t border-bone pt-[18px]">
-        <span className="mono">Total</span>
-        <span className="disp text-[clamp(32px,4vw,46px)] leading-none tracking-[-0.03em]">
-          $500.000
-        </span>
-      </div>
-    </div>
   );
 }

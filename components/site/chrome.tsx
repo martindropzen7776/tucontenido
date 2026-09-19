@@ -11,8 +11,8 @@ type Enlace = { href: string; label: string };
    quedan por si otra página necesita otro menú. */
 const NAV: Enlace[] = [
   { href: "#diferencia", label: "La diferencia" },
-  { href: "#incluye", label: "Qué incluye" },
   { href: "#dias", label: "Los 7 días" },
+  { href: "#incluye", label: "Qué incluye" },
   { href: "#reservas", label: "Reservas" },
   { href: "#trabajos", label: "Ejemplos" },
   { href: "#precio", label: "Precios" },
