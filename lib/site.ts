@@ -6,7 +6,7 @@
 /** Número con código de país, sin + ni espacios.
  *  Argentina: 54 + 9 + área sin el 0 + número sin el 15.
  *  Ej. Buenos Aires 11 2345-6789 → "5491123456789"          */
-export const WHATSAPP = "5491100000000";
+export const WHATSAPP = "5491165651322";
 
 /** ID del píxel de Meta. */
 export const PIXEL_ID = "TU_PIXEL_ID";
