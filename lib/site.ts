@@ -25,7 +25,7 @@ export const PIXEL_LISTO = /^\d{10,20}$/.test(PIXEL_ID);
 export const SITE_URL = (process.env.URL || "https://tucontenido.online").replace(/\/$/, "");
 /** Casilla de contacto. También es la del botón de arrepentimiento,
  *  que es obligatorio: tiene que ser una casilla que exista. */
-export const EMAIL = "hola@tucontenido.ar";
+export const EMAIL = "launchmasteryy@gmail.com";
 export const INSTAGRAM = "";
 
 /** Arma el link de WhatsApp con el mensaje ya escrito. */
