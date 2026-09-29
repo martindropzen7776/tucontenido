@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Aparece } from "./aparece";
 
 const LETANIA = [
@@ -34,13 +33,18 @@ const PASOS_NOSOTROS = [
    llega a "entregado". Ese es el argumento de la sección, no la copy. */
 function Letania() {
   const [i, setI] = useState(0);
-  const menos = useReducedMotion();
+  const [antes, setAntes] = useState<number | null>(null);
 
   useEffect(() => {
-    if (menos) return;
-    const t = setInterval(() => setI((v) => (v + 1) % LETANIA.length), 1900);
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const t = setInterval(() => {
+      setI((v) => {
+        setAntes(v);
+        return (v + 1) % LETANIA.length;
+      });
+    }, 1900);
     return () => clearInterval(t);
-  }, [menos]);
+  }, []);
 
   return (
     <div className="relative mt-auto border border-dashed border-ink/20 p-[16px] sm:p-[18px_20px]">
@@ -50,18 +54,16 @@ function Letania() {
         <span className="invisible block whitespace-nowrap text-[15px]">
           Contrato y 50% de seña
         </span>
-        <AnimatePresence mode="popLayout" initial={false}>
-          <motion.span
-            key={i}
-            initial={{ y: 8, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -8, opacity: 0 }}
-            transition={{ duration: 0.15, ease: "easeInOut" }}
-            className="absolute inset-x-0 top-0 block whitespace-nowrap text-[15px] text-ink/40"
-          >
-            {LETANIA[i]}
-          </motion.span>
-        </AnimatePresence>
+        {/* El que se va sube y se apaga; el que llega sube desde abajo
+            (animaciones letania-sale / letania-entra en globals.css). */}
+        {antes !== null && (
+          <span key={`s${antes}-${i}`} aria-hidden="true" className="letania-sale absolute inset-x-0 top-0 block whitespace-nowrap text-[15px] text-ink/40">
+            {LETANIA[antes]}
+          </span>
+        )}
+        <span key={i} className={`${antes !== null ? "letania-entra " : ""}absolute inset-x-0 top-0 block whitespace-nowrap text-[15px] text-ink/40`}>
+          {LETANIA[i]}
+        </span>
       </div>
     </div>
   );
@@ -71,33 +73,49 @@ function Letania() {
    longitud real del path, no de un número puesto a mano. */
 function Tilde() {
   const ref = useRef<HTMLDivElement>(null);
-  const visto = useInView(ref, { once: true, amount: 0.6 });
-  const menos = useReducedMotion();
+  /* sinJs -> espera -> visto: sin JS (o con "reducir movimiento") el
+     tilde queda dibujado; solo se esconde cuando el JS ya corrió. */
+  const [fase, setFase] = useState<"sinJs" | "espera" | "visto">("sinJs");
+
+  useLayoutEffect(() => {
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setFase("espera");
+  }, []);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setFase((f) => (f === "espera" ? "visto" : f));
+          io.disconnect();
+        }
+      },
+      { threshold: 0.6 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <div ref={ref} className="mt-auto flex items-center gap-4 border-2 border-bone bg-bone p-4 text-ink sm:p-[18px_20px]">
-      <motion.svg
+      <svg
         viewBox="0 0 48 48"
         width="40"
         height="40"
         fill="none"
-        className="shrink-0 overflow-visible"
-        initial={menos ? false : { opacity: 0, rotate: 80, y: 40 }}
-        animate={visto || menos ? { opacity: 1, rotate: 0, y: 0 } : {}}
-        transition={{ duration: 0.5, ease: [0.34, 1.35, 0.64, 1] }}
+        className={`tilde shrink-0 overflow-visible ${fase === "espera" ? "tilde--espera" : ""}`}
         aria-hidden="true"
       >
-        <motion.path
+        <path
           d="M13 24.5 L20.5 32 L35 16"
+          pathLength={1}
           stroke="currentColor"
           strokeWidth="4.5"
           strokeLinecap="round"
           strokeLinejoin="round"
-          initial={menos ? false : { pathLength: 0 }}
-          animate={visto || menos ? { pathLength: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
         />
-      </motion.svg>
+      </svg>
       <span>
         <strong className="disp block text-[17px] leading-tight tracking-[-0.02em] sm:text-[19px]">
           En 72 horas ves tu web

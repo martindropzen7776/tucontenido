@@ -195,7 +195,18 @@ export function Saturno({ className = "" }: { className?: string }) {
       ([e]) => (e.isIntersecting ? arrancar() : frenar()),
       { threshold: 0 }
     );
-    io.observe(cv);
+
+    /* El primer cuadro ya está pintado; el giro espera a que la página
+       termine de cargar y el navegador quede libre. Arrancarlo durante
+       la carga le sumaba trabajo al teléfono justo cuando tiene que
+       mostrar el texto (Lighthouse lo contaba como bloqueo). */
+    let idle = 0;
+    const empezar = () => {
+      const ric = window.requestIdleCallback ?? ((f: () => void) => window.setTimeout(f, 200));
+      idle = ric(() => io.observe(cv), { timeout: 2000 });
+    };
+    if (document.readyState === "complete") empezar();
+    else window.addEventListener("load", empezar, { once: true });
 
     /* Solo re-sembramos si el lado cambió de verdad. En móvil la barra
        de direcciones dispara resizes constantes al scrollear, y
@@ -214,6 +225,8 @@ export function Saturno({ className = "" }: { className?: string }) {
 
     return () => {
       frenar();
+      window.removeEventListener("load", empezar);
+      (window.cancelIdleCallback ?? window.clearTimeout)(idle);
       io.disconnect();
       ro.disconnect();
     };

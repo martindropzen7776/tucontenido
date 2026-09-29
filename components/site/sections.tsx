@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "motion/react";
 import { Aparece } from "./aparece";
 import { TiltCard } from "@/components/motion/tilt-card";
 import { TRABAJOS } from "@/lib/site";
@@ -386,29 +385,21 @@ function Pregunta({ q, a }: { q: string; a: React.ReactNode }) {
         className="disp flex w-full items-center justify-between gap-6 py-6 text-left text-[clamp(17px,2vw,21px)] leading-snug tracking-[-0.015em] transition-opacity hover:opacity-60 max-[620px]:min-h-[56px]"
       >
         <span>{q}</span>
-        <motion.span
-          animate={{ rotate: abierta ? 45 : 0 }}
-          transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          className="shrink-0 text-ink-soft"
-          aria-hidden="true"
-        >
+        <span className="pregunta__icono shrink-0 text-ink-soft" aria-hidden="true">
           <svg viewBox="0 0 16 16" width="16" height="16" fill="none">
             <path d="M8 2v12M2 8h12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
           </svg>
-        </motion.span>
+        </span>
       </button>
       {/* Se anima pero nunca se desmonta: si se desmontara, Google no
           vería la respuesta y perderíamos el contenido de cola larga. */}
-      <motion.div
-        initial={false}
-        animate={{ height: abierta ? "auto" : 0, opacity: abierta ? 1 : 0 }}
-        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-        className="overflow-hidden"
-      >
-        <div className="max-w-[64ch] pb-7 pr-8 text-[15.5px] leading-relaxed text-ink-soft [&_b]:font-semibold [&_b]:text-ink">
-          {a}
+      <div className={`pregunta__resp ${abierta ? "pregunta__resp--abierta" : ""}`}>
+        <div>
+          <div className="max-w-[64ch] pb-7 pr-8 text-[15.5px] leading-relaxed text-ink-soft [&_b]:font-semibold [&_b]:text-ink">
+            {a}
+          </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

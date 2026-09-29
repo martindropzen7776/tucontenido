@@ -423,3 +423,47 @@ button:focus-visible {
 }
 .prosa a:hover { opacity: 0.7; }
 .prosa .no-prosa a { text-decoration: none; }
+
+/* Barra de lectura arriba de todo: avanza con el scroll sin JavaScript. */
+.barra-lectura {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 300;
+  height: 3px;
+  background: var(--color-cobalt);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+@supports (animation-timeline: scroll()) {
+  .barra-lectura {
+    animation: barra-lectura linear both;
+    animation-timeline: scroll(root);
+  }
+}
+@keyframes barra-lectura {
+  to { transform: scaleX(1); }
+}
+
+/* Diff: el estado del proyecto que cicla (antes con AnimatePresence). */
+.letania-entra { animation: letania-entra 0.15s ease-in-out both; }
+.letania-sale { animation: letania-sale 0.15s ease-in-out both; }
+@keyframes letania-entra { from { transform: translateY(8px); opacity: 0; } }
+@keyframes letania-sale { to { transform: translateY(-8px); opacity: 0; } }
+
+/* Diff: el tilde entra girando y se dibuja el trazo. */
+.tilde { transition: opacity 0.5s cubic-bezier(0.34, 1.35, 0.64, 1), transform 0.5s cubic-bezier(0.34, 1.35, 0.64, 1); }
+.tilde path { stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.08s; }
+.tilde--espera { opacity: 0; transform: translateY(40px) rotate(80deg); }
+.tilde--espera path { stroke-dashoffset: 1; }
+
+/* Preguntas: el + gira a × y la respuesta se abre (antes con motion). */
+.pregunta__icono { transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1); }
+[aria-expanded="true"] > .pregunta__icono { transform: rotate(45deg); }
+.pregunta__resp {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pregunta__resp > * { overflow: hidden; min-height: 0; }
+.pregunta__resp--abierta { grid-template-rows: 1fr; opacity: 1; }

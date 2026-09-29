@@ -1,6 +1,5 @@
 "use client";
 
-import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { EMAIL, INSTAGRAM } from "@/lib/site";
 import { PAGINAS_LEGALES } from "@/lib/legal";
 import { WaLink } from "./wa-link";
@@ -32,7 +31,10 @@ export function Nav({
 }) {
   return (
     <>
-      <ScrollProgress variant="bar" position="top" height={3} className="!bg-cobalt z-[300]" />
+      {/* Barra de lectura hecha solo con CSS (animation-timeline): la
+          versión con motion arrastraba Lenis entero al paquete de la
+          página. Donde no hay soporte (Firefox) no se muestra. */}
+      <div aria-hidden="true" className="barra-lectura" />
       <nav className="pad-x fixed inset-x-0 top-0 z-[200] flex h-[68px] items-center justify-between gap-4 border-b border-[var(--rule)] vidrio-fijo max-[620px]:h-[60px]">
         <a href="#" className="disp tap text-[19px] tracking-[-0.03em]">
           tucontenido<i className={`not-italic ${sufijo === "." ? "text-cobalt" : "text-ink-soft"}`}>{sufijo}</i>
@@ -85,7 +87,7 @@ export function Footer({
         </div>
 
         <div>
-          <h5 className="mono !text-[11px] mb-4 text-bone/40">{titulo}</h5>
+          <h2 className="mono !text-[11px] mb-4 text-bone/60">{titulo}</h2>
           <ul>
             {enlaces.map((n) => (
               <li key={n.href}>
@@ -98,7 +100,7 @@ export function Footer({
         </div>
 
         <div>
-          <h5 className="mono !text-[11px] mb-4 text-bone/40">Contacto</h5>
+          <h2 className="mono !text-[11px] mb-4 text-bone/60">Contacto</h2>
           <ul>
             <li>
               <WaLink
@@ -137,7 +139,7 @@ export function Footer({
             key={l.href}
             href={l.href}
             className={`text-[13px] underline underline-offset-4 transition-colors hover:text-acid ${
-              l.href.includes("arrepentimiento") ? "text-bone" : "text-bone/55"
+              l.href.includes("arrepentimiento") ? "text-bone" : "text-bone/70"
             }`}
           >
             {l.titulo}
@@ -145,7 +147,7 @@ export function Footer({
         ))}
       </div>
 
-      <p className="mt-6 max-w-[70ch] text-[12.5px] leading-relaxed text-bone/40">
+      <p className="mt-6 max-w-[70ch] text-[12.5px] leading-relaxed text-bone/60">
         Usamos herramientas de inteligencia artificial en parte del proceso de
         diseño y redacción; el resultado lo revisa y aprueba una persona antes de
         entregarlo. No estamos asociados, patrocinados ni avalados por Meta
@@ -153,7 +155,7 @@ export function Footer({
         pertenecen a sus titulares.
       </p>
 
-      <div className="mono !text-[11px] mt-6 flex flex-wrap items-center justify-between gap-3.5 text-bone/40">
+      <div className="mono !text-[11px] mt-6 flex flex-wrap items-center justify-between gap-3.5 text-bone/60">
         <span>© 2026 Tu Contenido · Argentina</span>
         {firma && <span>{firma}</span>}
       </div>

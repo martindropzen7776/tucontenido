@@ -1,8 +1,7 @@
 "use client";
 
-import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
-import { useRef, type ReactNode } from "react";
-import { SPRING_MOUSE } from "@/lib/ease";
+import { useEffect, useRef, type ReactNode } from "react";
+import { crearSeguidor } from "@/lib/seguir";
 import { useHoverCapable } from "@/lib/hooks/use-hover-capable";
 import { cn } from "@/lib/utils";
 
@@ -12,39 +11,40 @@ export interface MagneticProps {
   className?: string;
 }
 
+/* Sin motion: la portada cargaba la librería entera para esto y dos
+   efectos más. Mismo comportamiento: solo con mouse real y sin
+   "reducir movimiento". */
 export function Magnetic({ children, strength = 0.35, className }: MagneticProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
   const canHover = useHoverCapable();
-  // Decorative cursor-follow: skip on touch (phantom hover) and reduced motion.
-  const enabled = !reduce && canHover;
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, SPRING_MOUSE);
-  const sy = useSpring(y, SPRING_MOUSE);
+  const seguidor = useRef<ReturnType<typeof crearSeguidor> | null>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    seguidor.current = crearSeguidor(2, ([x, y]) => {
+      el.style.transform = x || y ? `translate3d(${x}px, ${y}px, 0)` : "";
+    });
+    return () => seguidor.current?.parar();
+  }, []);
+
+  const activo = () => canHover && !matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = ref.current;
-    if (!el || !enabled) return;
+    if (!el || !activo()) return;
     const rect = el.getBoundingClientRect();
-    x.set((e.clientX - rect.left - rect.width / 2) * strength);
-    y.set((e.clientY - rect.top - rect.height / 2) * strength);
+    seguidor.current?.ir([
+      (e.clientX - rect.left - rect.width / 2) * strength,
+      (e.clientY - rect.top - rect.height / 2) * strength,
+    ]);
   };
 
-  const onLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
+  const onLeave = () => seguidor.current?.ir([0, 0]);
 
   return (
-    <motion.div
-      ref={ref}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      style={{ x: sx, y: sy }}
-      className={cn("inline-block", className)}
-    >
+    <div ref={ref} onMouseMove={onMove} onMouseLeave={onLeave} className={cn("inline-block", className)}>
       {children}
-    </motion.div>
+    </div>
   );
 }

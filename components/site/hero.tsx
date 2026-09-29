@@ -21,9 +21,12 @@ function Dato({
 }) {
   return (
     <div className="flex items-baseline gap-5 border-t border-[var(--rule)] py-4 first:border-t-0 sm:gap-7">
-      <div className="disp w-[4.2rem] shrink-0 text-[clamp(28px,4vw,40px)] leading-none tracking-[-0.03em] sm:w-[5.5rem]">
+      <div className="disp w-[4.2rem] shrink-0 !whitespace-nowrap text-[clamp(28px,4vw,40px)] leading-none tracking-[-0.03em] sm:w-[5.5rem]">
         <NumberTicker value={valor} startOnView />
-        {sufijo && <span className="text-[0.5em] text-ink-soft">{sufijo}</span>}
+        {/* Los dígitos van en cajas con overflow oculto, así que la línea
+            base del número queda en el borde de abajo: el sufijo se sube
+            lo mismo para quedar al pie de la cifra y no colgando. */}
+        {sufijo && <span className="relative -top-[0.4em] text-[0.5em] text-ink-soft">{sufijo}</span>}
       </div>
       <div className="min-w-0">
         <div className="text-[15px] font-semibold leading-tight">{etiqueta}</div>
