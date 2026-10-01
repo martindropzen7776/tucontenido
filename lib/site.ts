@@ -53,7 +53,7 @@ export type Trabajo = {
 
 export const TRABAJOS: Trabajo[] = [
   { nombre: "Arenales Odontología", rubro: "Clínica dental", url: "https://arenalesdental.netlify.app/", img: "/muestras/dental.webp", extra: { txt: "Ver el panel donde la clínica gestiona los turnos", url: "https://arenalesdental.netlify.app/panel/" } },
-  { nombre: "Clara", rubro: "Medicina estética", url: "https://esteticaclara.netlify.app/", img: "/muestras/estetica.webp" },
+  { nombre: "Clara", rubro: "Medicina estética", url: "https://esteticaclara.netlify.app/", img: "/muestras/estetica.webp", extra: { txt: "Ver el panel donde el consultorio gestiona los turnos", url: "https://esteticaclara.netlify.app/panel/" } },
   { nombre: "Alma de Uco", rubro: "Hotel boutique", url: "https://hotelamladeuco.netlify.app/", img: "/muestras/hotel.webp" },
   { nombre: "Forja Training Club", rubro: "Gimnasio", url: "https://forjagym0.netlify.app/", img: "/muestras/gym.webp" },
   { nombre: "Lumbre", rubro: "Restaurante", url: "https://restolumbre.netlify.app/", img: "/muestras/resto.webp" },
