@@ -197,6 +197,19 @@ export function Trabajos() {
                 {t.rubro}
               </p>
             </a>
+            {t.extra && (
+              <a
+                href={t.extra.url}
+                target="_blank"
+                rel="noopener"
+                className="mt-3 inline-flex items-center gap-2 text-[15px] text-ink underline decoration-ink/30 underline-offset-4 transition-colors hover:decoration-ink"
+              >
+                {t.extra.txt}
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                  <path d="M3 10 10 3M4.5 3H10v5.5" stroke="currentColor" strokeWidth="1.8" />
+                </svg>
+              </a>
+            )}
           </Aparece>
         ))}
       </div>

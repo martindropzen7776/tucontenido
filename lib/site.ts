@@ -47,10 +47,12 @@ export type Trabajo = {
   rubro: string;
   url: string;
   img: string;
+  /** Link secundario bajo la tarjeta (ej. el panel de turnos de demo). */
+  extra?: { txt: string; url: string };
 };
 
 export const TRABAJOS: Trabajo[] = [
-  { nombre: "Arenales Odontología", rubro: "Clínica dental", url: "https://arenalesdental.netlify.app/", img: "/muestras/dental.webp" },
+  { nombre: "Arenales Odontología", rubro: "Clínica dental", url: "https://arenalesdental.netlify.app/", img: "/muestras/dental.webp", extra: { txt: "Ver el panel donde la clínica gestiona los turnos", url: "https://arenalesdental.netlify.app/panel/" } },
   { nombre: "Clara", rubro: "Medicina estética", url: "https://esteticaclara.netlify.app/", img: "/muestras/estetica.webp" },
   { nombre: "Alma de Uco", rubro: "Hotel boutique", url: "https://hotelamladeuco.netlify.app/", img: "/muestras/hotel.webp" },
   { nombre: "Forja Training Club", rubro: "Gimnasio", url: "https://forjagym0.netlify.app/", img: "/muestras/gym.webp" },
