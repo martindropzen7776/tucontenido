@@ -81,20 +81,16 @@ export default function Terminos() {
         rige es el vigente al momento de aceptar el presupuesto.
       </p>
 
-      <h2>Alojamiento: un costo que no pagás a nosotros</h2>
+      <h2>Alojamiento</h2>
       <p>
-        El sitio se aloja en una plataforma de terceros cuyo costo aproximado es de{" "}
-        <strong>USD 10 por mes</strong>. Ese importe{" "}
-        <strong>no está incluido en el precio y no se nos paga a nosotros</strong>:
-        lo abonás vos, directamente a la plataforma, con tu propia tarjeta habilitada
-        para pagos internacionales.
+        El sitio se publica en una plataforma de terceros, en una{" "}
+        <strong>cuenta a tu nombre</strong>. Es una decisión deliberada: así el sitio
+        queda tuyo y podés prescindir de nosotros cuando quieras.
       </p>
       <p>
-        Es una decisión deliberada: así el sitio queda a tu nombre y podés
-        prescindir de nosotros cuando quieras. También significa que{" "}
-        <strong>si dejás de pagarlo, el sitio deja de estar online</strong>, y eso no
-        depende de nosotros. El precio de la plataforma lo fija la plataforma y puede
-        variar.
+        Las condiciones de esa plataforma las fija la plataforma y pueden cambiar.
+        Si esa cuenta se da de baja, <strong>el sitio deja de estar online</strong>,
+        y eso no depende de nosotros.
       </p>
 
       <h2>Titularidad y transferencia</h2>

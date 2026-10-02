@@ -73,8 +73,6 @@ export function trackContacto() {
    Las respuestas visibles viven en sections.tsx con su formato.
    Si cambiás una, cambiala en los dos lados.                */
 export const FAQ_SCHEMA: [string, string][] = [
-  ["¿Por qué hay 10 dólares por mes si dicen que no hay mantenimiento?",
-   "Son dos cosas distintas. Los USD 10 mensuales son el alojamiento y los pagás vos directo a la plataforma donde vive tu web. Nosotros no cobramos nada por mes. Si el alojamiento estuviera a nuestro nombre, el día que quisieras irte tendrías que pedirnos permiso. Necesitás una tarjeta habilitada para pagos en dólares."],
   ["¿La web es realmente mía?",
    "Sí. Al terminar te transferimos el proyecto a tu cuenta y el dominio se compra directamente a tu nombre. Podés editarla, cambiar de diseñador o darla de baja sin hablar con nosotros."],
   ["¿Hay que hacer una llamada?",

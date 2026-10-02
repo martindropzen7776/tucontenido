@@ -200,9 +200,11 @@ export function Precio() {
         </p>
       </Aparece>
 
-      {/* La tarjeta del precio a la izquierda y lo que va aparte a la
+      {/* La tarjeta del precio a la izquierda y lo que no entra a la
           derecha: con un solo plan, lo que se compara es qué entra
-          contra qué no. */}
+          contra qué no. Hasta el 02/10/2026 había además un bloque
+          "Aparte" con el alojamiento de USD 10 por mes: Ramón lo sacó,
+          igual que la pregunta y la cláusula de los términos. */}
       <div className="mt-[clamp(40px,5vw,64px)] grid gap-3 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
         <Aparece delay={0.05} className="h-full">
           <div className="flex h-full flex-col border border-ink/70 p-[clamp(26px,3.6vw,52px)] vidrio">
@@ -233,18 +235,11 @@ export function Precio() {
           </div>
         </Aparece>
 
-        <Aparece delay={0.09} className="h-full">
-          <div className="flex h-full flex-col border border-ink/25 bg-bone/30">
+        {/* De su alto natural: estirada hasta el pie de la tarjeta del
+            precio quedaba media caja vacía. */}
+        <Aparece delay={0.09}>
+          <div className="border border-ink/25 bg-bone/30">
             <div className="p-[clamp(26px,3.6vw,52px)]">
-              <div className="text-[15px] font-semibold">Aparte</div>
-              <p className="mt-4 text-sm leading-relaxed text-ink-soft">
-                El alojamiento de la web cuesta{" "}
-                <b className="font-semibold text-ink">USD 10 por mes</b> y lo pagás vos
-                directo a la plataforma, con tu tarjeta. No pasa por nosotros: es lo que
-                hace que la web sea realmente tuya y que no te podamos dejar sin nada.
-              </p>
-            </div>
-            <div className="flex-1 border-t border-ink/25 p-[clamp(26px,3.6vw,52px)]">
               <div className="text-[15px] font-semibold">Esto no entra</div>
               <ul className="mt-4">
                 {NO_ENTRA.map((x) => (
@@ -273,8 +268,6 @@ export function Precio() {
 /* ══════════ PREGUNTAS ══════════ */
 
 const QA: [string, React.ReactNode][] = [
-  ["¿Por qué hay 10 dólares por mes si dicen que no hay mantenimiento?",
-   <>Son dos cosas distintas. Los <b>USD 10 mensuales</b> son el alojamiento y los pagás vos directo a la plataforma donde vive tu web. Nosotros no te cobramos <b>nada</b> por mes. Es a propósito: si el alojamiento estuviera a nuestro nombre, el día que quisieras irte tendrías que pedirnos permiso. Necesitás una tarjeta habilitada para pagos en dólares.</>],
   ["¿La web es realmente mía?",
    <>Sí, y no es una forma de decir. Al terminar te transferimos el proyecto a <b>tu cuenta</b> y el dominio se compra directamente a tu nombre. Podés editarla, cambiar de diseñador o darla de baja sin hablar con nosotros.</>],
   ["¿Hay que hacer una llamada?",
