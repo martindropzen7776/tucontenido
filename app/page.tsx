@@ -2,49 +2,45 @@ import type { Metadata } from "next";
 import { Nav, Footer, WaFab } from "@/components/site/chrome";
 import { Hero } from "@/components/site/hero";
 import { Diff } from "@/components/site/diff";
-import { Incluye, Semana, Reservas, Trabajos, Precio, Preguntas, Cierre } from "@/components/site/sections";
+import { Incluye, Semana, Trabajos, Precio, Preguntas, Cierre } from "@/components/site/sections";
 import { SITE_URL, FAQ_SCHEMA } from "@/lib/site";
 
 /* La raíz del dominio es la landing de webs. Hasta el 17/09/2026 vivía
    en /web y la raíz era una agencia de publicidad, que se sacó; /web
    redirige acá con un 301 (netlify.toml) para no romper los links de
-   anuncios y posts viejos. */
+   anuncios y posts viejos. Desde el 01/10/2026 vende una sola web, la
+   de $500.000: el plan con reservas se sacó (queda en el historial). */
 export const metadata: Metadata = {
   title: "Tu web en 7 días — Tu Contenido",
   description:
-    "Tu web en 7 días por $500.000, a medida y con los textos escritos. Con sistema de reservas, $700.000: tus clientes sacan turno solos.",
+    "Tu web en 7 días por $500.000, a medida, con los textos escritos y a tu nombre. Pago único, sin cuota mensual.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Tu web en 7 días — desde $500.000",
+    title: "Tu web en 7 días — $500.000",
     description:
-      "A medida, andando en el celular y con los textos escritos. Si trabajás con turnos, con sistema de reservas adentro.",
+      "A medida, andando en el celular, con los textos escritos y a tu nombre. Pago único, sin cuota mensual.",
     url: "/",
-    images: [{ url: "/og/web.png", width: 1200, height: 630, alt: "Tu Contenido: tu web lista en 7 días, desde $500.000." }],
+    images: [{ url: "/og/web.png", width: 1200, height: 630, alt: "Tu Contenido: tu web lista en 7 días por $500.000." }],
   },
 };
-
-const oferta = (nombre: string, precio: string, servicio: string) => ({
-  "@type": "Offer",
-  name: nombre,
-  priceCurrency: "ARS",
-  price: precio,
-  availability: "https://schema.org/InStock",
-  itemOffered: { "@type": "Service", name: servicio, serviceType: "Diseño y desarrollo web" },
-});
 
 const schema = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: "Tu Contenido",
   description:
-    "Diseño y desarrollo de sitios web para negocios en Argentina, con sistema de reservas opcional. Entrega en 7 días.",
+    "Diseño y desarrollo de sitios web para negocios en Argentina. Entrega en 7 días.",
   url: `${SITE_URL}/`,
   areaServed: { "@type": "Country", name: "Argentina" },
-  priceRange: "$500.000 - $700.000",
-  makesOffer: [
-    oferta("Sitio web profesional", "500000", "Diseño web a medida"),
-    oferta("Sitio web con sistema de reservas", "700000", "Diseño web a medida con reservas online"),
-  ],
+  priceRange: "$500.000",
+  makesOffer: {
+    "@type": "Offer",
+    name: "Sitio web profesional",
+    priceCurrency: "ARS",
+    price: "500000",
+    availability: "https://schema.org/InStock",
+    itemOffered: { "@type": "Service", name: "Diseño web a medida", serviceType: "Diseño y desarrollo web" },
+  },
 };
 
 /* FAQPage: es lo que habilita el bloque desplegable en los resultados
@@ -64,13 +60,11 @@ export default function Page() {
     <>
       <Nav />
       <Hero />
-      {/* Cómo trabajamos (la diferencia y los 7 días), qué trae
-          cualquier web, qué suma la de reservas, ejemplos, y recién
-          ahí los dos precios lado a lado. */}
+      {/* Cómo trabajamos (la diferencia y los 7 días), qué trae la
+          web, ejemplos, y recién ahí el precio. */}
       <Diff />
       <Semana />
       <Incluye />
-      <Reservas />
       <Trabajos />
       <Precio />
       <Preguntas />

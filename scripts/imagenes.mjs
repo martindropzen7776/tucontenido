@@ -95,8 +95,8 @@ const OG = {
   web: {
     sufijo: ".",
     titular: ["Tu web lista", "en 7 días"],
-    bajada: "A medida y a tu nombre. Si trabajás con turnos, con reservas.",
-    bloque: "Desde $500.000",
+    bajada: "A medida, con los textos escritos y a tu nombre. Pago único.",
+    bloque: "$500.000",
   },
 };
 

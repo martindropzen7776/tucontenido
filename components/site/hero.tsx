@@ -47,8 +47,8 @@ export function Hero() {
       {/* Un cuadrado del tamaño de los anillos, no una capa a pantalla
           completa: en móvil eso bajaba a 3 cuadros por segundo.
           En computadora ocupa la columna derecha, que queda libre: el
-          precio no va arriba porque hay dos webs y se comparan en la
-          sección de precios. */}
+          precio no va arriba, tiene su sección con lo que entra y lo
+          que no. */}
       <Saturno className="-z-10 opacity-80
                           -right-[16%] top-[28px] h-[min(90vw,400px)] w-[min(90vw,400px)]
                           lg:right-[2%] lg:top-1/2 lg:h-[min(46vw,620px)] lg:w-[min(46vw,620px)]
@@ -78,13 +78,6 @@ export function Hero() {
             Ver ejemplos
           </a>
         </div>
-
-        <a
-          href="#reservas"
-          className="mt-5 self-start text-[15px] text-ink-soft underline underline-offset-4 transition-colors hover:text-ink"
-        >
-          ¿Trabajás con turnos? Mirá la web con reservas
-        </a>
 
         <div className="mt-[clamp(38px,5.5vw,60px)] max-w-[30rem]">
           <Dato valor={7} etiqueta="Días de entrega" detalle="Desde que mandás el material" />

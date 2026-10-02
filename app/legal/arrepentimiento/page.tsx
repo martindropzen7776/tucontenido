@@ -68,9 +68,9 @@ export default function Arrepentimiento() {
         hace efectiva sin que tengamos que ofrecerte alternativas ni retenerte.
       </p>
       <p>
-        En los servicios que se pagan por período, como el mantenimiento mensual
-        del sistema de reservas, desde la baja no se generan nuevos cargos: se
-        abona lo que corresponde hasta ese día.
+        En los servicios que se pagan por período, como un mantenimiento mensual
+        contratado aparte, desde la baja no se generan nuevos cargos: se abona lo
+        que corresponde hasta ese día.
       </p>
 
       <h2>Qué pasa después</h2>

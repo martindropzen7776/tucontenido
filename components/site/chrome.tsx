@@ -12,9 +12,8 @@ const NAV: Enlace[] = [
   { href: "#diferencia", label: "La diferencia" },
   { href: "#dias", label: "Los 7 días" },
   { href: "#incluye", label: "Qué incluye" },
-  { href: "#reservas", label: "Reservas" },
   { href: "#trabajos", label: "Ejemplos" },
-  { href: "#precio", label: "Precios" },
+  { href: "#precio", label: "Precio" },
 ];
 
 const MSG_WEB = "Hola! Quiero mi web en 7 días.";
@@ -64,7 +63,7 @@ export function Nav({
 export function Footer({
   bio = "Diseñamos webs para negocios que quieren vender por internet sin quedar atados a una agencia. Siete días y queda a tu nombre.",
   titulo = "Servicio",
-  enlaces = [NAV[1], NAV[3], NAV[5]],
+  enlaces = [NAV[1], NAV[3], NAV[4]],
   msg = "Hola! Quiero consultar por una web.",
   sufijo = ".",
   firma = "Hecha con este mismo proceso",

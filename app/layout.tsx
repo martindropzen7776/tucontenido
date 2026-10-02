@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_AR",
     siteName: "Tu Contenido",
-    images: [{ url: "/og/web.png", width: 1200, height: 630, alt: "Tu Contenido: tu web lista en 7 días, desde $500.000." }],
+    images: [{ url: "/og/web.png", width: 1200, height: 630, alt: "Tu Contenido: tu web lista en 7 días por $500.000." }],
   },
   twitter: { card: "summary_large_image" },
 };

@@ -4,13 +4,16 @@ import { TITULAR, DIAS_ARREPENTIMIENTO } from "@/lib/legal";
 export const metadata: Metadata = {
   title: "Términos y condiciones — Tu Contenido",
   description:
-    "Condiciones del servicio de diseño web de Tu Contenido, con y sin sistema de reservas.",
+    "Condiciones del servicio de diseño web de Tu Contenido.",
   robots: { index: true, follow: true },
 };
 
-/* Un servicio, diseño web, en dos planes: la web sola y la web con
-   sistema de reservas. Hasta el 17/09/2026 había además un servicio de
-   publicidad paga (la agencia), que se sacó del sitio. */
+/* Un servicio, diseño web, en un solo plan. Hasta el 01/10/2026 había
+   un segundo plan con sistema de reservas ($700.000), y hasta el
+   17/09/2026 además un servicio de publicidad paga (la agencia); los
+   dos se sacaron del sitio. Las reservas se pueden contratar aparte,
+   por eso siguen nombradas en lo que no incluye y en los datos de
+   tus clientes. */
 export default function Terminos() {
   return (
     <>
@@ -28,15 +31,12 @@ export default function Terminos() {
         constan en la factura de cualquier trabajo contratado.
       </p>
       <p>
-        Ofrecemos <strong>diseño web</strong> en dos planes: la web y la web con
-        sistema de reservas. Contratar cualquiera de ellos implica aceptar estas
+        Ofrecemos <strong>diseño web</strong>. Contratarlo implica aceptar estas
         condiciones. Si no estás de acuerdo con alguna, no contrates: es preferible
         discutirlo antes.
       </p>
 
-      <h2>Qué incluye cada plan</h2>
-
-      <h3>Web</h3>
+      <h2>Qué incluye</h2>
       <p>
         Por el precio publicado de <strong>$500.000</strong> entregamos un sitio web
         de hasta seis secciones, con diseño propio, adaptado a teléfono y
@@ -46,32 +46,19 @@ export default function Terminos() {
         <strong>capacitación para que puedas administrarlo vos</strong>.
       </p>
 
-      <h3>Web con reservas</h3>
+      <h3>Lo que no incluye</h3>
       <p>
-        Por el precio publicado de <strong>$700.000</strong> entregamos todo lo
-        anterior más un <strong>sistema de reservas</strong>: reservas online desde
-        el sitio, agenda de turnos, ficha de cada cliente con su historial y
-        recordatorios automáticos antes del turno.
-      </p>
-      <p>
-        El mantenimiento del sistema de reservas es <strong>opcional</strong> y
-        cuesta <strong>$50.000 por mes</strong>. No es condición para contratar el
-        plan, y su alcance se detalla por escrito al contratarlo.
-      </p>
-
-      <h3>Lo que no incluye ninguno</h3>
-      <p>
-        Tienda online con carrito o pagos, más de seis secciones, blog con carga de
-        contenidos ni producción fotográfica. Cualquiera de esas cosas se cotiza
-        aparte y se acuerda por escrito antes de empezar.
+        Sistema de reservas o turnos online, tienda online con carrito o pagos, más
+        de seis secciones, blog con carga de contenidos ni producción fotográfica.
+        Cualquiera de esas cosas se cotiza aparte y se acuerda por escrito antes de
+        empezar.
       </p>
 
       <h2>Plazos</h2>
       <p>
-        El plazo de entrega es de <strong>siete días corridos</strong> en los dos
-        planes, y empieza a correr cuando recibimos el material completo (logo,
-        fotos, datos de contacto y la información del formulario inicial), no desde
-        el pago. Si el material llega incompleto o tarde, el plazo se corre en la
+        El plazo de entrega es de <strong>siete días corridos</strong> y empieza a
+        correr cuando recibimos el material completo (logo, fotos, datos de
+        contacto y la información del formulario inicial), no desde el pago. Si el material llega incompleto o tarde, el plazo se corre en la
         misma medida.
       </p>
       <p>
@@ -82,17 +69,15 @@ export default function Terminos() {
 
       <h2>Precio y forma de pago</h2>
       <p>
-        El precio es de <strong>$500.000 (quinientos mil pesos argentinos)</strong>{" "}
-        por la web y de <strong>$700.000 (setecientos mil pesos argentinos)</strong>{" "}
-        por la web con reservas, en un único pago por el trabajo. Se abona{" "}
+        El precio es de <strong>$500.000 (quinientos mil pesos argentinos)</strong>,
+        en un único pago por el trabajo. Se abona{" "}
         <strong>50% para comenzar y 50% contra entrega</strong>. Aceptamos
         transferencia bancaria, Mercado Pago y USDT; si pagás en USDT, el importe
         se calcula al tipo de cambio del día de pago.
       </p>
       <p>
-        Fuera del mantenimiento opcional del sistema de reservas, no cobramos
-        cuotas mensuales. Los precios publicados pueden cambiar en cualquier
-        momento, pero <strong>nunca para un trabajo ya iniciado</strong>: el que
+        Por la web no cobramos cuotas mensuales. Los precios publicados pueden
+        cambiar en cualquier momento, pero <strong>nunca para un trabajo ya iniciado</strong>: el que
         rige es el vigente al momento de aceptar el presupuesto.
       </p>
 
@@ -187,10 +172,10 @@ export default function Terminos() {
 
       <h3>Datos de tus clientes</h3>
       <p>
-        En la web con reservas, el sistema guarda datos personales de tus clientes:
-        los que dejan al reservar y los que cargues en su ficha. Respecto de esos
-        datos el responsable sos vos, y nosotros los tratamos por cuenta tuya y
-        solo para prestarte el servicio, como se explica en la{" "}
+        Si contratás aparte un sistema de reservas, guarda datos personales de tus
+        clientes: los que dejan al reservar y los que cargues en su ficha. Respecto
+        de esos datos el responsable sos vos, y nosotros los tratamos por cuenta
+        tuya y solo para prestarte el servicio, como se explica en la{" "}
         <a href="/legal/privacidad">política de privacidad</a>.
       </p>
 
@@ -199,7 +184,7 @@ export default function Terminos() {
         Respondemos por la correcta ejecución del trabajo contratado. No respondemos
         por caídas, cambios de precio o discontinuación de servicios de terceros
         (plataforma de alojamiento, registrador de dominios, WhatsApp, Google), ni
-        por el uso que hagas del sitio o del sistema de reservas por tu cuenta, ni
+        por el uso que hagas del sitio por tu cuenta, ni
         por daños indirectos o lucro cesante.
       </p>
       <p>
@@ -213,8 +198,8 @@ export default function Terminos() {
         Defensa del Consumidor, tenés <strong>{DIAS_ARREPENTIMIENTO} días corridos</strong>{" "}
         para arrepentirte sin dar explicaciones, y podés hacerlo desde el{" "}
         <a href="/legal/arrepentimiento">botón de arrepentimiento</a>, sin registrarte
-        ni hacer ningún trámite previo. Desde esa misma página podés dar de baja el
-        mantenimiento mensual, si lo contrataste.
+        ni hacer ningún trámite previo. Desde esa misma página podés dar de baja
+        cualquier servicio mensual que hayas contratado aparte.
       </p>
 
       <h3>Ley aplicable</h3>

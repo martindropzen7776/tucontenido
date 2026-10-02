@@ -34,19 +34,12 @@ type Paso = {
   opciones: Opcion[];
 };
 
-/* El plan depende de si trabaja con turnos: cambia el precio que se
-   pregunta, el mensaje final y la pantalla de salida. */
-function planDe(respuestas: Record<string, Opcion>) {
-  const conReservas = respuestas.turnos?.id === "si";
-  return {
-    conReservas,
-    monto: conReservas ? "$700.000" : "$500.000",
-    nombre: conReservas ? "la web con reservas" : "la web",
-  };
-}
+/* Se vende una sola web. Hasta el 01/10/2026 había una pregunta de
+   turnos que mandaba a la web con reservas ($700.000); se sacó junto
+   con ese plan. */
+const MONTO = "$500.000";
 
-function armarPasos(r: Rubro, respuestas: Record<string, Opcion>): Paso[] {
-  const plan = planDe(respuestas);
+function armarPasos(r: Rubro): Paso[] {
   return [
     {
       /* El momento de la recomendación: alguien ya decidió considerarte
@@ -109,7 +102,7 @@ function armarPasos(r: Rubro, respuestas: Record<string, Opcion>): Paso[] {
         {
           id: "llamada",
           texto: "Sí, y me hicieron agendar una llamada",
-          eco: "Y en esa llamada tampoco te dijeron el precio. Acá lo sabés antes: desde $500.000.",
+          eco: `Y en esa llamada tampoco te dijeron el precio. Acá lo sabés antes: ${MONTO}.`,
         },
         {
           id: "fantasma",
@@ -124,35 +117,14 @@ function armarPasos(r: Rubro, respuestas: Record<string, Opcion>): Paso[] {
       ],
     },
     {
-      /* Define el plan: con turnos, la web con reservas. Va antes del
-         precio porque el precio que se pregunta depende de esto. */
-      clave: "turnos",
-      pregunta: "¿Tu negocio trabaja con turnos?",
-      opciones: [
-        {
-          id: "si",
-          texto: "Sí, doy turnos",
-          eco: "Entonces te conviene la web con reservas: tus clientes sacan turno solos desde la web.",
-        },
-        {
-          id: "no",
-          texto: "No, no trabajo con turnos",
-          eco: "Entonces alcanza con la web, sin sistema de reservas.",
-        },
-      ],
-    },
-    {
-      /* El filtro de presupuesto. Va justo después de la pregunta que
-         define el plan, así el precio no aparece de la nada. Quien
+      /* El filtro de presupuesto. Va justo después de la pregunta por
+         presupuestos anteriores, que ya pone el precio sobre la mesa:
+         así no aparece de la nada. Quien
          dice que no sale acá: hacerle contestar el resto es hacerle
          perder el tiempo, y meterlo como lead ensucia las campañas. */
       clave: "precio",
-      pregunta: plan.conReservas
-        ? "¿Estás dispuesto a pagar $700.000 por tu web con reservas?"
-        : "¿Estás dispuesto a pagar $500.000 por una web para tu negocio?",
-      ayuda: plan.conReservas
-        ? "Pago único. El mantenimiento del sistema es opcional: $50.000 por mes."
-        : "Pago único. No hay cuota mensual con nosotros.",
+      pregunta: `¿Estás dispuesto a pagar ${MONTO} por una web para tu negocio?`,
+      ayuda: "Pago único. No hay cuota mensual con nosotros.",
       opciones: [
         {
           id: "si",
@@ -227,9 +199,8 @@ export function Califica() {
 
   const [paso, setPaso] = useState(0);
   const [respuestas, setRespuestas] = useState<Record<string, Opcion>>({});
-  const PASOS = armarPasos(rubro, respuestas);
+  const PASOS = armarPasos(rubro);
   const TOTAL = PASOS.length;
-  const plan = planDe(respuestas);
   const [nombre, setNombre] = useState("");
   /* El nombre es obligatorio: sin él, el closer arranca la conversación
      sin saber a quién le habla. El error aparece recién al intentar
@@ -309,8 +280,7 @@ export function Califica() {
       `· Hoy encuentran: ${respuestas.encuentra?.texto ?? "-"}`,
       `· Quiere transmitir: ${respuestas.transmite?.texto ?? "-"}`,
       `· Presupuestó antes: ${respuestas.presupuesto?.texto ?? "-"}`,
-      `· Turnos: ${respuestas.turnos?.texto ?? "-"}`,
-      `· Pagar ${plan.monto}: ${respuestas.precio?.texto ?? "-"}`,
+      `· Pagar ${MONTO}: ${respuestas.precio?.texto ?? "-"}`,
       `· Plazo: ${respuestas.cuando?.texto ?? "-"}`,
       `· Llamada: ${respuestas.llamada?.texto ?? "-"}`,
     ];
@@ -318,7 +288,7 @@ export function Califica() {
 
     return [
       nombre.trim() ? `Hola! Soy ${nombre.trim()}.` : "Hola!",
-      `Quiero ${plan.conReservas ? "mi web con reservas" : "mi web"} en 7 días${
+      `Quiero mi web en 7 días${
         quiereLlamada ? " y me gustaría hacer una llamada para conocernos" : ""
       }. Te paso lo que respondí:`,
       "",
@@ -391,8 +361,8 @@ export function Califica() {
           {salida === "precio" ? (
             <div className="flex flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
               <p>
-                {plan.monto} es lo que cuesta {plan.conReservas ? "una web a medida con sistema de reservas" : "una web a medida"},
-                con los textos escritos y a tu nombre. No la abaratamos sacándole partes,
+                {MONTO} es lo que cuesta una web a medida, con los textos
+                escritos y a tu nombre. No la abaratamos sacándole partes,
                 porque después la web no cumple su trabajo.
               </p>
               <p className="text-ink">
@@ -420,7 +390,7 @@ export function Califica() {
             <a
               href={wa(
                 salida === "precio"
-                  ? `Hola! Hice el cuestionario. Me interesa ${plan.nombre} pero hoy no llego a los ${plan.monto}. Tengo una duda:`
+                  ? `Hola! Hice el cuestionario. Me interesa la web pero hoy no llego a los ${MONTO}. Tengo una duda:`
                   : "Hola! Hice el cuestionario y me dio que no califico porque mi web funciona bien. ¿Me la miran igual?"
               )}
               target="_blank"

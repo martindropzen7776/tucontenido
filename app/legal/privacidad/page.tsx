@@ -78,8 +78,8 @@ export default function Privacidad() {
         </li>
         <li>
           <strong>La plataforma de alojamiento</strong> del sitio que te entreguemos
-          y los servicios que use el sistema de reservas, si contratás, y solo con
-          los datos necesarios para que funcionen.
+          y, si contratás aparte un sistema de reservas, los servicios que use,
+          siempre solo con los datos necesarios para que funcionen.
         </li>
       </ul>
       <p>
@@ -91,7 +91,7 @@ export default function Privacidad() {
 
       <h2>Cuando tu web tiene reservas: los datos de tus clientes</h2>
       <p>
-        Si contratás la web con reservas, el sistema guarda datos personales de tus
+        Si contratás aparte un sistema de reservas, guarda datos personales de tus
         clientes: los que dejan al sacar un turno (por ejemplo, nombre y teléfono),
         sus turnos y lo que cargues en su ficha. Respecto de esos datos,{" "}
         <strong>el responsable sos vos</strong>, y nosotros actuamos como

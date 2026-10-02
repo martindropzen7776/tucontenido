@@ -1,11 +1,15 @@
 # tucontenido
 
-La landing del servicio de webs, en la raíz del dominio, con dos planes:
+La landing del servicio de webs, en la raíz del dominio. Vende un solo
+producto: **la web, $500.000**, pago único, llave en mano, sin
+mantenimiento y con capacitación para que el cliente la administre.
 
-| Plan | Precio | Qué es |
-|---|---|---|
-| Web | $500.000 | Llave en mano, sin mantenimiento, con capacitación para que el cliente la administre |
-| Web con reservas | $700.000 | Lo mismo más reservas online, agenda, ficha de clientes y recordatorios. Mantenimiento opcional de $50.000 por mes |
+Hasta el 01/10/2026 había un segundo plan, la web con reservas
+($700.000, con mantenimiento opcional de $50.000 por mes). Se sacó para
+concentrar todo en la web; está en el historial de git. Las muestras
+con reservas (Arenales, Clara y el hotel) siguen en los ejemplos, con
+los paneles de turnos, y las reservas figuran en lo que no entra: se
+presupuestan aparte.
 
 Hasta el 17/09/2026 la landing vivía en `/web` y la raíz era una agencia
 de publicidad (`agencia.tsx`, se puede ver en el historial de git). La
@@ -18,7 +22,7 @@ El resto de las rutas:
 | `/empezar` | Calificador para tráfico pago (noindex) |
 | `/gracias` | Adonde llega el calificador después de abrir WhatsApp (noindex) |
 | `/entrega` | Generador de la hoja de entrega para el cliente (interna, fuera de robots) |
-| `/legal/*` | Términos, privacidad, cookies y arrepentimiento, para los dos planes |
+| `/legal/*` | Términos, privacidad, cookies y arrepentimiento |
 
 `robots.txt`, `sitemap.xml`, la 404 y los íconos salen del build.
 
@@ -82,7 +86,7 @@ app/
   page.tsx          la landing: orden de secciones, metadata y schema
   globals.css       tokens de color, tipografía y escala de motion
 components/
-  site/             las secciones (los precios y los planes, en sections.tsx)
+  site/             las secciones (el precio y lo que entra, en sections.tsx)
   motion/           componentes de beUI (número, tilt, marquee, reveals…)
 lib/site.ts         ← lo único que hay que tocar para publicar
 ```
