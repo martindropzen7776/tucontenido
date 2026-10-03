@@ -41,7 +41,7 @@ export function wa(mensaje = "Hola!") {
    primeros los publica Ramón en Netlify; Cruce está en Cloudflare
    (muestras-webs/_herramientas/cloudflare.sh). La captura de cada
    uno vive en public/muestras/ y sale del inicio a 1440×900; la de
-   Cruce, con una hamburguesa abierta.
+   Cruce, con el panel del pedido abierto y productos cargados.
    La tarjeta muestra solo nombre y rubro: Ramón sacó el plan y
    la línea de "qué probar adentro" porque sobraban.
    Arenales, Clara y el hotel traen reservas: aunque desde el 01/10
