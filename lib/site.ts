@@ -34,12 +34,14 @@ export function wa(mensaje = "Hola!") {
 }
 
 /* ── Ejemplos ─────────────────────────────────────────────
-   Seis sitios de muestra, uno por rubro, con negocios inventados
+   Siete sitios de muestra, uno por rubro, con negocios inventados
    (cada uno lo dice en su pie). No son clientes: la sección los
    presenta como ejemplos y nunca como "trabajos en producción".
-   Los repos son privados (martindropzen7776/muestra-*) y los
-   publica Ramón en Netlify. La captura de cada uno vive en
-   public/muestras/ y sale del inicio a 1440×900.
+   Los repos son privados (martindropzen7776/muestra-*). Los seis
+   primeros los publica Ramón en Netlify; Cruce está en Cloudflare
+   (muestras-webs/_herramientas/cloudflare.sh). La captura de cada
+   uno vive en public/muestras/ y sale del inicio a 1440×900; la de
+   Cruce, con una hamburguesa abierta.
    La tarjeta muestra solo nombre y rubro: Ramón sacó el plan y
    la línea de "qué probar adentro" porque sobraban.
    Arenales, Clara y el hotel traen reservas: aunque desde el 01/10
@@ -61,6 +63,7 @@ export const TRABAJOS: Trabajo[] = [
   { nombre: "Forja Training Club", rubro: "Gimnasio", url: "https://forjagym0.netlify.app/", img: "/muestras/gym.webp" },
   { nombre: "Lumbre", rubro: "Restaurante", url: "https://restolumbre.netlify.app/", img: "/muestras/resto.webp" },
   { nombre: "Ferrand Metalúrgica", rubro: "Pyme industrial", url: "https://industriaferrandd.netlify.app/", img: "/muestras/industrial.webp" },
+  { nombre: "Hamburguesas Cruce", rubro: "Hamburguesería", url: "https://muestra-hamburguesas-cruce.fedefalas15.workers.dev/", img: "/muestras/hamburguesas.webp" },
 ];
 
 /** Dispara el evento Contact del píxel. Silencioso si no cargó. */

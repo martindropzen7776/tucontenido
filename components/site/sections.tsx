@@ -98,8 +98,8 @@ export function Semana() {
 }
 
 /* ══════════ TRABAJOS ══════════
-   Grilla asimétrica: el primero ocupa el doble. Además de romper
-   la fila de tres, te obliga a poner adelante tu mejor trabajo. */
+   Dos columnas. Si la cantidad es impar, el último va centrado en
+   su fila, del mismo ancho que los demás, para que no quede colgado. */
 
 export function Trabajos() {
   return (
@@ -107,7 +107,7 @@ export function Trabajos() {
       <Aparece>
         <h2 className="disp h2 max-w-[16ch]">Así puede quedar la tuya</h2>
         <p className="lede mt-7">
-          Seis sitios de muestra, uno por rubro, hechos con el mismo proceso y
+          Siete sitios de muestra, uno por rubro, hechos con el mismo proceso y
           el mismo nivel que te entregamos. Los negocios son inventados; todo lo
           demás funciona. Abrí cualquiera y recorrelo entero.
         </p>
@@ -115,7 +115,15 @@ export function Trabajos() {
 
       <div className="mt-[clamp(40px,5vw,64px)] grid gap-x-4 gap-y-10 min-[720px]:grid-cols-2">
         {TRABAJOS.map((t, i) => (
-          <Aparece key={t.nombre} delay={(i % 2) * 0.05}>
+          <Aparece
+            key={t.nombre}
+            delay={(i % 2) * 0.05}
+            className={
+              TRABAJOS.length % 2 === 1 && i === TRABAJOS.length - 1
+                ? "min-[720px]:col-span-2 min-[720px]:justify-self-center min-[720px]:w-[calc(50%_-_0.5rem)]"
+                : ""
+            }
+          >
             <a href={t.url} target="_blank" rel="noopener" className="group block">
               <TiltCard max={5}>
                 <div className="overflow-hidden border border-ink/25 bg-ink/5 transition-colors group-hover:border-ink/60">
