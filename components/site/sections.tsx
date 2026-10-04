@@ -107,9 +107,9 @@ export function Trabajos() {
       <Aparece>
         <h2 className="disp h2 max-w-[16ch]">Así puede quedar la tuya</h2>
         <p className="lede mt-7">
-          Siete sitios de muestra, uno por rubro, hechos con el mismo proceso y
-          el mismo nivel que te entregamos. Los negocios son inventados; todo lo
-          demás funciona. Abrí cualquiera y recorrelo entero.
+          Once sitios de muestra, hechos con el mismo proceso y el mismo nivel
+          que te entregamos. Los negocios son inventados; todo lo demás
+          funciona. Abrí cualquiera y recorrelo entero.
         </p>
       </Aparece>
 

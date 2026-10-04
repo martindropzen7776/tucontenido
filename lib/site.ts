@@ -34,14 +34,17 @@ export function wa(mensaje = "Hola!") {
 }
 
 /* ── Ejemplos ─────────────────────────────────────────────
-   Siete sitios de muestra, uno por rubro, con negocios inventados
-   (cada uno lo dice en su pie). No son clientes: la sección los
-   presenta como ejemplos y nunca como "trabajos en producción".
+   Once sitios de muestra con negocios inventados (cada uno lo dice
+   en su pie). No son clientes: la sección los presenta como
+   ejemplos y nunca como "trabajos en producción".
    Los repos son privados (martindropzen7776/muestra-*). Los seis
-   primeros los publica Ramón en Netlify; Cruce está en Cloudflare
-   (muestras-webs/_herramientas/cloudflare.sh). La captura de cada
-   uno vive en public/muestras/ y sale del inicio a 1440×900; la de
-   Cruce, con el panel del pedido abierto y productos cargados.
+   de Netlify los publica Ramón; Cruce, Morfi, Núcleo, Cuarzo y
+   Ceibo están en Cloudflare (muestras-webs/_herramientas/
+   cloudflare.sh). Morfi, Núcleo, Cuarzo y Ceibo tienen una escena
+   3D con three.js que se arma con el scroll.
+   La captura de cada uno vive en public/muestras/ y sale del inicio
+   a 1440×900; la de Cruce, con el panel del pedido abierto, y las de
+   los 3D, en el momento más reconocible de su escena.
    La tarjeta muestra solo nombre y rubro: Ramón sacó el plan y
    la línea de "qué probar adentro" porque sobraban.
    Arenales, Clara y el hotel traen reservas: aunque desde el 01/10
@@ -58,6 +61,10 @@ export type Trabajo = {
 
 export const TRABAJOS: Trabajo[] = [
   { nombre: "Hamburguesas Cruce", rubro: "Hamburguesería", url: "https://muestra-hamburguesas-cruce.fedefalas15.workers.dev/", img: "/muestras/hamburguesas.webp" },
+  { nombre: "Morfi", rubro: "Smash burgers", url: "https://muestra-hamburguesas-morfi.fedefalas15.workers.dev/", img: "/muestras/morfi.webp" },
+  { nombre: "Núcleo", rubro: "Estudio de IA para creadores", url: "https://muestra-estudio-nucleo.fedefalas15.workers.dev/", img: "/muestras/nucleo.webp" },
+  { nombre: "Bodega Cuarzo", rubro: "Bodega", url: "https://muestra-bodega-cuarzo.fedefalas15.workers.dev/", img: "/muestras/cuarzo.webp" },
+  { nombre: "Ceibo Residencias", rubro: "Desarrollo inmobiliario", url: "https://muestra-residencias-ceibo.fedefalas15.workers.dev/", img: "/muestras/ceibo.webp" },
   { nombre: "Arenales Odontología", rubro: "Clínica dental", url: "https://arenalesdental.netlify.app/", img: "/muestras/dental.webp", extra: { txt: "Ver el panel donde la clínica gestiona los turnos", url: "https://arenalesdental.netlify.app/panel/" } },
   { nombre: "Clara", rubro: "Medicina estética", url: "https://esteticaclara.netlify.app/", img: "/muestras/estetica.webp", extra: { txt: "Ver el panel donde el consultorio gestiona los turnos", url: "https://esteticaclara.netlify.app/panel/" } },
   { nombre: "Alma de Uco", rubro: "Hotel boutique", url: "https://hotelamladeuco.netlify.app/", img: "/muestras/hotel.webp" },
