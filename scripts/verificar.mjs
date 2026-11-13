@@ -19,8 +19,6 @@ if (!/^\d{10,20}$/.test(valor("PIXEL_ID") ?? ""))
 const email = valor("EMAIL") ?? "";
 if (!email.endsWith("@tucontenido.online") && email.endsWith("@tucontenido.ar"))
   avisos.push(`EMAIL es ${email}, de un dominio que no es el del sitio: el contacto y el botón de arrepentimiento mandan a una casilla que no existe.`);
-if (/listo: false/.test(site))
-  avisos.push("TRABAJOS tiene proyectos sin URL: la página principal muestra tarjetas punteadas con \"Falta URL\".");
 
 if (avisos.length) {
   console.warn("\n⚠  Datos de ejemplo en lib/site.ts:");

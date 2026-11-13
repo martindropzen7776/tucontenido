@@ -68,9 +68,11 @@ export default function Arrepentimiento() {
         hace efectiva sin que tengamos que ofrecerte alternativas ni retenerte.
       </p>
       <p>
-        En los servicios que se pagan por período, como un mantenimiento mensual
-        contratado aparte, desde la baja no se generan nuevos cargos: se abona lo
-        que corresponde hasta ese día.
+        En los servicios que se pagan por período, como la gestión mensual de
+        campañas, desde la baja no se generan nuevos cargos: se abona lo que
+        corresponde hasta ese día. La inversión en anuncios la cobran Meta y
+        Google directamente; para frenarla alcanza con pausar las campañas o
+        quitarnos el acceso a tus cuentas.
       </p>
 
       <h2>Qué pasa después</h2>

@@ -33,45 +33,14 @@ export function wa(mensaje = "Hola!") {
   return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
 }
 
-/* ── Ejemplos ─────────────────────────────────────────────
-   Once sitios de muestra con negocios inventados (cada uno lo dice
-   en su pie). No son clientes: la sección los presenta como
-   ejemplos y nunca como "trabajos en producción".
-   Los repos son privados (martindropzen7776/muestra-*). Los seis
-   de Netlify los publica Ramón; Cruce, Morfi, Núcleo, Cuarzo y
-   Ceibo están en Cloudflare (muestras-webs/_herramientas/
-   cloudflare.sh). Morfi, Núcleo, Cuarzo y Ceibo tienen una escena
-   3D con three.js que se arma con el scroll.
-   La captura de cada uno vive en public/muestras/ y sale del inicio
-   a 1440×900; la de Cruce, con el panel del pedido abierto, y las de
-   los 3D, en el momento más reconocible de su escena.
-   La tarjeta muestra solo nombre y rubro: Ramón sacó el plan y
-   la línea de "qué probar adentro" porque sobraban.
-   Arenales, Clara y el hotel traen reservas: aunque desde el 01/10
-   se vende solo la web, Ramón pidió que se queden, y con ellas
-   los paneles de turnos de Arenales y Clara.                    */
-export type Trabajo = {
-  nombre: string;
-  rubro: string;
-  url: string;
-  img: string;
-  /** Link secundario bajo la tarjeta (ej. el panel de turnos de demo). */
-  extra?: { txt: string; url: string };
-};
-
-export const TRABAJOS: Trabajo[] = [
-  { nombre: "Hamburguesas Cruce", rubro: "Hamburguesería", url: "https://muestra-hamburguesas-cruce.fedefalas15.workers.dev/", img: "/muestras/hamburguesas.webp" },
-  { nombre: "Morfi", rubro: "Smash burgers", url: "https://muestra-hamburguesas-morfi.fedefalas15.workers.dev/", img: "/muestras/morfi.webp" },
-  { nombre: "Núcleo", rubro: "Estudio de IA para creadores", url: "https://muestra-estudio-nucleo.fedefalas15.workers.dev/", img: "/muestras/nucleo.webp" },
-  { nombre: "Bodega Cuarzo", rubro: "Bodega", url: "https://muestra-bodega-cuarzo.fedefalas15.workers.dev/", img: "/muestras/cuarzo.webp" },
-  { nombre: "Ceibo Residencias", rubro: "Desarrollo inmobiliario", url: "https://muestra-residencias-ceibo.fedefalas15.workers.dev/", img: "/muestras/ceibo.webp" },
-  { nombre: "Arenales Odontología", rubro: "Clínica dental", url: "https://arenalesdental.netlify.app/", img: "/muestras/dental.webp", extra: { txt: "Ver el panel donde la clínica gestiona los turnos", url: "https://arenalesdental.netlify.app/panel/" } },
-  { nombre: "Clara", rubro: "Medicina estética", url: "https://esteticaclara.netlify.app/", img: "/muestras/estetica.webp", extra: { txt: "Ver el panel donde el consultorio gestiona los turnos", url: "https://esteticaclara.netlify.app/panel/" } },
-  { nombre: "Alma de Uco", rubro: "Hotel boutique", url: "https://hotelamladeuco.netlify.app/", img: "/muestras/hotel.webp" },
-  { nombre: "Forja Training Club", rubro: "Gimnasio", url: "https://forjagym0.netlify.app/", img: "/muestras/gym.webp" },
-  { nombre: "Lumbre", rubro: "Restaurante", url: "https://restolumbre.netlify.app/", img: "/muestras/resto.webp" },
-  { nombre: "Ferrand Metalúrgica", rubro: "Pyme industrial", url: "https://industriaferrandd.netlify.app/", img: "/muestras/industrial.webp" },
-];
+/* ── Honorarios ─────────────────────────────────────────
+   Desde el 13/11/2026 el sitio es una agencia de publicidad en Meta
+   y Google; la landing de webs ($500.000) se sacó y está en el
+   historial de git, con sus once muestras.
+   Si querés publicar desde cuánto arranca la gestión mensual, ponelo
+   acá con el formato "$000.000" y aparece en la tarjeta de precios.
+   Vacío, la tarjeta dice que se cotiza después del diagnóstico.   */
+export const HONORARIO_DESDE = "";
 
 /** Dispara el evento Contact del píxel. Silencioso si no cargó. */
 export function trackContacto() {
@@ -83,16 +52,18 @@ export function trackContacto() {
    Las respuestas visibles viven en sections.tsx con su formato.
    Si cambiás una, cambiala en los dos lados.                */
 export const FAQ_SCHEMA: [string, string][] = [
-  ["¿La web es realmente mía?",
-   "Sí. Al terminar te transferimos el proyecto a tu cuenta y el dominio se compra directamente a tu nombre. Podés editarla, cambiar de diseñador o darla de baja sin hablar con nosotros."],
-  ["¿Hay que hacer una llamada?",
-   "Te la ofrecemos y te la recomendamos: son 15 minutos para conocernos, que nos cuentes tu negocio y que sepas con quién vas a trabajar antes de pagar. No es una llamada de venta, porque el precio ya lo sabés. Si preferís, hacemos todo por WhatsApp."],
-  ["¿Y si después necesito cambiar algo?",
-   "Lo cambiás vos, y te enseñamos cómo sin costo. Al entregarte la web te mostramos paso a paso cómo cambiar textos, fotos, precios, horarios y datos de contacto, y cómo mantenerla al día. Secciones nuevas o rediseños son presupuesto aparte."],
-  ["¿Y si no me llevo bien con la computadora?",
-   "No hace falta saber de diseño ni de programación. Te enseñamos sobre tu propia web, con los cambios que vas a hacer de verdad, y si te olvidás de algo te lo volvemos a explicar."],
+  ["¿Cuánto tengo que invertir en anuncios?",
+   "Depende de tu rubro, tu zona y lo que quieras conseguir, y te lo decimos con números en el diagnóstico. Esa inversión la pagás vos directo a Meta o a Google, con tu tarjeta y desde una cuenta a tu nombre: no pasa por nosotros. Nuestros honorarios van aparte."],
+  ["¿Meta o Google?",
+   "Hacen cosas distintas. Google te muestra a quien ya está buscando lo que vendés; Meta (Facebook, Instagram y WhatsApp) le muestra tu negocio a gente que todavía no te buscaba pero se parece a tu cliente. La mayoría de los negocios necesita las dos en distinta proporción, y en el diagnóstico te decimos por dónde empezar."],
+  ["¿Las cuentas quedan a mi nombre?",
+   "Sí. La cuenta publicitaria, el píxel, las audiencias y las campañas son tuyas. Trabajamos con un acceso que nos das y que podés quitar cuando quieras. Si un día dejás de trabajar con nosotros, te quedás con todo el historial."],
+  ["¿En cuánto tiempo se ven resultados?",
+   "Las primeras consultas pueden llegar en la primera semana, pero las campañas necesitan unas semanas de datos para estabilizarse. Contá con uno o dos meses para saber, con números, cuánto te cuesta cada cliente. Nadie serio te puede garantizar un resultado; lo que sí vas a tener es cada número a la vista."],
+  ["¿Hay contrato de permanencia?",
+   "No. Trabajamos mes a mes y podés darte de baja cuando quieras, avisando antes de que empiece el mes siguiente."],
+  ["¿Necesito tener una web?",
+   "No siempre. En Meta las consultas pueden llegar directo a tu WhatsApp o a un formulario dentro de Facebook e Instagram. En Google conviene tener una página a donde mandar a la gente; si la tuya frena las ventas, te decimos qué cambiar. Webs no hacemos: nos dedicamos solo a la publicidad."],
   ["¿Cómo se paga?",
-   "Mercado Pago, transferencia bancaria o USDT. Se abona 50% para arrancar y 50% contra entrega."],
-  ["¿De verdad son 7 días?",
-   "Sí. El reloj arranca cuando mandás el material, no cuando pagás. Con el material completo, el primer boceto lo ves en 72 horas."],
+   "Los honorarios se pagan por mes, con Mercado Pago, transferencia bancaria o USDT. La inversión en anuncios la cobran Meta y Google directamente a tu tarjeta."],
 ];

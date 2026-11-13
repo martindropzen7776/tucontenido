@@ -14,8 +14,12 @@ import { guardarLead } from "@/lib/lead";
 
    Al final arma el mensaje de WhatsApp con las respuestas ya
    adentro, así la conversación no arranca de cero: cuando el
-   lead escribe, ya sabés si tiene web, si acepta el precio,
-   para cuándo la quiere y si quiere la llamada para conocernos.
+   lead escribe, ya sabés dónde anuncia hoy, quién se lo maneja,
+   qué busca, si tiene presupuesto para anuncios y si quiere la
+   llamada de diagnóstico.
+
+   Desde el 13/11/2026 califica para la agencia (Meta y Google).
+   La versión para la web de $500.000 está en el historial de git.
    ═══════════════════════════════════════════════════════════ */
 
 type Opcion = {
@@ -34,107 +38,126 @@ type Paso = {
   opciones: Opcion[];
 };
 
-/* Se vende una sola web. Hasta el 01/10/2026 había una pregunta de
-   turnos que mandaba a la web con reservas ($700.000); se sacó junto
-   con ese plan. */
-const MONTO = "$500.000";
-
 function armarPasos(r: Rubro): Paso[] {
   return [
     {
-      /* El momento de la recomendación: alguien ya decidió considerarte
-         y te busca. Ahí es donde una mala presencia cuesta caro, y es
-         algo que el dueño sabe de memoria sin tener que verificar nada. */
-      clave: "encuentra",
-      pregunta: "Cuando te recomiendan, ¿qué encuentra el que te busca?",
+      /* Dónde está hoy. Ninguna respuesta lo deja afuera: el que nunca
+         anunció es tan cliente como el que ya invierte. */
+      clave: "donde",
+      pregunta: "¿Hoy hacés publicidad paga?",
       opciones: [
         {
-          id: "ficha",
-          texto: "Mi ficha de Google y nada más",
-          eco: "La ficha dice que existís. No dice por qué elegirte a vos y no al de la otra cuadra.",
+          id: "meta",
+          texto: "Sí, en Facebook e Instagram",
+          eco: `Bien. Falta ver si Google te puede traer a los ${r.cliente} que ya te están buscando.`,
         },
         {
-          id: "insta",
-          texto: "Mi Instagram",
-          eco: `Instagram muestra el día a día. La web es la que dice quién es tu ${r.local} y qué hace.`,
+          id: "google",
+          texto: "Sí, en Google",
+          eco: "Bien. Falta ver si Meta te puede traer a los que todavía no saben que te necesitan.",
         },
         {
-          id: "vieja",
-          texto: "Una web vieja que no me representa",
-          eco: "Y te juzga por eso antes de leer una línea. Una web vieja dice más de lo que quisieras.",
+          id: "ambas",
+          texto: "Sí, en las dos",
+          eco: "Entonces lo primero es ver cuánto te cuesta cada cliente en cada una. Ahí suele estar la plata perdida.",
         },
         {
-          id: "bien",
-          texto: "Una web que me representa bien",
-          eco: "Entonces frenamos acá.",
-          sirve: false,
+          id: "nunca",
+          texto: "No, nunca hice",
+          eco: "Mejor: arrancás con la medición bien hecha desde el primer día, que es lo que casi nadie tiene.",
         },
       ],
     },
     {
-      /* Qué quiere transmitir. No es paja: sale de acá el material con
-         el que después se arma la maqueta. */
-      clave: "transmite",
-      pregunta: "¿Qué querés que transmita?",
+      /* Quién lo maneja. Sale de acá cómo arranca la conversación. */
+      clave: "quien",
+      pregunta: "¿Quién maneja los anuncios?",
       opciones: [
         {
-          id: "serio",
-          texto: "Que somos serios y profesionales",
-          eco: "Eso se transmite con tipografía, orden y espacio. No con más secciones ni más efectos.",
+          id: "yo",
+          texto: "Yo, con el botón de promocionar",
+          eco: "Promocionar sirve para que te vean. Para que te compren hace falta una campaña armada con ese objetivo.",
         },
         {
-          id: "actual",
-          texto: "Que estamos al día",
-          eco: "Fotos propias y bien tomadas hacen más por eso que cualquier animación.",
+          id: "agencia",
+          texto: "Una agencia o un freelancer",
+          eco: "Entonces la pregunta es si te dicen cuánto te cuesta cada venta. Si no, eso es lo primero que miramos.",
         },
         {
-          id: "claro",
-          texto: "Lo que hacemos, bien explicado",
-          eco: "La mayoría de las webs lo dicen todo y no se entiende nada. Es un problema de orden.",
+          id: "nadie",
+          texto: "Nadie, por ahora",
+          eco: "Entonces partimos de cero, sin vicios que desarmar.",
         },
       ],
     },
     {
-      /* La fricción del proceso de siempre, contada por él. */
-      clave: "presupuesto",
-      pregunta: "¿Alguna vez pediste presupuesto para una web?",
+      /* El objetivo. Define plataforma, campaña y qué se mide. */
+      clave: "objetivo",
+      pregunta: "¿Qué querés conseguir con la publicidad?",
       opciones: [
         {
-          id: "llamada",
-          texto: "Sí, y me hicieron agendar una llamada",
-          eco: `Y en esa llamada tampoco te dijeron el precio. Acá lo sabés antes: ${MONTO}.`,
+          id: "ventas",
+          texto: "Ventas en mi tienda online",
+          eco: "Se mide en ventas y en lo que vuelve por cada peso invertido. Nada de alcance.",
         },
         {
-          id: "fantasma",
-          texto: "Sí, pero nunca me contestaron",
-          eco: "Nos lo dicen seguido. Es la parte del rubro que peor funciona.",
+          id: "consultas",
+          texto: "Consultas por WhatsApp",
+          eco: `Se puede llevar a los ${r.cliente} directo a tu WhatsApp, sin pasar por ninguna página.`,
         },
         {
-          id: "primera",
-          texto: "No, es la primera vez",
-          eco: "Mejor. Te ahorrás la parte fea: acá el precio está publicado desde el principio.",
+          id: "local",
+          texto: `Más ${r.cliente} en mi ${r.local}`,
+          eco: `Ahí Google Maps y los anuncios por zona trabajan juntos: te ven los que están cerca.`,
+        },
+        {
+          id: "marca",
+          texto: "Que me conozcan",
+          eco: "Vale, pero lo vamos a medir igual: cuántos de los que te conocieron terminaron escribiendo.",
         },
       ],
     },
     {
-      /* El filtro de presupuesto. Va justo después de la pregunta por
-         presupuestos anteriores, que ya pone el precio sobre la mesa:
-         así no aparece de la nada. Quien
-         dice que no sale acá: hacerle contestar el resto es hacerle
-         perder el tiempo, y meterlo como lead ensucia las campañas. */
-      clave: "precio",
-      pregunta: `¿Estás dispuesto a pagar ${MONTO} por una web para tu negocio?`,
-      ayuda: "Pago único. No hay cuota mensual con nosotros.",
+      /* La pregunta que más reencuadra: casi nadie lo sabe. */
+      clave: "costo",
+      pregunta: "¿Sabés cuánto te cuesta hoy conseguir un cliente?",
       opciones: [
         {
           id: "si",
-          texto: "Sí, es lo que busco",
-          eco: "Entonces hablamos el mismo idioma. Mitad para arrancar y mitad cuando la ves terminada.",
+          texto: "Sí, lo tengo medido",
+          eco: "Sos de los pocos. Con ese número se puede decidir cuánto escalar sin perder plata.",
         },
         {
-          id: "conocer",
-          texto: "Sí, pero antes quiero conocerlos",
-          eco: "Es lo más lógico. Para eso está la llamada: nadie debería pagar sin saber con quién trabaja.",
+          id: "masomenos",
+          texto: "Más o menos",
+          eco: "Con un más o menos no se puede decidir cuánto invertir. El diagnóstico te da el número.",
+        },
+        {
+          id: "no",
+          texto: "No, ni idea",
+          eco: "Es lo más común, y es lo primero que vas a saber cuando trabajemos juntos.",
+        },
+      ],
+    },
+    {
+      /* El filtro. La inversión en anuncios la paga el cliente directo
+         a Meta y Google; sin eso, la gestión no tiene sobre qué
+         trabajar. Quien dice que no sale acá: hacerle contestar el
+         resto es hacerle perder el tiempo, y meterlo como lead ensucia
+         las campañas. */
+      clave: "presupuesto",
+      pregunta: "¿Tenés un presupuesto mensual para invertir en anuncios?",
+      ayuda: "Se le paga directo a Meta y a Google, con tu tarjeta. Nuestros honorarios van aparte.",
+      opciones: [
+        {
+          id: "si",
+          texto: "Sí, ya lo tengo definido",
+          eco: "Entonces hablamos el mismo idioma. En el diagnóstico vemos cómo repartirlo.",
+        },
+        {
+          id: "definir",
+          texto: "Sí, pero no sé cuánto conviene",
+          eco: "Es lo más lógico. Te decimos cuánto con números de tu rubro, antes de que gastes un peso.",
         },
         {
           id: "no",
@@ -145,43 +168,21 @@ function armarPasos(r: Rubro): Paso[] {
       ],
     },
     {
-      /* Cierre operativo: qué pasa a partir de ahora. */
-      clave: "cuando",
-      pregunta: "¿Para cuándo la necesitás online?",
-      opciones: [
-        {
-          id: "ya",
-          texto: "Cuanto antes",
-          eco: "Mandás logo y fotos hoy, y el jueves estás mirando tu web en el celular.",
-        },
-        {
-          id: "mes",
-          texto: "Este mes",
-          eco: "Entra cómodo. Son siete días desde que mandás el material, no desde que pagás.",
-        },
-        {
-          id: "viendo",
-          texto: "Estoy averiguando",
-          eco: "Está bien. Te dejamos el precio y los tiempos por escrito y lo pensás.",
-        },
-      ],
-    },
-    {
       /* La llamada se ofrece, no se exige. Lo que elija viaja en el
          mensaje, así el closer sabe si llamar o seguir por escrito. */
       clave: "llamada",
-      pregunta: "¿Querés que hagamos una llamada para conocernos?",
-      ayuda: "Son 15 minutos, para que sepas con quién vas a trabajar. No es una llamada de venta: el precio ya lo sabés.",
+      pregunta: "¿Hacemos el diagnóstico en una llamada?",
+      ayuda: "Son 20 minutos, sin cargo. No es una llamada de venta: te llevás qué está fallando y cuánto conviene invertir.",
       opciones: [
         {
           id: "si",
-          texto: "Sí, prefiero hablar antes",
+          texto: "Sí, prefiero hablar",
           eco: "Buenísimo. Te escribimos para coordinar un horario que te quede cómodo.",
         },
         {
           id: "whatsapp",
           texto: "No, sigamos por WhatsApp",
-          eco: "Perfecto. Te mandamos todo por escrito y seguimos por ahí.",
+          eco: "Perfecto. Te mandamos el diagnóstico por escrito y seguimos por ahí.",
         },
       ],
     },
@@ -277,19 +278,19 @@ export function Califica() {
   function mensajeFinal() {
     const NL = String.fromCharCode(10);
     const datos = [
-      `· Hoy encuentran: ${respuestas.encuentra?.texto ?? "-"}`,
-      `· Quiere transmitir: ${respuestas.transmite?.texto ?? "-"}`,
-      `· Presupuestó antes: ${respuestas.presupuesto?.texto ?? "-"}`,
-      `· Pagar ${MONTO}: ${respuestas.precio?.texto ?? "-"}`,
-      `· Plazo: ${respuestas.cuando?.texto ?? "-"}`,
+      `· Publicidad hoy: ${respuestas.donde?.texto ?? "-"}`,
+      `· La maneja: ${respuestas.quien?.texto ?? "-"}`,
+      `· Objetivo: ${respuestas.objetivo?.texto ?? "-"}`,
+      `· Costo por cliente: ${respuestas.costo?.texto ?? "-"}`,
+      `· Presupuesto para anuncios: ${respuestas.presupuesto?.texto ?? "-"}`,
       `· Llamada: ${respuestas.llamada?.texto ?? "-"}`,
     ];
     if (rubroClave !== "general") datos.push(`· Rubro: ${rubroClave}`);
 
     return [
       nombre.trim() ? `Hola! Soy ${nombre.trim()}.` : "Hola!",
-      `Quiero mi web en 7 días${
-        quiereLlamada ? " y me gustaría hacer una llamada para conocernos" : ""
+      `Quiero un diagnóstico de mis campañas en Meta y Google${
+        quiereLlamada ? " en una llamada" : ""
       }. Te paso lo que respondí:`,
       "",
       ...datos,
@@ -355,50 +356,33 @@ export function Califica() {
       {salida ? (
         <div className="flex flex-col gap-6">
           <h1 className="disp text-[clamp(28px,6vw,46px)] leading-[1.04] tracking-[-0.028em] text-balance">
-            {salida === "precio" ? "Por ahora no somos para vos" : "No somos lo que estás buscando"}
+            Por ahora no somos para vos
           </h1>
 
-          {salida === "precio" ? (
-            <div className="flex flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
-              <p>
-                {MONTO} es lo que cuesta una web a medida, con los textos
-                escritos y a tu nombre. No la abaratamos sacándole partes,
-                porque después la web no cumple su trabajo.
-              </p>
-              <p className="text-ink">
-                Si más adelante cambia, el precio va a seguir publicado acá. Y si
-                tenés alguna duda sobre lo que incluye, escribinos igual y te
-                contestamos.
-              </p>
-            </div>
-          ) : (
-            <div className="flex flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
-              <p>
-                Esto es para negocios que no tienen web, o que tienen una de hace
-                diez años. Si la tuya ya funciona, cambiarla sería gastar por gastar
-                — y no te lo vamos a vender.
-              </p>
-              <p className="text-ink">
-                Lo que sí podemos hacer: mirarla y decirte en qué está floja.
-                Velocidad en el celular, si aparecés en Google, si el contacto está
-                donde tiene que estar. Gratis, y sin que te ofrezcamos nada después.
-              </p>
-            </div>
-          )}
+          {/* Una sola salida: sin presupuesto para anuncios, la gestión
+              no tiene sobre qué trabajar. */}
+          <div className="flex flex-col gap-4 text-[15.5px] leading-relaxed text-ink-soft">
+            <p>
+              Nuestro trabajo es hacer rendir lo que invertís en Meta y Google.
+              Sin inversión en anuncios, pagarnos a nosotros sería gastar por
+              gastar, y no te lo vamos a vender.
+            </p>
+            <p className="text-ink">
+              Cuando tengas un presupuesto, escribinos y te decimos con cuánto
+              conviene arrancar en tu rubro. Y si tenés una duda hoy, preguntá
+              igual: te contestamos.
+            </p>
+          </div>
 
           <div className="flex flex-col gap-3 pt-1">
             <a
-              href={wa(
-                salida === "precio"
-                  ? `Hola! Hice el cuestionario. Me interesa la web pero hoy no llego a los ${MONTO}. Tengo una duda:`
-                  : "Hola! Hice el cuestionario y me dio que no califico porque mi web funciona bien. ¿Me la miran igual?"
-              )}
+              href={wa("Hola! Hice el cuestionario. Todavía no tengo presupuesto para anuncios, pero tengo una duda:")}
               target="_blank"
               rel="noopener"
               onClick={alEnviarSalida}
               className="btn min-h-[58px] justify-center text-[16px]"
             >
-              {salida === "precio" ? "Escribirles igual" : "Que me la revisen igual"}
+              Escribirles igual
               <svg className="arw" width="15" height="12" viewBox="0 0 15 12" fill="none" aria-hidden="true">
                 <path d="M1 6h12M9 1.5 13.5 6 9 10.5" stroke="currentColor" strokeWidth="2" />
               </svg>
@@ -487,8 +471,8 @@ export function Califica() {
 
             <p className="text-[15.5px] leading-relaxed text-ink-soft">
               {quiereLlamada
-                ? "Te escribimos por WhatsApp para coordinar la llamada en un horario que te quede cómodo."
-                : "Te escribimos por WhatsApp con el precio cerrado y los tiempos, todo por escrito."}
+                ? "Te escribimos por WhatsApp para coordinar la llamada de diagnóstico en un horario que te quede cómodo."
+                : "Te escribimos por WhatsApp y hacemos el diagnóstico por escrito."}
             </p>
 
             <div className="flex flex-col gap-2">
@@ -536,7 +520,7 @@ export function Califica() {
                 </>
               ) : (
                 <>
-                  Pedir mi web por WhatsApp
+                  Pedir el diagnóstico por WhatsApp
                   <svg className="arw" width="15" height="12" viewBox="0 0 15 12" fill="none" aria-hidden="true">
                     <path d="M1 6h12M9 1.5 13.5 6 9 10.5" stroke="currentColor" strokeWidth="2" />
                   </svg>

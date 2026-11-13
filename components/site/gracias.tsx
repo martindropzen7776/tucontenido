@@ -26,9 +26,9 @@ export function Gracias() {
     ["Mandá el mensaje", "Se abrió WhatsApp con tus respuestas ya escritas. Si todavía no tocaste enviar, hacelo: sin ese mensaje no nos llega nada."],
     ["Te respondemos", "De lunes a sábado, normalmente en menos de una hora."],
     lead?.llamada
-      ? ["Nos conocemos", "Coordinamos la llamada de 15 minutos en un horario que te quede cómodo."]
-      : ["Te pasamos todo por escrito", "El precio cerrado, los tiempos y lo que necesitamos de vos para arrancar."],
-    ["Ves tu web", "Mandás el logo y las fotos, y en 72 horas la estás recorriendo en tu celular."],
+      ? ["Hacemos el diagnóstico", "Coordinamos la llamada de 20 minutos en un horario que te quede cómodo, y revisamos tus cuentas si ya tenés."]
+      : ["Hacemos el diagnóstico", "Por escrito: qué está fallando, qué funciona y cuánto conviene invertir."],
+    ["Te pasamos el plan", "Qué plataformas, cuánto invertir en cada una y nuestros honorarios, todo por escrito. Vos decidís si seguimos."],
   ];
 
   return (
@@ -60,7 +60,7 @@ export function Gracias() {
 
       <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
         <a
-          href={lead?.link || wa("Hola! Quiero mi web en 7 días.")}
+          href={lead?.link || wa("Hola! Quiero un diagnóstico de mis campañas en Meta y Google.")}
           target="_blank"
           rel="noopener"
           className="btn min-h-[56px] justify-center text-[15px]"

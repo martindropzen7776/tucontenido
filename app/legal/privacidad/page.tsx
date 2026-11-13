@@ -29,8 +29,8 @@ export default function Privacidad() {
         <strong>Los que nos das vos.</strong> Cuando completás el cuestionario o nos
         escribís por WhatsApp o email: tu nombre, tu número de teléfono, tu correo,
         el rubro de tu negocio y las respuestas que elegiste. Si después contratás,
-        también los datos necesarios para facturar y el material del trabajo (logo,
-        fotos, textos, datos de contacto de tu negocio).
+        también los datos necesarios para facturar, el material para los anuncios
+        (logo, fotos, videos, textos) y el acceso a tus cuentas publicitarias.
       </p>
       <p>
         <strong>Los que se recogen solos.</strong> Si aceptaste las cookies de
@@ -77,9 +77,9 @@ export default function Privacidad() {
           queda sujeta además a las políticas de WhatsApp.
         </li>
         <li>
-          <strong>La plataforma de alojamiento</strong> del sitio que te entreguemos
-          y, si contratás aparte un sistema de reservas, los servicios que use,
-          siempre solo con los datos necesarios para que funcionen.
+          <strong>Meta y Google</strong> — si contratás la gestión de campañas,
+          trabajamos dentro de tus cuentas publicitarias, que se rigen además por
+          las políticas de cada plataforma.
         </li>
       </ul>
       <p>
@@ -89,11 +89,12 @@ export default function Privacidad() {
         limita a lo indispensable para prestar el servicio.
       </p>
 
-      <h2>Cuando tu web tiene reservas: los datos de tus clientes</h2>
+      <h2>Cuando las campañas usan datos de tus clientes</h2>
       <p>
-        Si contratás aparte un sistema de reservas, guarda datos personales de tus
-        clientes: los que dejan al sacar un turno (por ejemplo, nombre y teléfono),
-        sus turnos y lo que cargues en su ficha. Respecto de esos datos,{" "}
+        Si contratás la gestión de campañas, puede que trabajemos con datos
+        personales de tus clientes: las listas que subas para armar públicos en
+        Meta o Google, y los nombres, teléfonos o correos que dejan en los
+        formularios de tus anuncios. Respecto de esos datos,{" "}
         <strong>el responsable sos vos</strong>, y nosotros actuamos como
         prestadores del servicio por cuenta tuya, en los términos del artículo 25
         de la Ley 25.326.
@@ -108,9 +109,9 @@ export default function Privacidad() {
       </ul>
       <p>
         Vos sos responsable de contar con la base legal para tratarlos, por ejemplo
-        el consentimiento de tus clientes y tu propia política de privacidad. Si en
-        la ficha cargás datos sensibles, como información de salud en un
-        consultorio, su tratamiento también queda bajo tu responsabilidad.
+        el consentimiento de tus clientes y tu propia política de privacidad. Las
+        listas no se usan para públicos basados en datos sensibles, como
+        información de salud, que además las plataformas no permiten.
       </p>
 
       <h2>Cuánto tiempo los guardamos</h2>

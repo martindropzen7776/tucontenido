@@ -4,16 +4,16 @@ import { TITULAR, DIAS_ARREPENTIMIENTO } from "@/lib/legal";
 export const metadata: Metadata = {
   title: "Términos y condiciones — Tu Contenido",
   description:
-    "Condiciones del servicio de diseño web de Tu Contenido.",
+    "Condiciones del servicio de gestión de publicidad en Meta y Google de Tu Contenido.",
   robots: { index: true, follow: true },
 };
 
-/* Un servicio, diseño web, en un solo plan. Hasta el 01/10/2026 había
-   un segundo plan con sistema de reservas ($700.000), y hasta el
-   17/09/2026 además un servicio de publicidad paga (la agencia); los
-   dos se sacaron del sitio. Las reservas se pueden contratar aparte,
-   por eso siguen nombradas en lo que no incluye y en los datos de
-   tus clientes. */
+/* Un servicio: la gestión de publicidad paga en Meta y Google. Hasta
+   el 13/11/2026 el sitio vendía diseño web ($500.000), que se sacó; sus
+   condiciones están en el historial de git. Los honorarios no tienen
+   precio publicado, así que alcance, honorarios y duración se remiten
+   a la propuesta escrita; acá van las reglas por defecto para cuando
+   la propuesta no dice nada. */
 export default function Terminos() {
   return (
     <>
@@ -31,122 +31,118 @@ export default function Terminos() {
         constan en la factura de cualquier trabajo contratado.
       </p>
       <p>
-        Ofrecemos <strong>diseño web</strong>. Contratarlo implica aceptar estas
-        condiciones. Si no estás de acuerdo con alguna, no contrates: es preferible
-        discutirlo antes.
+        Ofrecemos la <strong>gestión de publicidad paga en Meta y Google</strong>.
+        Contratarla implica aceptar estas condiciones. Si no estás de acuerdo con
+        alguna, no contrates: es preferible discutirlo antes.
       </p>
 
       <h2>Qué incluye</h2>
       <p>
-        Por el precio publicado de <strong>$500.000</strong> entregamos un sitio web
-        de hasta seis secciones, con diseño propio, adaptado a teléfono y
-        computadora, con los textos redactados por nosotros, configuración básica
-        para buscadores, integración de WhatsApp y formulario de contacto, hasta{" "}
-        <strong>dos rondas de ajustes</strong> y una{" "}
-        <strong>capacitación para que puedas administrarlo vos</strong>.
+        Estrategia de publicidad paga, armado y gestión de campañas en Meta
+        (Facebook, Instagram, Messenger y WhatsApp) y en Google Ads (Búsqueda,
+        Performance Max, YouTube y Display), producción de anuncios y textos,
+        configuración de la medición y reportes. Otras plataformas se suman solo
+        si se acuerdan.
+      </p>
+      <p>
+        El alcance concreto —qué plataformas, cuántas campañas y anuncios, y cada
+        cuánto se reporta— se define en una <strong>propuesta por escrito</strong>{" "}
+        antes de empezar. Lo que no figure en la propuesta no está incluido.
       </p>
 
       <h3>Lo que no incluye</h3>
       <p>
-        Sistema de reservas o turnos online, tienda online con carrito o pagos, más
-        de seis secciones, blog con carga de contenidos ni producción fotográfica.
-        Cualquiera de esas cosas se cotiza aparte y se acuerda por escrito antes de
-        empezar.
+        Diseño o desarrollo de sitios web, manejo de redes sociales y
+        publicaciones orgánicas, y producción fotográfica o audiovisual en tu
+        negocio. Tampoco la inversión en anuncios, que se explica más abajo.
       </p>
 
-      <h2>Plazos</h2>
+      <h2>Diagnóstico sin cargo</h2>
       <p>
-        El plazo de entrega es de <strong>siete días corridos</strong> y empieza a
-        correr cuando recibimos el material completo (logo, fotos, datos de
-        contacto y la información del formulario inicial), no desde el pago. Si el material llega incompleto o tarde, el plazo se corre en la
-        misma medida.
-      </p>
-      <p>
-        Las dos rondas de ajustes incluidas deben pedirse dentro de los quince días
-        de entregado el primer boceto. Los cambios de una misma ronda se envían
-        juntos.
+        El diagnóstico inicial es gratuito y <strong>no te obliga a contratar</strong>.
+        Para hacerlo podemos pedirte un acceso limitado a tus cuentas publicitarias.
+        Usamos esa información únicamente para el diagnóstico, y podés quitarnos el
+        acceso cuando quieras.
       </p>
 
-      <h2>Precio y forma de pago</h2>
+      <h2>Honorarios y forma de pago</h2>
       <p>
-        El precio es de <strong>$500.000 (quinientos mil pesos argentinos)</strong>,
-        en un único pago por el trabajo. Se abona{" "}
-        <strong>50% para comenzar y 50% contra entrega</strong>. Aceptamos
-        transferencia bancaria, Mercado Pago y USDT; si pagás en USDT, el importe
-        se calcula al tipo de cambio del día de pago.
+        Los honorarios por la gestión son mensuales y su monto se fija en la
+        propuesta. Aceptamos transferencia bancaria, Mercado Pago y USDT; si pagás
+        en USDT, el importe se calcula al tipo de cambio del día de pago. Los
+        honorarios acordados no cambian mientras dure el período ya pactado.
       </p>
       <p>
-        Por la web no cobramos cuotas mensuales. Los precios publicados pueden
-        cambiar en cualquier momento, pero <strong>nunca para un trabajo ya iniciado</strong>: el que
-        rige es el vigente al momento de aceptar el presupuesto.
-      </p>
-
-      <h2>Alojamiento</h2>
-      <p>
-        El sitio se publica en una plataforma de terceros, en una{" "}
-        <strong>cuenta a tu nombre</strong>. Es una decisión deliberada: así el sitio
-        queda tuyo y podés prescindir de nosotros cuando quieras.
-      </p>
-      <p>
-        Las condiciones de esa plataforma las fija la plataforma y pueden cambiar.
-        Si esa cuenta se da de baja, <strong>el sitio deja de estar online</strong>,
-        y eso no depende de nosotros.
+        Salvo que la propuesta diga otra cosa, el servicio es{" "}
+        <strong>mes a mes y sin permanencia</strong>: podés darlo de baja cuando
+        quieras, y desde la baja no se generan nuevos cargos.
       </p>
 
-      <h2>Titularidad y transferencia</h2>
+      <h2>La inversión en publicidad no es nuestra</h2>
       <p>
-        Al completarse el pago te transferimos el proyecto a tu cuenta y el dominio
-        se registra a tu nombre. Desde ese momento{" "}
-        <strong>el sitio es tuyo</strong>: podés modificarlo, contratar a otro
-        proveedor o darlo de baja sin consultarnos.
-      </p>
-      <p>
-        Vos sos responsable de que los textos, imágenes, logos y datos que nos
-        entregues sean tuyos o tengas derecho a usarlos. Nos autorizás a mostrar el
-        trabajo terminado en nuestro portafolio, salvo que nos pidas lo contrario por
-        escrito.
+        Lo que se le paga a Meta, a Google o a otra plataforma para mostrar los
+        anuncios <strong>no forma parte de nuestros honorarios</strong>. Salvo que
+        la propuesta diga otra cosa, lo abonás vos directamente a la plataforma,
+        desde una cuenta publicitaria a tu nombre y con tu propio medio de pago. El
+        monto lo decidís vos; nosotros te recomendamos cuánto invertir y cómo
+        repartirlo.
       </p>
 
-      <h2>Mantenimiento y cambios posteriores</h2>
+      <h2>Las cuentas son tuyas</h2>
       <p>
-        La web no incluye mantenimiento. En su lugar, te entregamos el sitio llave
-        en mano y te enseñamos, sin cargo, a administrarlo: cómo cambiar textos,
-        fotos, precios, horarios y datos de contacto, y cómo mantenerlo al día. Si
-        después de la entrega te surge una duda sobre cómo hacer alguno de esos
-        cambios, te lo volvemos a explicar sin costo.
+        Las cuentas publicitarias, páginas, perfiles, píxeles, etiquetas de
+        conversión y audiencias son tuyos. Para trabajar nos das acceso a ellos, y{" "}
+        <strong>podés retirarlo en cualquier momento</strong> sin consultarnos. Al
+        terminar el servicio dejamos de usar esos accesos y te pedimos que los
+        retires, si no lo hiciste antes. El historial de las campañas queda en tus
+        cuentas.
+      </p>
+
+      <h2>Qué se anuncia</h2>
+      <p>
+        Vos sos responsable de que lo que se anuncia sea legal y cierto: productos,
+        precios, promociones, condiciones y cualquier afirmación sobre tu negocio.
+        También, de que los textos, imágenes y marcas que nos entregues sean tuyos o
+        tengas derecho a usarlos.
       </p>
       <p>
-        Secciones nuevas, rediseños o funcionalidades que no estaban en el alcance
-        original se presupuestan aparte y se acuerdan por escrito antes de empezar.
+        Respetamos las políticas publicitarias de cada plataforma, y podemos
+        negarnos a publicar un anuncio que las infrinja o que infrinja la ley. Salvo
+        que nos pidas lo contrario por escrito, podemos mostrar los anuncios que
+        produjimos en nuestro portafolio, pero nunca tus números de rendimiento sin
+        tu autorización.
+      </p>
+
+      <h2>Las decisiones de las plataformas</h2>
+      <p>
+        Meta, Google y las demás plataformas pueden rechazar anuncios, limitar su
+        alcance, cambiar sus reglas o sus precios, o restringir cuentas por decisión
+        propia. Hacemos lo razonable para evitarlo y para apelar cuando corresponde,
+        pero <strong>no controlamos esas decisiones ni respondemos por ellas</strong>.
       </p>
 
       <h2>Condiciones generales</h2>
 
       <h3>Qué no prometemos</h3>
       <p>
-        <strong>No garantizamos resultados comerciales.</strong> Entregamos un sitio
-        funcional, con diseño propio y correctamente configurado, pero no una
-        cantidad determinada de clientes, consultas, reservas o ventas, ni una
-        posición específica en Google.
+        <strong>No garantizamos resultados comerciales.</strong> Nos comprometemos a
+        gestionar las campañas con criterio profesional y a mostrarte los números
+        tal como son, pero no una cantidad determinada de clientes, consultas o
+        ventas, ni un costo por resultado específico.
       </p>
       <p>
-        Los resultados dependen de tu producto, tu precio, tu oferta, tu rubro y tu
-        competencia, muchas variables que no controlamos. Desconfiá de quien te los
-        prometa.
+        Los resultados dependen de tu producto, tu precio, tu oferta, tu rubro, tu
+        competencia y las propias plataformas, muchas variables que no controlamos.
+        Desconfiá de quien te los prometa.
       </p>
 
       <h3>Uso de inteligencia artificial</h3>
       <p>
         Usamos herramientas de inteligencia artificial en partes del proceso de
-        diseño, redacción y programación. El resultado siempre lo revisa y aprueba
-        una persona antes de entregártelo o de publicarlo, y respondemos por él como
-        si estuviera hecho enteramente a mano. Te lo contamos porque nos parece que
+        producción de anuncios, redacción y análisis. El resultado siempre lo revisa
+        y aprueba una persona antes de publicarlo, y respondemos por él como si
+        estuviera hecho enteramente a mano. Te lo contamos porque nos parece que
         corresponde saberlo, no porque cambie lo que recibís.
-      </p>
-      <p>
-        Los textos que redactamos son originales para tu proyecto. Si nos entregás
-        contenido, imágenes o marcas de terceros, la responsabilidad por su uso es
-        tuya.
       </p>
 
       <h3>No tenemos relación con Meta, Google ni ninguna plataforma</h3>
@@ -168,24 +164,24 @@ export default function Terminos() {
 
       <h3>Datos de tus clientes</h3>
       <p>
-        Si contratás aparte un sistema de reservas, guarda datos personales de tus
-        clientes: los que dejan al reservar y los que cargues en su ficha. Respecto
-        de esos datos el responsable sos vos, y nosotros los tratamos por cuenta
-        tuya y solo para prestarte el servicio, como se explica en la{" "}
+        Si las campañas usan datos personales de tus clientes —listas para armar
+        públicos o los datos que dejan en los formularios de tus anuncios—, el
+        responsable de esos datos sos vos, y nosotros los tratamos por cuenta tuya y
+        solo para prestarte el servicio, como se explica en la{" "}
         <a href="/legal/privacidad">política de privacidad</a>.
       </p>
 
       <h3>Responsabilidad</h3>
       <p>
         Respondemos por la correcta ejecución del trabajo contratado. No respondemos
-        por caídas, cambios de precio o discontinuación de servicios de terceros
-        (plataforma de alojamiento, registrador de dominios, WhatsApp, Google), ni
-        por el uso que hagas del sitio por tu cuenta, ni
-        por daños indirectos o lucro cesante.
+        por caídas, cambios de reglas o de precio, rechazos de anuncios o
+        restricciones de cuentas decididos por las plataformas, ni por el uso que
+        hagas de las cuentas por tu cuenta, ni por daños indirectos o lucro cesante.
       </p>
       <p>
         En cualquier caso, nuestra responsabilidad máxima está limitada a los
-        honorarios que nos hayas pagado por el servicio en cuestión.
+        honorarios que nos hayas pagado por el servicio en cuestión. La inversión en
+        anuncios, que se le paga a cada plataforma, no cuenta como honorarios.
       </p>
 
       <h3>Arrepentimiento y baja</h3>
@@ -194,8 +190,8 @@ export default function Terminos() {
         Defensa del Consumidor, tenés <strong>{DIAS_ARREPENTIMIENTO} días corridos</strong>{" "}
         para arrepentirte sin dar explicaciones, y podés hacerlo desde el{" "}
         <a href="/legal/arrepentimiento">botón de arrepentimiento</a>, sin registrarte
-        ni hacer ningún trámite previo. Desde esa misma página podés dar de baja
-        cualquier servicio mensual que hayas contratado aparte.
+        ni hacer ningún trámite previo. Desde esa misma página podés dar de baja la
+        gestión mensual.
       </p>
 
       <h3>Ley aplicable</h3>
@@ -208,7 +204,7 @@ export default function Terminos() {
       <p>
         Podemos actualizar estos términos. La versión vigente es siempre la publicada
         en esta página, con su fecha de última actualización al pie. Los cambios no
-        se aplican retroactivamente a trabajos ya contratados.
+        se aplican retroactivamente a servicios ya contratados.
       </p>
     </>
   );

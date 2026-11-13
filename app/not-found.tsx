@@ -4,11 +4,11 @@ import { Saturno } from "@/components/site/saturno";
 export const metadata: Metadata = {
   title: "Página no encontrada — Tu Contenido",
   description:
-    "La dirección que buscaste no existe o cambió de lugar. Desde acá podés volver al inicio o ver los precios.",
+    "La dirección que buscaste no existe o cambió de lugar. Desde acá podés volver al inicio o ver los servicios.",
   robots: { index: false, follow: true },
 };
 
-/* La 404 no es un callejón: lleva al inicio o directo a los precios. Como
+/* La 404 no es un callejón: lleva al inicio o directo a los servicios. Como
    el sitio se exporta estático, esto sale como out/404.html, que es
    lo que sirven Cloudflare Pages y Netlify ante una URL que no existe. */
 export default function NoEncontrada() {
@@ -39,8 +39,8 @@ export default function NoEncontrada() {
             <a href="/" className="btn">
               Ir al inicio
             </a>
-            <a href="/#precio" className="btn btn-line">
-              Ver los precios
+            <a href="/#servicios" className="btn btn-line">
+              Ver los servicios
             </a>
           </div>
         </div>

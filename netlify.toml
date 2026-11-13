@@ -10,8 +10,9 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# Hasta el 17/09/2026 la landing de webs vivía en /web. Ahora es la raíz:
-# los links viejos (anuncios, posts, bio) siguen funcionando.
+# /web fue la landing de webs (hasta el 17/09/2026 ahí, después en la
+# raíz). Desde el 13/11/2026 la raíz es la agencia de Meta y Google y
+# las webs ya no se venden: los links viejos caen en la raíz.
 [[redirects]]
   from = "/web"
   to = "/"

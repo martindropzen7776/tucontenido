@@ -7,10 +7,10 @@ import { Saturno } from "@/components/site/saturno";
 export const metadata: Metadata = {
   title: "Gracias — Tu Contenido",
   description:
-    "Tu pedido está armado en WhatsApp. Qué pasa ahora y cuándo ves tu web.",
+    "Tu pedido de diagnóstico está armado en WhatsApp. Qué pasa ahora.",
   robots: { index: false, follow: true },
   openGraph: {
-    images: [{ url: "/og/web.png", width: 1200, height: 630, alt: "Tu Contenido: tu web lista en 7 días por $500.000." }],
+    images: [{ url: "/og/agencia.png", width: 1200, height: 630, alt: "Tu Contenido: publicidad en Meta y Google que se mide en ventas." }],
   },
 };
 

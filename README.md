@@ -1,19 +1,18 @@
 # tucontenido
 
-La landing del servicio de webs, en la raíz del dominio. Vende un solo
-producto: **la web, $500.000**, pago único, llave en mano, sin
-mantenimiento y con capacitación para que el cliente la administre.
+La landing de la agencia de publicidad paga, en la raíz del dominio.
+Vende la **gestión de campañas en Meta (Facebook, Instagram, WhatsApp)
+y Google Ads**, con un **diagnóstico sin cargo** como puerta de entrada.
+Los honorarios no están publicados: se pasan por escrito después del
+diagnóstico (si querés mostrar un "desde", va en `HONORARIO_DESDE`).
+La inversión en anuncios la paga el cliente directo a cada plataforma.
 
-Hasta el 01/10/2026 había un segundo plan, la web con reservas
-($700.000, con mantenimiento opcional de $50.000 por mes). Se sacó para
-concentrar todo en la web; está en el historial de git. Las muestras
-con reservas (Arenales, Clara y el hotel) siguen en los ejemplos, con
-los paneles de turnos, y las reservas figuran en lo que no entra: se
-presupuestan aparte.
-
-Hasta el 17/09/2026 la landing vivía en `/web` y la raíz era una agencia
-de publicidad (`agencia.tsx`, se puede ver en el historial de git). La
-agencia se sacó y `/web` redirige a `/` con un 301 (`netlify.toml`).
+Historia: hasta el 17/09/2026 la raíz era una agencia (solo Meta) y la
+landing de webs vivía en `/web`; después la web pasó a la raíz y la
+agencia se sacó. Desde el 13/11/2026 vuelve la agencia, ahora con Meta y
+Google, y **las webs ya no se venden**: la landing de $500.000, sus once
+muestras y sus términos están en el historial de git. `/web` sigue
+redirigiendo a `/` con un 301 (`netlify.toml`).
 
 El resto de las rutas:
 
@@ -21,7 +20,7 @@ El resto de las rutas:
 |---|---|
 | `/empezar` | Calificador para tráfico pago (noindex) |
 | `/gracias` | Adonde llega el calificador después de abrir WhatsApp (noindex) |
-| `/entrega` | Generador de la hoja de entrega para el cliente (interna, fuera de robots) |
+| `/entrega` | Generador de la hoja de entrega de una web (interna, fuera de robots; quedó de cuando se vendían webs) |
 | `/legal/*` | Términos, privacidad, cookies y arrepentimiento |
 
 `robots.txt`, `sitemap.xml`, la 404 y los íconos salen del build.
@@ -38,7 +37,7 @@ Todo vive en **`lib/site.ts`**:
 |---|---|
 | `WHATSAPP` | Tu número con código de país, sin `+` ni espacios. Arma los 8 puntos de contacto de la página. |
 | `PIXEL_ID` | El ID del píxel de Meta. Sin esto no podés optimizar ni medir las campañas. |
-| `TRABAJOS` | Las URL del portafolio. Poné el link y pasá `listo: true`; las que quedan en `false` se muestran en punteado. |
+| `HONORARIO_DESDE` | Opcional. Desde cuánto arranca la gestión mensual ("$000.000"). Vacío, la tarjeta dice que se cotiza tras el diagnóstico. |
 | `INSTAGRAM` | Opcional. Si queda vacío, el enlace no aparece en el footer. |
 
 También conviene revisar los medios de pago en las preguntas frecuentes
@@ -52,7 +51,7 @@ build de producción, el sitio sale roto.
 
 ## Imágenes
 
-`scripts/imagenes.mjs` genera las de Open Graph (`public/og/*.png`)
+`scripts/imagenes.mjs` genera la de Open Graph (`public/og/agencia.png`)
 antes de cada `dev` y `build`, con las fuentes de `assets/fonts`. Si
 cambia un titular, se cambia ahí. No se usa `opengraph-image.tsx` de
 Next porque con exportación estática sale sin extensión y WhatsApp no
@@ -86,7 +85,7 @@ app/
   page.tsx          la landing: orden de secciones, metadata y schema
   globals.css       tokens de color, tipografía y escala de motion
 components/
-  site/             las secciones (el precio y lo que entra, en sections.tsx)
+  site/             las secciones (servicios, Meta y Google, cómo se cobra: sections.tsx)
   motion/           componentes de beUI (número, tilt, marquee, reveals…)
 lib/site.ts         ← lo único que hay que tocar para publicar
 ```

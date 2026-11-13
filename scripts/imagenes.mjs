@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════
    Genera las imágenes del sitio que no son fotos:
 
-   - public/og/web.png (Open Graph, 1200×630)
+   - public/og/agencia.png (Open Graph, 1200×630)
    - app/favicon.ico, app/apple-icon.png (con --iconos)
 
    Corre solo antes de cada build (npm "prebuild"), así las de Open
@@ -73,8 +73,8 @@ function tarjeta({ sufijo, titular, bajada, bloque }) {
       "tucontenido",
       h("span", { style: { color: GRIS } }, sufijo),
     ),
-    /* Cortes fijos: con ajuste automático, "7" quedaba colgado al
-       final de la primera línea, lejos de "días". */
+    /* Cortes fijos: con ajuste automático las líneas se cortan
+       donde caen, no donde se leen bien. */
     h(
       "div",
       { style: { display: "flex", flexDirection: "column", fontFamily: "Bricolage", fontSize: 104, lineHeight: 0.92, letterSpacing: -4 } },
@@ -92,11 +92,11 @@ function tarjeta({ sufijo, titular, bajada, bloque }) {
 await mkdir(join(RAIZ, "public/og"), { recursive: true });
 
 const OG = {
-  web: {
+  agencia: {
     sufijo: ".",
-    titular: ["Tu web lista", "en 7 días"],
-    bajada: "A medida, con los textos escritos y a tu nombre. Pago único.",
-    bloque: "$500.000",
+    titular: ["Publicidad que", "se mide en ventas"],
+    bajada: "Campañas en Meta y Google, con las cuentas a tu nombre.",
+    bloque: "Diagnóstico $0",
   },
 };
 

@@ -9,18 +9,18 @@ type Enlace = { href: string; label: string };
 /* Los valores por defecto son los de la página principal. Las props
    quedan por si otra página necesita otro menú. */
 const NAV: Enlace[] = [
-  { href: "#diferencia", label: "La diferencia" },
-  { href: "#dias", label: "Los 7 días" },
-  { href: "#incluye", label: "Qué incluye" },
-  { href: "#trabajos", label: "Ejemplos" },
-  { href: "#precio", label: "Precio" },
+  { href: "#servicios", label: "Servicios" },
+  { href: "#plataformas", label: "Meta y Google" },
+  { href: "#como", label: "Cómo trabajamos" },
+  { href: "#precio", label: "Cómo se cobra" },
+  { href: "#preguntas", label: "Preguntas" },
 ];
 
-const MSG_WEB = "Hola! Quiero mi web en 7 días.";
+const MSG_AGENCIA = "Hola! Quiero un diagnóstico de mis campañas en Meta y Google.";
 
 export function Nav({
   enlaces = NAV,
-  msg = MSG_WEB,
+  msg = MSG_AGENCIA,
   sufijo = ".",
 }: {
   enlaces?: Enlace[];
@@ -61,12 +61,12 @@ export function Nav({
 }
 
 export function Footer({
-  bio = "Diseñamos webs para negocios que quieren vender por internet sin quedar atados a una agencia. Siete días y queda a tu nombre.",
-  titulo = "Servicio",
-  enlaces = [NAV[1], NAV[3], NAV[4]],
-  msg = "Hola! Quiero consultar por una web.",
+  bio = "Agencia de publicidad en Meta y Google. Campañas medidas contra lo que vendés, con las cuentas siempre a tu nombre.",
+  titulo = "Agencia",
+  enlaces = [NAV[0], NAV[1], NAV[3]],
+  msg = "Hola! Quiero consultar por la gestión de mis campañas.",
   sufijo = ".",
-  firma = "Hecha con este mismo proceso",
+  firma = "Publicidad paga · Meta y Google",
 }: {
   bio?: string;
   titulo?: string;
@@ -148,7 +148,7 @@ export function Footer({
 
       <p className="mt-6 max-w-[70ch] text-[12.5px] leading-relaxed text-bone/60">
         Usamos herramientas de inteligencia artificial en parte del proceso de
-        diseño y redacción; el resultado lo revisa y aprueba una persona antes de
+        producción de anuncios y redacción; el resultado lo revisa y aprueba una persona antes de
         entregarlo. No estamos asociados, patrocinados ni avalados por Meta
         Platforms, Google ni ninguna de las plataformas mencionadas: sus marcas
         pertenecen a sus titulares.
@@ -162,7 +162,7 @@ export function Footer({
   );
 }
 
-export function WaFab({ msg = MSG_WEB }: { msg?: string }) {
+export function WaFab({ msg = MSG_AGENCIA }: { msg?: string }) {
   return (
     <WaLink
       msg={msg}

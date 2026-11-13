@@ -1,36 +1,41 @@
 "use client";
 
-import { NumberTicker } from "@/components/motion/number-ticker";
 import { Magnetic } from "@/components/motion/magnetic";
 import { WaLink, Arrow } from "./wa-link";
 import { Saturno } from "./saturno";
 
-/* Los datos van en filas con una regla fina entre medio, como un
-   remito. En columnas serían tres tarjetas, que es exactamente el
-   bloque que delata una página generada. */
-function Dato({
-  valor,
-  sufijo,
-  etiqueta,
-  detalle,
-}: {
-  valor: number;
-  sufijo?: string;
-  etiqueta: string;
-  detalle: string;
-}) {
+/* El mensaje con el que arrancan los botones de la agencia. */
+export const MSG_AGENCIA = "Hola! Quiero un diagnóstico de mis campañas en Meta y Google.";
+
+function Fila({ k, v }: { k: string; v: string }) {
   return (
-    <div className="flex items-baseline gap-5 border-t border-[var(--rule)] py-4 first:border-t-0 sm:gap-7">
-      <div className="disp w-[4.2rem] shrink-0 !whitespace-nowrap text-[clamp(28px,4vw,40px)] leading-none tracking-[-0.03em] sm:w-[5.5rem]">
-        <NumberTicker value={valor} startOnView />
-        {/* Los dígitos van en cajas con overflow oculto, así que la línea
-            base del número queda en el borde de abajo: el sufijo se sube
-            lo mismo para quedar al pie de la cifra y no colgando. */}
-        {sufijo && <span className="relative -top-[0.4em] text-[0.5em] text-ink-soft">{sufijo}</span>}
+    <div className="flex justify-between gap-4 border-b border-dashed border-[var(--rule-on-c)] py-[11px] text-sm last:border-b-0">
+      <span className="font-medium">{k}</span>
+      <span className="shrink-0 text-right text-bone/55">{v}</span>
+    </div>
+  );
+}
+
+/* El remito del hero dice qué te llevás por escribir: el diagnóstico.
+   Es la puerta de entrada, así que va arriba, donde la web tenía el
+   precio. Sin cifras de resultados ni testimonios: si hay números o
+   clientes reales, van con nombre y con permiso; inventados no. */
+function Diagnostico() {
+  return (
+    <div className="relative border border-ink vidrio-claro p-[clamp(24px,3vw,38px)] text-bone">
+      <div className="mb-5 flex items-baseline justify-between border-b border-dashed border-[var(--rule-on-c)] pb-4">
+        <span className="mono text-bone/45">Diagnóstico</span>
+        <span className="mono text-bone/45">Meta · Google</span>
       </div>
-      <div className="min-w-0">
-        <div className="text-[15px] font-semibold leading-tight">{etiqueta}</div>
-        <div className="text-[13.5px] leading-snug text-ink-soft">{detalle}</div>
+      <Fila k="Llamada para conocer tu negocio" v="Incluida" />
+      <Fila k="Revisión de tus cuentas publicitarias" v="Incluida" />
+      <Fila k="Qué funciona y qué no" v="Incluido" />
+      <Fila k="Mirada a tu competencia" v="Incluida" />
+      <Fila k="Cuánto invertir y dónde" v="Incluido" />
+      <Fila k="Compromiso de contratar" v="Ninguno" />
+      <div className="mt-5 flex items-baseline justify-between border-t border-bone pt-[18px]">
+        <span className="mono">Costo</span>
+        <span className="disp text-[clamp(32px,4vw,46px)] leading-none tracking-[-0.03em]">$0</span>
       </div>
     </div>
   );
@@ -45,46 +50,40 @@ export function Hero() {
                  lg:items-center lg:gap-[clamp(40px,6vw,88px)] lg:pb-0"
     >
       {/* Un cuadrado del tamaño de los anillos, no una capa a pantalla
-          completa: en móvil eso bajaba a 3 cuadros por segundo.
-          En computadora ocupa la columna derecha, que queda libre: el
-          precio no va arriba, tiene su sección con lo que entra y lo
-          que no. */}
-      <Saturno className="-z-10 opacity-80
-                          -right-[16%] top-[28px] h-[min(90vw,400px)] w-[min(90vw,400px)]
+          completa: en móvil eso bajaba a 3 cuadros por segundo. */}
+      <Saturno className="-z-10 opacity-70
+                          -right-[26%] top-[3%] h-[min(86vw,380px)] w-[min(86vw,380px)]
                           lg:right-[2%] lg:top-1/2 lg:h-[min(46vw,620px)] lg:w-[min(46vw,620px)]
-                          lg:-translate-y-1/2 lg:opacity-100" />
+                          lg:-translate-y-1/2 lg:opacity-90" />
 
       <div className="order-1 flex flex-col">
-        {/* Sin rótulo arriba. El titular no necesita que le avisen
-            que es el titular, y ninguna palabra va resaltada: la
-            frase entera es la promesa. */}
-        <h1 className="disp h1 max-w-[13ch]">Tu web lista en 7 días</h1>
+        {/* Sin rótulo arriba y sin palabras resaltadas: la frase entera
+            es la promesa. */}
+        <h1 className="disp h1 max-w-[13ch]">Publicidad que se mide en ventas</h1>
 
         <p className="lede mt-[clamp(26px,3.4vw,38px)]">
-          Nos escribís por WhatsApp y hacemos una llamada corta para conocernos,
-          así sabés con quién vas a trabajar antes de pagar. Sin briefs de cuarenta
-          preguntas ni reuniones para coordinar reuniones.{" "}
-          <b className="font-semibold text-ink">En 72 horas ya estás viendo tu web.</b>
+          Armamos y manejamos tus campañas en <b className="font-semibold text-ink">Meta</b>{" "}
+          (Facebook, Instagram y WhatsApp) y en <b className="font-semibold text-ink">Google</b>{" "}
+          (Búsqueda, YouTube y Maps). Y las medimos contra lo que vendiste, no contra
+          los me gusta.
         </p>
 
         <div className="mt-[clamp(32px,4.4vw,46px)] flex flex-wrap gap-3.5">
           <Magnetic strength={0.28}>
-            <WaLink msg="Hola! Quiero mi web en 7 días. ¿Cómo arrancamos?" className="btn">
-              Pedir mi web
+            <WaLink msg={MSG_AGENCIA} className="btn">
+              Pedir un diagnóstico
               <Arrow />
             </WaLink>
           </Magnetic>
-          <a href="#trabajos" className="btn btn-line">
-            Ver ejemplos
+          <a href="#servicios" className="btn btn-line">
+            Ver servicios
           </a>
         </div>
-
-        <div className="mt-[clamp(38px,5.5vw,60px)] max-w-[30rem]">
-          <Dato valor={7} etiqueta="Días de entrega" detalle="Desde que mandás el material" />
-          <Dato valor={72} sufijo="h" etiqueta="Primer boceto" detalle="La web entera, navegable" />
-          <Dato valor={100} sufijo="%" etiqueta="A tu nombre" detalle="Se transfiere a tu cuenta" />
-        </div>
       </div>
+
+      <aside className="order-2 self-stretch lg:self-center">
+        <Diagnostico />
+      </aside>
     </header>
   );
 }

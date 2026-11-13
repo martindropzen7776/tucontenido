@@ -3,34 +3,39 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Aparece } from "./aparece";
 
+/* El estado de la campaña de siempre: cicla para siempre y nunca
+   dice cuánto vendiste. */
 const LETANIA = [
-  "Brief de 40 preguntas",
-  "Llamada de 45 minutos",
-  "Reunión de seguimiento",
-  "Presupuesto en 5 días",
-  "Contrato y 50% de seña",
-  "Entrega en 6 semanas",
+  "En fase de aprendizaje",
+  "Optimizando",
+  "Esperando más datos",
+  "Probando un público nuevo",
+  "Subiendo el presupuesto",
+  "Reporte de alcance enviado",
 ];
 
 const PASOS_ELLOS = [
-  "Completás un brief de cuarenta preguntas",
-  "Agendás una llamada de descubrimiento",
-  "Esperás el presupuesto cinco días hábiles",
-  "Otra reunión para revisar el presupuesto",
-  "Firmás contrato y adelantás la seña",
-  "Recién ahí empiezan a diseñar",
+  "Te reportan alcance, impresiones y me gusta",
+  "La cuenta publicitaria queda a nombre de la agencia",
+  "Contrato mínimo de seis meses",
+  "Promocionan publicaciones y lo llaman estrategia",
+  "Nadie te dice cuánto te costó cada venta",
+  "Si cortás, perdés el historial y los públicos",
 ];
 
-/* La diferencia no es que no haya llamada: es que hay una sola, corta,
-   para conocerse, y el precio ya se sabe antes de hacerla. */
+/* Tres compromisos, no tres pasos: es lo que nos separa de la
+   agencia de siempre. */
 const PASOS_NOSOTROS = [
-  "Nos escribís por WhatsApp y te decimos el precio en el momento",
-  "Una llamada de 15 minutos para conocernos, si la querés",
-  "Mandás el logo y las fotos que tengas",
+  "La cuenta, el píxel y las audiencias quedan a tu nombre",
+  "Cada mes sabés cuánto te costó cada consulta o venta",
+  "Mes a mes, sin contrato de permanencia",
 ];
 
-/* El estado del proyecto de la competencia cicla para siempre y nunca
-   llega a "entregado". Ese es el argumento de la sección, no la copy. */
+/* El texto más largo reserva el ancho para que la caja no salte. */
+const LETANIA_LARGA = LETANIA.reduce((a, b) => (b.length > a.length ? b : a));
+
+/* El estado de la campaña de la competencia cicla para siempre y nunca
+   llega a "vendiste". Ese es el argumento de la sección, no la copy. */
 function Letania() {
   const [i, setI] = useState(0);
   const [antes, setAntes] = useState<number | null>(null);
@@ -48,11 +53,11 @@ function Letania() {
 
   return (
     <div className="relative mt-auto border border-dashed border-ink/20 p-[16px] sm:p-[18px_20px]">
-      <div className="mono !text-[11px] !tracking-[0.14em] text-ink/35">Estado del proyecto</div>
+      <div className="mono !text-[11px] !tracking-[0.14em] text-ink/35">Estado de tu campaña</div>
       <div className="relative mt-3 h-6">
         {/* Reserva el ancho del texto más largo para que la caja no salte. */}
         <span className="invisible block whitespace-nowrap text-[15px]">
-          Contrato y 50% de seña
+          {LETANIA_LARGA}
         </span>
         {/* El que se va sube y se apaga; el que llega sube desde abajo
             (animaciones letania-sale / letania-entra en globals.css). */}
@@ -118,9 +123,9 @@ function Tilde() {
       </svg>
       <span>
         <strong className="disp block text-[17px] leading-tight tracking-[-0.02em] sm:text-[19px]">
-          En 72 horas ves tu web
+          Cada peso, con su resultado
         </strong>
-        <span className="text-[13px] text-ink/60">Entera, navegable, desde tu celular</span>
+        <span className="text-[13px] text-ink/60">Un reporte por mes, en una página</span>
       </span>
     </div>
   );
@@ -132,15 +137,16 @@ export function Diff() {
       <div className="mb-[clamp(44px,6vw,76px)] grid items-end gap-[clamp(24px,5vw,72px)] lg:grid-cols-[minmax(0,1fr)_minmax(0,0.72fr)]">
         <Aparece>
           <h2 className="disp h2">
-            Otros todavía te están
+            Otros te reportan
             <br />
-            pidiendo cosas
+            me gusta
           </h2>
         </Aparece>
         <Aparece delay={0.05}>
           <p className="lede">
-            No somos más rápidos porque trabajemos apurados. Somos más rápidos
-            porque sacamos del medio todo lo que no hace falta.
+            Alcance, impresiones y seguidores quedan lindos en un reporte, pero
+            no pagan el alquiler. Nosotros medimos lo que importa: cuánto te
+            cuesta cada cliente.
           </p>
         </Aparece>
       </div>
@@ -150,7 +156,7 @@ export function Diff() {
           <div className="flex flex-col vidrio p-5 sm:p-[clamp(28px,3.4vw,48px)]">
             <div className="mono !text-[11px] text-ink-soft">En otros lados</div>
             <div className="disp mb-6 mt-2.5 text-[clamp(26px,3.4vw,40px)] leading-none tracking-[-0.03em]">
-              Seis pasos antes de ver un solo diseño
+              Mucho reporte, poca venta
             </div>
             <ul className="mb-6 flex flex-col">
               {PASOS_ELLOS.map((p, n) => (
@@ -171,7 +177,7 @@ export function Diff() {
           <div className="flex flex-col border-t-2 border-ink vidrio-claro p-5 text-bone min-[900px]:border-l-2 min-[900px]:border-t-0 sm:p-[clamp(28px,3.4vw,48px)]">
             <div className="mono !text-[11px] text-bone/55">Acá</div>
             <div className="disp mb-6 mt-2.5 text-[clamp(26px,3.4vw,40px)] leading-none tracking-[-0.03em]">
-              Tres pasos y a diseñar
+              Tres cosas que no se negocian
             </div>
             <ul className="mb-6 flex flex-col">
               {PASOS_NOSOTROS.map((p, n) => (
